@@ -118,7 +118,7 @@ class CreateMpin extends StatelessWidget {
                 height: MediaQuery.of(context).size.height*0.05,
                 text: Dd_Strings.submit_button_text,
                 onPressed: () {
-                  // _otpBloc.add(OnOtpGenerate(number: phoneController.text));
+                  //
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

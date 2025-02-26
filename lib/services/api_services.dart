@@ -3,15 +3,19 @@ import 'package:dd_shop/orders/order_model.dart';
 import 'package:dd_shop/shop_prices/piece_model.dart';
 import 'package:dd_shop/shop_prices/weight_model.dart';
 import 'package:dd_shop/shop_signup/shop_model.dart';
+import 'package:dd_shop/utils/components/alertDialogue.dart';
 import 'package:http/http.dart';
+
+import '../otp_generate/otp_modal.dart';
 
 class APIService {
   //String url = 'https://10.0.2.2:8080';
-  String url = 'https://dhobidosth.com';
+  String url = 'http://35.207.255.233:90';
 
-  Future sendOTP(mobile) async {
+  Future<UserInfoModal> getEmployeeDetailsByPhone(mobile) async {
+    print("this is mobile number passing, $mobile");
     Response response = await post(
-      Uri.parse('$url/user/otp'),
+      Uri.parse('$url/employ/userPhone'),
       headers: {
         "content-type": "application/json",
         "accept": "application/json",
@@ -19,17 +23,45 @@ class APIService {
       body: jsonEncode(<String, String>{'phoneNumber': '$mobile'}),
     );
     print("this is response ${response.body}");
-    if (response.statusCode == 200) {
-      var res = json.decode(response.body);
-      return res;
-    } else {
-      print("error came in api call");
-    }
+
+    Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+    // Now map the JSON Map to the UserInfoModal using the fromJson constructor
+    UserInfoModal userInfoModal = UserInfoModal.fromJson(jsonResponse);
+
+    // Return the UserInfoModal object
+    return userInfoModal;
   }
 
+  Future<EmployeePayload?> generateMPIN(empcode, mpin) async {
+    print("this is empcode passing, $empcode");
+    Response response = await post(
+      Uri.parse('$url/employ/genratempin'),
+      headers: {
+        "content-type": "application/json",
+        "accept": "application/json",
+      },
+      body: jsonEncode(<String, String>{
+        "employCode":"$empcode",
+        "mpin":"$mpin",
+      }),
+    );
+    print("this is response ${response.body}");
+
+    Map<String, dynamic> jsonResponse = json.decode(response.body);
+    EmployeePayload? payload;
+      if(jsonResponse["statusCode"] == 200){
+        payload  = EmployeePayload.fromJson(jsonResponse["payload"]);
+      }else{
+        payload = null;
+      }
+    // Now map the JSON Map to the UserInfoModal using the fromJson constructor
+    // Return the UserInfoModal object
+    return payload;
+  }
   Future<ShopModel> verifyOTP(mobile, otp) async {
     Response response = await post(
-      Uri.parse('$url/shop/otp/verify'),
+      Uri.parse('$url/user/otp/verify'),
       headers: {
         "content-type": "application/json",
         "accept": "application/json",

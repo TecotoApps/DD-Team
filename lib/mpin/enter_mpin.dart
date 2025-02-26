@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
+import '../otp_generate/otp_generate_controller.dart';
+
 class EnterMpin extends StatelessWidget {
   EnterMpin({super.key});
 
@@ -102,7 +104,15 @@ class EnterMpin extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.05,
                 text: Dd_Strings.submit_button_text,
-                onPressed: () {
+                onPressed: () async {
+                  String mpin = mpinController_1.text +
+                      mpinController_2.text +
+                      mpinController_3.text +
+                      mpinController_4.text +
+                      mpinController_5.text +
+                      mpinController_6.text;
+                  print("this is mpin $mpin");
+                 await otp_controller.createMPIN(mpin, context);
                   // _otpBloc.add(OnOtpGenerate(number: phoneController.text));
                   // Navigator.pushReplacement(
                   //     context,

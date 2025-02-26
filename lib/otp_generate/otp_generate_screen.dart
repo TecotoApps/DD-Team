@@ -1,3 +1,6 @@
+import 'package:dd_shop/mpin/create_mpin.dart';
+import 'package:dd_shop/mpin/enter_mpin.dart';
+import 'package:dd_shop/otp_generate/otp_generate_controller.dart';
 import 'package:dd_shop/utils/components/elevated_rounded_button.dart';
 import 'package:dd_shop/utils/components/text_field_curved_edges.dart';
 import 'package:dd_shop/utils/constants/app_fonts.dart';
@@ -8,6 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
 import '../otp_verify/otp_validation_screen.dart';
+import 'otp_modal.dart';
 
 class OtpGenerate extends StatefulWidget {
   @override
@@ -15,7 +19,7 @@ class OtpGenerate extends StatefulWidget {
 }
 
 class _OtpGenerateState extends State<OtpGenerate> {
-  TextEditingController phoneController = TextEditingController(text: '+91 ');
+  TextEditingController phoneController = TextEditingController(text: '');
   final formKey = GlobalKey<FormState>();
   String verifymsg = '';
   @override
@@ -74,7 +78,8 @@ class _OtpGenerateState extends State<OtpGenerate> {
                           length: 13,
                           borderRadius: 10,
                           inputFormatter: "number",
-                          validatorType: 'phone'),
+                          validatorType: 'phone'
+                      ),
                     ),
                     // Container(
                     //   padding: EdgeInsets.symmetric(horizontal: 24.0),
@@ -134,14 +139,30 @@ class _OtpGenerateState extends State<OtpGenerate> {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height*0.05,
                     text: Dd_Strings.continue_button_text,
-                    onPressed: () {
-                      // _otpBloc.add(OnOtpGenerate(number: phoneController.text));
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => OtpValidation(
-                                  phoneNumber:phoneController.text)));
-                    },
+                    onPressed: () async{
+                      UserInfoModal empDetails = await otp_controller.getEmployeeDetailsByPhoneNumber(phoneController.text,context);
+                     print("this si status code ${empDetails.statusCode}");
+                     if(empDetails.statusCode == 200) {
+                       if (empDetails.payload!.mpin != null) {
+                         //naviagte to enter mpin
+                         Navigator.pushReplacement(
+                             context,
+                             MaterialPageRoute(
+                                 builder: (context) =>
+                                     EnterMpin()));
+                       } else {
+                         //navigate to create mpin flow
+                         Navigator.pushReplacement(
+                             context,
+                             MaterialPageRoute(
+                                 builder: (context) =>
+                                     CreateMpin()),);
+                       }
+                     }
+                     else if(empDetails.statusCode == 203){
+                       //error dialogue
+                     }
+                   },
                     cornerRadius: 6.0,
                     buttonColor: AppColors.appSecondaryColor,
                     textStyle: AppFonts.header

@@ -53,4 +53,7 @@ class Dd_Strings {
   static const String order_details = 'Order Details';
   static const String process_order = 'Process order';
   static const String employee_list = 'Employee List';
+
+  static const String employee_id = "EMPID";
+  static const String employee_code = "EMPCODE";
 }
