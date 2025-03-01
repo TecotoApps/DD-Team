@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:dd_shop/dashboard/hr_dashboard.dart';
 import 'package:dd_shop/otp_generate/otp_generate_screen.dart';
 import 'package:dd_shop/services/sharedPress.dart';
 import 'package:dd_shop/utils/components/home_screen.dart';
@@ -53,7 +54,7 @@ class MySplashScreenState extends State<MySplashScreen> {
       Timer(
           Duration(seconds: 3),
               () => Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => OtpGenerate())));
+              context, MaterialPageRoute(builder: (context) => HrDashboard())));
     } else {
       Timer(
           Duration(seconds: 3),

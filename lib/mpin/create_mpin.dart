@@ -1,5 +1,4 @@
-import 'package:dd_shop/mpin/enter_mpin.dart';
-import 'package:dd_shop/utils/components/elevated_rounded_button.dart';
+import 'package:dd_shop/otp_generate/otp_generate_controller.dart';
 import 'package:dd_shop/utils/components/text_field_curved_edges.dart';
 import 'package:dd_shop/utils/constants/app_fonts.dart';
 import 'package:dd_shop/utils/constants/colors.dart';
@@ -8,134 +7,144 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
-class CreateMpin extends StatelessWidget {
+import '../utils/components/elevated_rounded_button.dart';
+
+class CreateMpin extends StatefulWidget {
   CreateMpin({super.key});
 
-   FocusNode focusNode_1 = FocusNode();
-   FocusNode focusNode_2 = FocusNode();
-   FocusNode focusNode_3 = FocusNode();
-   FocusNode focusNode_4 = FocusNode();
-   FocusNode focusNode_5 = FocusNode();
-   FocusNode focusNode_6 = FocusNode();
-  final TextEditingController mpinController_1 = TextEditingController();
-  final TextEditingController mpinController_2 = TextEditingController();
-  final TextEditingController mpinController_3 = TextEditingController();
-  final TextEditingController mpinController_4 = TextEditingController();
-  final TextEditingController mpinController_5 = TextEditingController();
-  final TextEditingController mpinController_6 = TextEditingController();
+  @override
+  State<CreateMpin> createState() => _CreateMpinState();
+}
+
+class _CreateMpinState extends State<CreateMpin> {
+  final List<FocusNode> focusNodes = List.generate(6, (_) => FocusNode());
+  final List<FocusNode> reFocusNodes = List.generate(6, (_) => FocusNode());
+
+  final List<TextEditingController> mpinControllers =
+  List.generate(6, (_) => TextEditingController());
+  final List<TextEditingController> reMpinControllers =
+  List.generate(6, (_) => TextEditingController());
+
+  @override
+  void initState() {
+    super.initState();
+    _addFocusListeners();
+  }
+
+  void _addFocusListeners() {
+    for (int i = 0; i < focusNodes.length; i++) {
+      focusNodes[i].addListener(() {
+        if (!focusNodes[i].hasFocus && mpinControllers[i].text.isEmpty) {
+          // Clear text if the user leaves an empty field
+          mpinControllers[i].clear();
+        }
+      });
+    }
+
+    for (int i = 0; i < reFocusNodes.length; i++) {
+      reFocusNodes[i].addListener(() {
+        if (!reFocusNodes[i].hasFocus && reMpinControllers[i].text.isEmpty) {
+          reMpinControllers[i].clear();
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    for (var node in focusNodes) {
+      node.dispose();
+    }
+    for (var node in reFocusNodes) {
+      node.dispose();
+    }
+    for (var controller in mpinControllers) {
+      controller.dispose();
+    }
+    for (var controller in reMpinControllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  void _handleTextFieldInput(int index, List<FocusNode> nodes) {
+    if (mpinControllers[index].text.isNotEmpty && index < nodes.length - 1) {
+      nodes[index + 1].requestFocus();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Gap(MediaQuery.of(context).size.height*0.15),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                  child: SvgPicture.asset(
-                    'images/splash_logo.svg',fit: BoxFit.fill,
-                  ),
-                ),
-                Gap(24),
-                Center(
-                  child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 36.0),
-                      color: Colors.white,
-                      child: Text(Dd_Strings.generate_otp_text,textAlign: TextAlign.center,
-                        style: AppFonts.smallText.copyWith(color: AppColors.textColor,fontWeight: FontWeight.w400),
-                      )),
-                ),
-                Padding(padding: EdgeInsets.only(top: 40.0)),
-                Center(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height*0.2,
-                    width: MediaQuery.of(context).size.width*0.5,
-                    color: Colors.white,
-                    child: SvgPicture.asset(
-                      'images/create_mpin.svg',fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-                Gap(18),
-
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Text(Dd_Strings.enter_new_mpin,textAlign: TextAlign.start,
-                    style: AppFonts.title.copyWith(color: AppColors.appPrimaryColor,fontWeight: FontWeight.w700),
-                  ),
-                ),
-                Gap(10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildOtpTextField(focusNode_1,mpinController_1),
-                      buildOtpTextField(focusNode_2,mpinController_2),
-                      buildOtpTextField(focusNode_3,mpinController_3),
-                      buildOtpTextField(focusNode_4,mpinController_4),
-                      buildOtpTextField(focusNode_5,mpinController_5),
-                      buildOtpTextField(focusNode_6,mpinController_6),
-                    ],
-                  ),
-                ),
-                Gap(18),
-
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Text(Dd_Strings.re_enter_your_mpin,textAlign: TextAlign.start,
-                    style: AppFonts.title.copyWith(color: AppColors.appPrimaryColor,fontWeight: FontWeight.w700),
-                  ),
-                ),
-                Gap(10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildOtpTextField(focusNode_1,mpinController_1),
-                      buildOtpTextField(focusNode_2,mpinController_2),
-                      buildOtpTextField(focusNode_3,mpinController_3),
-                      buildOtpTextField(focusNode_4,mpinController_4),
-                      buildOtpTextField(focusNode_5,mpinController_5),
-                      buildOtpTextField(focusNode_6,mpinController_6),
-                    ],
-                  ),
-                )
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Gap(MediaQuery.of(context).size.height * 0.15),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              child: SvgPicture.asset(
+                'images/splash_logo.svg',
+                fit: BoxFit.fill,
+              ),
             ),
+            Gap(24),
+            _buildTitle(Dd_Strings.enter_new_mpin),
+            _buildPinInputRow(focusNodes, mpinControllers),
+            Gap(18),
+            _buildTitle(Dd_Strings.re_enter_your_mpin),
+            _buildPinInputRow(reFocusNodes, reMpinControllers),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        child: RoundedElevatedButton(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.05,
+          text: Dd_Strings.submit_button_text,
+          onPressed: () => _compareMpin(context),
+          cornerRadius: 6.0,
+          buttonColor: AppColors.appSecondaryColor,
+          textStyle: AppFonts.title.copyWith(
+            color: AppColors.white,
+            fontWeight: FontWeight.w600,
           ),
-          Container(
-            alignment: Alignment.bottomCenter,
-            padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 24),
-            child: RoundedElevatedButton(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height*0.05,
-                text: Dd_Strings.submit_button_text,
-                onPressed: () {
-                  //
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EnterMpin()));
-                },
-                cornerRadius: 6.0,
-                buttonColor: AppColors.appSecondaryColor,
-                textStyle: AppFonts.title
-                    .copyWith(color: AppColors.white,fontWeight: FontWeight.w600)),
-          ),
-        ],
+        ),
       ),
     );
   }
 
-  Widget buildOtpTextField(
-      FocusNode focusNode, TextEditingController controller) {
+  Widget _buildTitle(String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: Text(
+        text,
+        textAlign: TextAlign.start,
+        style: AppFonts.title.copyWith(
+          color: AppColors.appPrimaryColor,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPinInputRow(List<FocusNode> nodes, List<TextEditingController> controllers) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: List.generate(
+          6,
+              (index) => _buildOtpTextField(nodes[index], controllers[index], index, nodes),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOtpTextField(FocusNode focusNode, TextEditingController controller,
+      int index, List<FocusNode> nodes) {
     return SizedBox(
       height: 48.0,
       width: 48.0,
@@ -148,7 +157,23 @@ class CreateMpin extends StatelessWidget {
         textAlign: TextAlign.center,
         length: 1,
         borderRadius: 8,
+        onChanged: (value) {
+          if (value.isNotEmpty) {
+            _handleTextFieldInput(index, nodes);
+          }
+        },
       ),
     );
+  }
+
+  void _compareMpin(BuildContext context) async {
+    String mpin = mpinControllers.map((e) => e.text).join();
+    String re_mpin = reMpinControllers.map((e) => e.text).join();
+    print('this is entered mpin : $mpin');
+    print('this is entered re mpin : $re_mpin');
+
+    if (mpin == re_mpin) {
+      await otp_controller.createMPIN(mpin, context);
+    }
   }
 }

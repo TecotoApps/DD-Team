@@ -112,7 +112,7 @@ class EnterMpin extends StatelessWidget {
                       mpinController_5.text +
                       mpinController_6.text;
                   print("this is mpin $mpin");
-                 await otp_controller.createMPIN(mpin, context);
+                 await otp_controller.validateMpin(mpin, context);
                   // _otpBloc.add(OnOtpGenerate(number: phoneController.text));
                   // Navigator.pushReplacement(
                   //     context,

@@ -42,6 +42,8 @@ dependencies:
   flutter_svg: ^2.0.17
   gap: ^3.0.1
   order_tracker_zen: ^1.0.0+4
+  get: ^4.6.6
+  intl: ^0.20.2
 
 
 dev_dependencies:

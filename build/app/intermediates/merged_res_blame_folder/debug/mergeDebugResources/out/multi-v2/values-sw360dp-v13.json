@@ -4,7 +4,7 @@
             "outputFile": "com.example.dd_shop.app-mergeDebugResources-38:/values-sw360dp-v13/values-sw360dp-v13.xml",
             "map": [
                 {
-                    "source": "/Users/kritisharma/.gradle/caches/8.9/transforms/645f6534f957fc5e5897e481e88ee8b8/transformed/preference-1.2.1/res/values-sw360dp-v13/values-sw360dp-v13.xml",
+                    "source": "/Users/tilak/.gradle/caches/8.9/transforms/645f6534f957fc5e5897e481e88ee8b8/transformed/preference-1.2.1/res/values-sw360dp-v13/values-sw360dp-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
