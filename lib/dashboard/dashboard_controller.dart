@@ -57,6 +57,11 @@ class DashboardController{
     return employeeListModel;
   }
 
+  getShopsList() async {
+    EmployeeListModel employeeListModel = await apiService.getEmployeeList();
+    return employeeListModel;
+  }
+
 
 }
 

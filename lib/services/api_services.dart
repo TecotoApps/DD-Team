@@ -6,6 +6,7 @@ import 'package:dd_shop/dashboard/model/assign_role_model.dart';
 import 'package:dd_shop/employee/model/employee_list_model.dart';
 import 'package:dd_shop/mpin/model/validate_mpin_model.dart';
 import 'package:dd_shop/orders/order_model.dart';
+import 'package:dd_shop/shop/model/location_model.dart';
 import 'package:dd_shop/shop_prices/piece_model.dart';
 import 'package:dd_shop/shop_prices/weight_model.dart';
 import 'package:dd_shop/shop_signup/shop_model.dart';
@@ -404,6 +405,32 @@ class APIService {
 
     // Return the UserInfoModal object
     return assignRolesModel;
+  }
+
+  Future<LocationModel> addLocation(id, addressName, address, city, landmark, latitude, longitude) async {
+    print("this is userid---->$id, address--->$address, landmark---->$landmark, lat-->$latitude, long---->$longitude");
+    Response response = await post(
+      Uri.parse('$url/location/save'),
+      headers: _headers,//78c2ee77-5302-4ae2-afa9-54a8e76ebf3b
+      body: jsonEncode(<String, String>{
+        'userId': '$id',
+        'address': '$address, $city',
+        'landmark': '$landmark',
+        'lat': '$latitude',
+        'lng': '$longitude'
+      }),
+    );
+    print("this is response ${response.body}");
+
+    if (response.statusCode == 201) {
+      print('inside 201');
+      Map<String, dynamic> locationMap = jsonDecode(response.body);
+      LocationModel locations = LocationModel.fromJSON(locationMap);
+      return locations;
+    } else {
+      LocationModel res = json.decode(response.body);
+      return res;
+    }
   }
 
 

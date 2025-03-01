@@ -1,3 +1,4 @@
+import 'package:dd_shop/shop/shop_list_screen.dart';
 import 'package:dd_shop/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,7 @@ class _ClusterManagerDashboardState extends State<ClusterManagerDashboard> {
         backgroundColor: AppColors.appPrimaryColor,
         leading: Container(),
       ),
+      body: ShopListScreen(),
     );
   }
 }
