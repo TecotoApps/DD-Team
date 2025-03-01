@@ -44,7 +44,7 @@ class APIService {
     return userInfoModal;
   }
 
-  Future<EmployeePayload?> generateMPIN(empcode, mpin) async {
+  Future<UserInfoModal?> generateMPIN(empcode, mpin) async {
     print("this is empcode passing, $empcode");
     Response response = await post(
       Uri.parse('$url/employ/genratempin'),
@@ -57,9 +57,9 @@ class APIService {
     print("this is response ${response.body}");
 
     Map<String, dynamic> jsonResponse = json.decode(response.body);
-    EmployeePayload? payload;
+    UserInfoModal? payload;
       if(jsonResponse["statusCode"] == 200){
-        payload  = EmployeePayload.fromJson(jsonResponse["payload"]);
+        payload  = UserInfoModal.fromJson(jsonResponse["payload"]);
       }else{
         payload = null;
       }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:dd_shop/dashboard/Dashboard.dart';
 import 'package:dd_shop/dashboard/hr_dashboard.dart';
 import 'package:dd_shop/otp_generate/otp_generate_screen.dart';
 import 'package:dd_shop/services/sharedPress.dart';
@@ -49,17 +50,17 @@ class MySplashScreenState extends State<MySplashScreen> {
   }
 
   void goScreen() async {
-    String? name1 = await sharedPress.getData(Dd_Strings.SHOPNAME);
-    if (name1 == null) {
+    String? name1 = sharedPress.getData("EMPLOGIN");
+    if (name1 == 'LOGGEDIN') {
       Timer(
           Duration(seconds: 3),
               () => Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HrDashboard())));
+              context, MaterialPageRoute(builder: (context) => Dashboard())));
     } else {
       Timer(
           Duration(seconds: 3),
               () => Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HomeScreen())));
+              context, MaterialPageRoute(builder: (context) => OtpGenerate())));
     }
   }
 }

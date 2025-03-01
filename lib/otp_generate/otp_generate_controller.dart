@@ -1,3 +1,4 @@
+import 'package:dd_shop/dashboard/no_role_screen.dart';
 import 'package:dd_shop/mpin/model/validate_mpin_model.dart';
 import 'package:dd_shop/services/api_services.dart';
 import 'package:dd_shop/services/sharedPress.dart';
@@ -24,8 +25,11 @@ class OTP_Controller {
     final empid = await sharedPress.getData("EMPID");
     print("this is empcode $empcode");
     print("this is mpin $mpin");
-    EmployeePayload? employee = await apiService.generateMPIN(empcode, mpin);
-    if (employee != null) {
+    UserInfoModal? employee = await apiService.generateMPIN(empcode, mpin);
+    if(employee?.statusCode==200){
+      await sharedPress.saveData("EMPLOGIN","LOGGEDIN");
+    }
+    if (employee?.payload != null) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => Dashboard()));
     }
@@ -42,9 +46,16 @@ class OTP_Controller {
     print("this is empcode $empcode");
     print("this is mpin $mpin");
     ValidateMpinModel? validateMpinModel = await apiService.validateMpin(empcode, mpin);
-    if (validateMpinModel != null) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Dashboard()));
+    if (validateMpinModel?.payload != null) {
+      if(validateMpinModel?.payload?.roles!=null){
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Dashboard()));
+      }
+      else{
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => NoRoleScreen()));
+      }
+
     }
   }
 }
