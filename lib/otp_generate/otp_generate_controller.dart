@@ -20,43 +20,6 @@ class OTP_Controller {
     return employee;
   }
 
-  createMPIN(mpin, context) async {
-    final empcode = await sharedPress.getData("EMPCODE");
-    final empid = await sharedPress.getData("EMPID");
-    print("this is empcode $empcode");
-    print("this is mpin $mpin");
-    UserInfoModal? employee = await apiService.generateMPIN(empcode, mpin);
-    if(employee?.statusCode==200){
-      await sharedPress.saveData("EMPLOGIN","LOGGEDIN");
-    }
-    if (employee?.payload != null) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Dashboard()));
-    }
 
-
-    // const employeeCode = ;
-// const employeeId =;
-
-  }
-
-  validateMpin(mpin, context) async {
-    final empcode = await sharedPress.getData("EMPCODE");
-    final empid = await sharedPress.getData("EMPID");
-    print("this is empcode $empcode");
-    print("this is mpin $mpin");
-    ValidateMpinModel? validateMpinModel = await apiService.validateMpin(empcode, mpin);
-    if (validateMpinModel?.payload != null) {
-      if(validateMpinModel?.payload?.roles!=null){
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Dashboard()));
-      }
-      else{
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => NoRoleScreen()));
-      }
-
-    }
-  }
 }
 OTP_Controller otp_controller = OTP_Controller();

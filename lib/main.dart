@@ -50,7 +50,7 @@ class MySplashScreenState extends State<MySplashScreen> {
   }
 
   void goScreen() async {
-    String? name1 = sharedPress.getData("EMPLOGIN");
+    String? name1 = await sharedPress.getData("EMPLOGIN");
     if (name1 == 'LOGGEDIN') {
       Timer(
           Duration(seconds: 3),

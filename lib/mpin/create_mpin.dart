@@ -1,3 +1,4 @@
+import 'package:dd_shop/mpin/mpin_controller.dart';
 import 'package:dd_shop/otp_generate/otp_generate_controller.dart';
 import 'package:dd_shop/utils/components/text_field_curved_edges.dart';
 import 'package:dd_shop/utils/constants/app_fonts.dart';
@@ -172,7 +173,7 @@ class _CreateMpinState extends State<CreateMpin> {
     print('this is entered re mpin : $re_mpin');
 
     if (mpin == re_mpin) {
-      await otp_controller.createMPIN(mpin, context);
+      await mpinController.createMPIN(mpin, context);
     }
   }
 }

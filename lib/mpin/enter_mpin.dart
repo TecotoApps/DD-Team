@@ -1,3 +1,4 @@
+import 'package:dd_shop/mpin/mpin_controller.dart';
 import 'package:dd_shop/utils/components/elevated_rounded_button.dart';
 import 'package:dd_shop/utils/components/text_field_curved_edges.dart';
 import 'package:dd_shop/utils/constants/app_fonts.dart';
@@ -112,7 +113,7 @@ class EnterMpin extends StatelessWidget {
                       mpinController_5.text +
                       mpinController_6.text;
                   print("this is mpin $mpin");
-                 await otp_controller.validateMpin(mpin, context);
+                 await mpinController.validateMpin(mpin, context);
                   // _otpBloc.add(OnOtpGenerate(number: phoneController.text));
                   // Navigator.pushReplacement(
                   //     context,

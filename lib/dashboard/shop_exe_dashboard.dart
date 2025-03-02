@@ -16,6 +16,7 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
       appBar: AppBar(
         backgroundColor: AppColors.appPrimaryColor,
         leading: Container(),
+        title: Text('SHOP'),
       ),
     );
   }

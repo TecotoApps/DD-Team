@@ -52,7 +52,7 @@ class DashboardController{
     return assignRolesModel;
   }
 
-  getEmployeeList() async {
+  Future<EmployeeListModel> getEmployeeList() async {
     EmployeeListModel employeeListModel = await apiService.getEmployeeList();
     return employeeListModel;
   }

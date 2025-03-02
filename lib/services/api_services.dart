@@ -4,6 +4,7 @@ import 'package:dd_shop/dashboard/model/add_new_cluster.dart';
 import 'package:dd_shop/dashboard/model/add_shop_to_cluster.dart';
 import 'package:dd_shop/dashboard/model/assign_role_model.dart';
 import 'package:dd_shop/employee/model/employee_list_model.dart';
+import 'package:dd_shop/hr/model/role_list_model.dart';
 import 'package:dd_shop/mpin/model/validate_mpin_model.dart';
 import 'package:dd_shop/orders/order_model.dart';
 import 'package:dd_shop/shop/model/location_model.dart';
@@ -83,11 +84,9 @@ class APIService {
 
     Map<String, dynamic> jsonResponse = json.decode(response.body);
     ValidateMpinModel? payload;
-    if(jsonResponse["statusCode"] == 200){
-      payload  = ValidateMpinModel.fromJson(jsonResponse["payload"]);
-    }else{
-      payload = null;
-    }
+
+    payload  = ValidateMpinModel.fromJson(jsonResponse);
+
     // Now map the JSON Map to the UserInfoModal using the fromJson constructor
     // Return the UserInfoModal object
     return payload;
@@ -218,6 +217,57 @@ class APIService {
     } else {
       EmployeeListModel res = json.decode(response.body);
       return res;
+    }
+  }
+
+  Future<RoleListModel> getRolesList() async {
+    Response response = await get(
+        Uri.parse('$url/roles/allroles'),
+        headers: _headers
+    );
+    print("this is response ${response.body}");
+    if (response.statusCode == 200) {
+      Map<String, dynamic> allRolesMap = jsonDecode(response.body);
+      RoleListModel roleListModel = RoleListModel.fromJson(allRolesMap);
+      return roleListModel;
+    } else {
+      RoleListModel res = json.decode(response.body);
+      return res;
+    }
+  }
+
+  Future<bool> createNewRole(String role,String Description) async {
+    Response response = await post(
+        Uri.parse('$url/roles/regrole'),
+        headers: _headers,
+        body: jsonEncode(<String, String>{
+          "roles":"$role",
+          "description":"$Description"
+        }),
+    );
+    print("this is response ${response.body}");
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> editRole(String roleId,String role,String Description) async {
+    Response response = await put(
+        Uri.parse('$url/roles/updaterole'),
+        headers: _headers,
+        body: jsonEncode(<String, String>{
+         "roleId":"$roleId",
+        "roles":"$role",
+        "description":"$Description"
+      }),
+    );
+    print("this is response ${response.body}");
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
     }
   }
 

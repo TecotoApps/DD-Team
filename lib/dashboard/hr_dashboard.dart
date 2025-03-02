@@ -1,4 +1,6 @@
 import 'package:dd_shop/employee/employee_list.dart';
+import 'package:dd_shop/hr/create_new_role.dart';
+import 'package:dd_shop/hr/roles.dart';
 import 'package:dd_shop/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -29,14 +31,53 @@ class _HrDashboardState extends State<HrDashboard>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
+      drawer: Drawer(
+        elevation: 10,
+        backgroundColor: AppColors.appPrimaryColor,
+        child: ListView(
+          padding: EdgeInsets.only(top: 50),
+          children: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HrDashboard()));
+                },
+                child: Text(
+                  "Employees",
+                  style: TextStyle(color: AppColors.white),
+                )),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              child: Divider(),
+            ),
+            TextButton(
+                onPressed: () {
+                Navigator.push(context,MaterialPageRoute(builder: (context)=>CreateNewRole()));
+                },
+                child: Text("Create New Role",
+                    style: TextStyle(color: AppColors.white))),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              child: Divider(),
+            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.push(context,MaterialPageRoute(builder: (context)=>RolesList()));
+                },
+                child: Text("Roles", style: TextStyle(color: AppColors.white))),
+          ],
+        ),
+      ),
       appBar: AppBar(
+        foregroundColor: Colors.white,
         backgroundColor: AppColors.appPrimaryColor,
         title: const Text('HR Dashboard'),
         bottom: TabBar(
           controller: _tabController,
           labelColor: AppColors.white,
           tabs: const [
-            Tab(text: 'Employee',),
+            Tab(
+              text: 'Employee',
+            ),
             Tab(text: 'Cluster'),
           ],
           indicatorColor: Colors.white,
@@ -44,7 +85,7 @@ class _HrDashboardState extends State<HrDashboard>
       ),
       body: TabBarView(
         controller: _tabController,
-        children:  [
+        children: [
           EmployeeList(),
           ClusterTab(),
         ],
@@ -52,8 +93,6 @@ class _HrDashboardState extends State<HrDashboard>
     );
   }
 }
-
-
 
 class ClusterTab extends StatelessWidget {
   const ClusterTab({super.key});

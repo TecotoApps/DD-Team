@@ -1,7 +1,9 @@
+import 'package:dd_shop/utils/constants/enumss.dart';
+
 class ValidateMpinModel {
   int? statusCode;
   String? message;
-  Payload? payload;
+  List<Payload>? payload;
   String? timeStamp;
 
   ValidateMpinModel(
@@ -10,8 +12,12 @@ class ValidateMpinModel {
   ValidateMpinModel.fromJson(Map<String, dynamic> json) {
     statusCode = json['statusCode'];
     message = json['message'];
-    payload =
-    json['payload'] != null ? new Payload.fromJson(json['payload']) : null;
+    if (json['payload'] != null) {
+      payload = <Payload>[];
+      json['payload'].forEach((v) {
+        payload!.add(new Payload.fromJson(v));
+      });
+    }
     timeStamp = json['timeStamp'];
   }
 
@@ -20,7 +26,7 @@ class ValidateMpinModel {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.payload != null) {
-      data['payload'] = this.payload!.toJson();
+      data['payload'] = this.payload!.map((v) => v.toJson()).toList();
     }
     data['timeStamp'] = this.timeStamp;
     return data;
@@ -28,70 +34,51 @@ class ValidateMpinModel {
 }
 
 class Payload {
-  String? employId;
+  String? roleAssignId;
   String? employCode;
-  String? mpin;
-  String? employName;
-  String? employPhone;
-  String? aadharCopy;
-  String? panCopy;
-  String? photo;
-  String? email;
-  String? joinDate;
+  UserRole? roles;
+  String? clusterName;
+  String? shopId;
+  String? assignDate;
+  Null? stopDate;
   String? description;
-  String? roles;
-  String? employStatus;
-  String? createdDate;
 
   Payload(
-      {this.employId,
+      {this.roleAssignId,
         this.employCode,
-        this.mpin,
-        this.employName,
-        this.employPhone,
-        this.aadharCopy,
-        this.panCopy,
-        this.photo,
-        this.email,
-        this.joinDate,
-        this.description,
         this.roles,
-        this.employStatus,
-        this.createdDate});
+        this.clusterName,
+        this.shopId,
+        this.assignDate,
+        this.stopDate,
+        this.description});
 
   Payload.fromJson(Map<String, dynamic> json) {
-    employId = json['employId'];
+    roleAssignId = json['roleAssignId'];
     employCode = json['employCode'];
-    mpin = json['mpin'];
-    employName = json['employName'];
-    employPhone = json['employPhone'];
-    aadharCopy = json['aadharCopy'];
-    panCopy = json['panCopy'];
-    photo = json['photo'];
-    email = json['email'];
-    joinDate = json['joinDate'];
+    roles = json['roles'] != null
+        ? UserRole.values.firstWhere(
+          (e) => e.toString().split('.').last == json['roles'],
+      orElse: () => UserRole.DELIVERBOY, // Default role if not found
+    )
+        : null;
+    clusterName = json['clusterName'];
+    shopId = json['shopId'];
+    assignDate = json['assignDate'];
+    stopDate = json['stopDate'];
     description = json['description'];
-    roles = json['roles'];
-    employStatus = json['employStatus'];
-    createdDate = json['createdDate'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['employId'] = this.employId;
+    data['roleAssignId'] = this.roleAssignId;
     data['employCode'] = this.employCode;
-    data['mpin'] = this.mpin;
-    data['employName'] = this.employName;
-    data['employPhone'] = this.employPhone;
-    data['aadharCopy'] = this.aadharCopy;
-    data['panCopy'] = this.panCopy;
-    data['photo'] = this.photo;
-    data['email'] = this.email;
-    data['joinDate'] = this.joinDate;
-    data['description'] = this.description;
     data['roles'] = this.roles;
-    data['employStatus'] = this.employStatus;
-    data['createdDate'] = this.createdDate;
+    data['clusterName'] = this.clusterName;
+    data['shopId'] = this.shopId;
+    data['assignDate'] = this.assignDate;
+    data['stopDate'] = this.stopDate;
+    data['description'] = this.description;
     return data;
   }
 }
