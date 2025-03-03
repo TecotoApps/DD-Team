@@ -1,6 +1,7 @@
 import 'package:dd_shop/dashboard/dashboard_controller.dart';
 import 'package:dd_shop/employee/add_employee.dart';
 import 'package:dd_shop/employee/model/employee_list_model.dart';
+import 'package:dd_shop/hr/hr_controller.dart';
 import 'package:dd_shop/utils/constants/app_fonts.dart';
 import 'package:dd_shop/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,7 @@ class EmployeeList extends StatelessWidget {
     );
   }
 
-  Widget employeeListItem(BuildContext context, Payload payload) => Card(
+  Widget employeeListItem(BuildContext context, EmployeePayload payload) => Card(
         color: AppColors.white,
         elevation: 1.0,
         shadowColor: AppColors.grey_dots,
@@ -97,7 +98,7 @@ class EmployeeList extends StatelessWidget {
                           InkWell(
                             onTap: (){
                               if(payload.roles==null){
-                                print('assign roles');
+                               hrController.goToAssignRole(context,payload);
                               }
                               else{
                                 print('change role');

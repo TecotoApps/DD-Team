@@ -52,19 +52,19 @@ class APIService {
       Uri.parse('$url/employ/genratempin'),
       headers: _headers,
       body: jsonEncode(<String, String>{
-        "employCode":"$empcode",
-        "mpin":"$mpin",
+        "employCode": "$empcode",
+        "mpin": "$mpin",
       }),
     );
     print("this is response ${response.body}");
 
     Map<String, dynamic> jsonResponse = json.decode(response.body);
     UserInfoModal? payload;
-      if(jsonResponse["statusCode"] == 200){
-        payload  = UserInfoModal.fromJson(jsonResponse["payload"]);
-      }else{
-        payload = null;
-      }
+    if (jsonResponse["statusCode"] == 200) {
+      payload = UserInfoModal.fromJson(jsonResponse["payload"]);
+    } else {
+      payload = null;
+    }
     // Now map the JSON Map to the UserInfoModal using the fromJson constructor
     // Return the UserInfoModal object
     return payload;
@@ -76,8 +76,8 @@ class APIService {
       Uri.parse('$url/employ/validatempin'),
       headers: _headers,
       body: jsonEncode(<String, String>{
-        "employCode":"$empcode",
-        "mpin":"$mpin",
+        "employCode": "$empcode",
+        "mpin": "$mpin",
       }),
     );
     print("this is response ${response.body}");
@@ -85,12 +85,13 @@ class APIService {
     Map<String, dynamic> jsonResponse = json.decode(response.body);
     ValidateMpinModel? payload;
 
-    payload  = ValidateMpinModel.fromJson(jsonResponse);
+    payload = ValidateMpinModel.fromJson(jsonResponse);
 
     // Now map the JSON Map to the UserInfoModal using the fromJson constructor
     // Return the UserInfoModal object
     return payload;
   }
+
   Future<ShopModel> verifyOTP(mobile, otp) async {
     Response response = await post(
       Uri.parse('$url/user/otp/verify'),
@@ -114,19 +115,19 @@ class APIService {
   }
 
   Future<ShopModel> signUp(
-    shopName,
-    phoneNumber,
-    email,
-    deviceId,
-    address,
-    city,
-    state,
-    landmark,
-    pinCode,
-    accountNumber,
-    ifscCode,latitude,
-      longitude
-  ) async {
+      shopName,
+      phoneNumber,
+      email,
+      deviceId,
+      address,
+      city,
+      state,
+      landmark,
+      pinCode,
+      accountNumber,
+      ifscCode,
+      latitude,
+      longitude) async {
     Response response = await post(
       Uri.parse('$url/shop'),
       headers: {
@@ -189,10 +190,8 @@ class APIService {
 
   Future<OrderModel> getShopOrder(shopId) async {
     print('in services $shopId');
-    Response response = await get(
-      Uri.parse('$url/order/shopOrders/$shopId'),
-      headers: _headers
-    );
+    Response response = await get(Uri.parse('$url/order/shopOrders/$shopId'),
+        headers: _headers);
     print("this is response ${response.body}");
     if (response.statusCode == 202) {
       Map<String, dynamic> OrderMap = jsonDecode(response.body);
@@ -205,14 +204,13 @@ class APIService {
   }
 
   Future<EmployeeListModel> getEmployeeList() async {
-    Response response = await get(
-        Uri.parse('$url/employ/allemploys'),
-        headers: _headers
-    );
+    Response response =
+        await get(Uri.parse('$url/employ/allemploys'), headers: _headers);
     print("this is response ${response.body}");
     if (response.statusCode == 200) {
       Map<String, dynamic> employeeMap = jsonDecode(response.body);
-      EmployeeListModel employeeListModel = EmployeeListModel.fromJson(employeeMap);
+      EmployeeListModel employeeListModel =
+          EmployeeListModel.fromJson(employeeMap);
       return employeeListModel;
     } else {
       EmployeeListModel res = json.decode(response.body);
@@ -221,10 +219,8 @@ class APIService {
   }
 
   Future<RoleListModel> getRolesList() async {
-    Response response = await get(
-        Uri.parse('$url/roles/allroles'),
-        headers: _headers
-    );
+    Response response =
+        await get(Uri.parse('$url/roles/allroles'), headers: _headers);
     print("this is response ${response.body}");
     if (response.statusCode == 200) {
       Map<String, dynamic> allRolesMap = jsonDecode(response.body);
@@ -236,14 +232,12 @@ class APIService {
     }
   }
 
-  Future<bool> createNewRole(String role,String Description) async {
+  Future<bool> createNewRole(String role, String Description) async {
     Response response = await post(
-        Uri.parse('$url/roles/regrole'),
-        headers: _headers,
-        body: jsonEncode(<String, String>{
-          "roles":"$role",
-          "description":"$Description"
-        }),
+      Uri.parse('$url/roles/regrole'),
+      headers: _headers,
+      body: jsonEncode(
+          <String, String>{"roles": "$role", "description": "$Description"}),
     );
     print("this is response ${response.body}");
     if (response.statusCode == 201) {
@@ -253,14 +247,14 @@ class APIService {
     }
   }
 
-  Future<bool> editRole(String roleId,String role,String Description) async {
+  Future<bool> editRole(String roleId, String role, String Description) async {
     Response response = await put(
-        Uri.parse('$url/roles/updaterole'),
-        headers: _headers,
-        body: jsonEncode(<String, String>{
-         "roleId":"$roleId",
-        "roles":"$role",
-        "description":"$Description"
+      Uri.parse('$url/roles/updaterole'),
+      headers: _headers,
+      body: jsonEncode(<String, String>{
+        "roleId": "$roleId",
+        "roles": "$role",
+        "description": "$Description"
       }),
     );
     print("this is response of update role ${response.body}");
@@ -282,7 +276,8 @@ class APIService {
     print("this is response ${response.body}");
     if (response.statusCode == 202) {
       Map<String, dynamic> WeightMap = jsonDecode(response.body);
-      ItemPerWeightListModel weightPrice = ItemPerWeightListModel.fromJson(WeightMap);
+      ItemPerWeightListModel weightPrice =
+          ItemPerWeightListModel.fromJson(WeightMap);
       return weightPrice;
     } else {
       ItemPerWeightListModel res = json.decode(response.body);
@@ -301,7 +296,8 @@ class APIService {
     print("this is response ${response.body}");
     if (response.statusCode == 202) {
       Map<String, dynamic> PieceMap = jsonDecode(response.body);
-      ItemPerPeiceListModel weightPrice = ItemPerPeiceListModel.fromJson(PieceMap);
+      ItemPerPeiceListModel weightPrice =
+          ItemPerPeiceListModel.fromJson(PieceMap);
       return weightPrice;
     } else {
       ItemPerPeiceListModel res = json.decode(response.body);
@@ -313,10 +309,8 @@ class APIService {
     Response response = await put(
       Uri.parse('$url/shop/addToCluster'),
       headers: _headers,
-      body: jsonEncode(<String, String>{
-        'shopId': '$shopId',
-        'clusterId': '$clusterId'
-      }),
+      body: jsonEncode(
+          <String, String>{'shopId': '$shopId', 'clusterId': '$clusterId'}),
     );
     print("this is response ${response.body}");
 
@@ -353,18 +347,19 @@ class APIService {
     }
   }
 
-  Future<UserInfoModal> addShop(phoneNumber,imageUrl,city,state) async {
+  Future<UserInfoModal> addShop(phoneNumber, imageUrl, city, state) async {
     print("this is mobile number passing, $phoneNumber");
     Response response = await post(
       Uri.parse('$url/shop/addshop'),
       headers: _headers,
       body: jsonEncode(<String, String>{
-        "phoneNumber":"$phoneNumber",
-        "imageUrl":"$imageUrl",
-        "shopType":"REGULAR",
-        "shopOwnership":"COMPANY",
-        "city":"$city",
-        "state":"$state"}),
+        "phoneNumber": "$phoneNumber",
+        "imageUrl": "$imageUrl",
+        "shopType": "REGULAR",
+        "shopOwnership": "COMPANY",
+        "city": "$city",
+        "state": "$state"
+      }),
     );
     print("this is response ${response.body}");
 
@@ -377,20 +372,21 @@ class APIService {
     return userInfoModal;
   }
 
-  Future<AddEmployeeModel> addEmployeeByHR(employName,employPhone,email,description,joinDate) async {
+  Future<AddEmployeeModel> addEmployeeByHR(
+      employName, employPhone, email, description, joinDate) async {
     print("this is mobile number passing, $employPhone");
     Response response = await post(
       Uri.parse('$url/employ/regemploy'),
       headers: _headers,
       body: jsonEncode(<String, String>{
-        "employName":"$employName",
-        "employPhone":"$employPhone",
-        "aadharCopy":"abc.pdf",
-        "panCopy":"abc.pdf",
-        "photo":"abc.jpeg",
-        "email":"$email",
-        "description":"$description",
-        "joinDate":"$joinDate"
+        "employName": "$employName",
+        "employPhone": "$employPhone",
+        "aadharCopy": "abc.pdf",
+        "panCopy": "abc.pdf",
+        "photo": "abc.jpeg",
+        "email": "$email",
+        "description": "$description",
+        "joinDate": "$joinDate"
       }),
     );
     print("this is response ${response.body}");
@@ -404,22 +400,23 @@ class APIService {
     return addEmployeeModel;
   }
 
-  Future<AddEmployeeModel> updateEmployeeDataByHR(employCode,employName,employPhone,email,description,roles,joinDate) async {
+  Future<AddEmployeeModel> updateEmployeeDataByHR(employCode, employName,
+      employPhone, email, description, roles, joinDate) async {
     print("this is mobile number passing, $employPhone");
     Response response = await post(
       Uri.parse('$url/employ/regemploy'),
       headers: _headers,
       body: jsonEncode(<String, String>{
-        "employCode":"$employCode",
-        "employName":"$employName",
-        "employPhone":"$employPhone",
-        "aadharCopy":"abc.pdf",
-        "panCopy":"abc.pdf",
-        "photo":"abc.jpeg",
-        "email":"$email",
-        "description":"$description",
-        "roles":"$roles",
-        "joinDate":"$joinDate"
+        "employCode": "$employCode",
+        "employName": "$employName",
+        "employPhone": "$employPhone",
+        "aadharCopy": "abc.pdf",
+        "panCopy": "abc.pdf",
+        "photo": "abc.jpeg",
+        "email": "$email",
+        "description": "$description",
+        "roles": "$roles",
+        "joinDate": "$joinDate"
       }),
     );
     print("this is response ${response.body}");
@@ -432,18 +429,27 @@ class APIService {
     // Return the UserInfoModal object
     return addEmployeeModel;
   }
-  Future<AssignRolesModel> assignRoles(roles,clusterName,employCode,shopId,assignDate,stopDate,description) async {
+
+  Future<AssignRolesModel> assignRoles({
+    roles,
+    clusterName,
+    employCode,
+    shopId,
+    assignDate,
+    stopDate,
+    description,
+  }) async {
     Response response = await post(
       Uri.parse('$url/roles/assignrole'),
       headers: _headers,
       body: jsonEncode(<String, String>{
-        "roles":"$roles",
-        "clusterName":"$clusterName",
-        "employCode":"$employCode",
-        "shopId":"$shopId",
-        "assignDate":"$assignDate",
-        "stopDate":"$stopDate",
-        "description":"$description"
+        "roles": "$roles",
+        "clusterName": "$clusterName",
+        "employCode": "$employCode",
+        "shopId": "$shopId",
+        "assignDate": "$assignDate",
+        "stopDate": "$stopDate",
+        "description": "$description"
       }),
     );
     print("this is response ${response.body}");
@@ -457,11 +463,13 @@ class APIService {
     return assignRolesModel;
   }
 
-  Future<LocationModel> addLocation(id, addressName, address, city, landmark, latitude, longitude) async {
-    print("this is userid---->$id, address--->$address, landmark---->$landmark, lat-->$latitude, long---->$longitude");
+  Future<LocationModel> addLocation(
+      id, addressName, address, city, landmark, latitude, longitude) async {
+    print(
+        "this is userid---->$id, address--->$address, landmark---->$landmark, lat-->$latitude, long---->$longitude");
     Response response = await post(
       Uri.parse('$url/location/save'),
-      headers: _headers,//78c2ee77-5302-4ae2-afa9-54a8e76ebf3b
+      headers: _headers, //78c2ee77-5302-4ae2-afa9-54a8e76ebf3b
       body: jsonEncode(<String, String>{
         'userId': '$id',
         'address': '$address, $city',
@@ -482,8 +490,6 @@ class APIService {
       return res;
     }
   }
-
-
 }
 
 APIService apiService = APIService();

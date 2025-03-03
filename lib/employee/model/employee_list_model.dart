@@ -1,7 +1,7 @@
 class EmployeeListModel {
   int? statusCode;
   String? message;
-  List<Payload>? payload;
+  List<EmployeePayload>? payload;
   String? timeStamp;
 
   EmployeeListModel(
@@ -11,9 +11,9 @@ class EmployeeListModel {
     statusCode = json['statusCode'];
     message = json['message'];
     if (json['payload'] != null) {
-      payload = <Payload>[];
+      payload = <EmployeePayload>[];
       json['payload'].forEach((v) {
-        payload!.add(new Payload.fromJson(v));
+        payload!.add(new EmployeePayload.fromJson(v));
       });
     }
     timeStamp = json['timeStamp'];
@@ -31,7 +31,7 @@ class EmployeeListModel {
   }
 }
 
-class Payload {
+class EmployeePayload {
   String? employId;
   String? employCode;
   String? mpin;
@@ -47,7 +47,7 @@ class Payload {
   String? employStatus;
   String? createdDate;
 
-  Payload(
+  EmployeePayload(
       {this.employId,
         this.employCode,
         this.mpin,
@@ -63,7 +63,7 @@ class Payload {
         this.employStatus,
         this.createdDate});
 
-  Payload.fromJson(Map<String, dynamic> json) {
+  EmployeePayload.fromJson(Map<String, dynamic> json) {
     employId = json['employId'];
     employCode = json['employCode'];
     mpin = json['mpin'];

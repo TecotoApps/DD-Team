@@ -15,7 +15,7 @@ class _DeliveryBoyDashboardState extends State<DeliveryBoyDashboard> {
       backgroundColor: AppColors.white,
       appBar: AppBar(
         backgroundColor: AppColors.appPrimaryColor,
-        leading: Container(),
+        title: Text('DELIVERY',),
       ),
     );
   }

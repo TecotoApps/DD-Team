@@ -1,5 +1,5 @@
 import 'package:dd_shop/mpin/create_mpin.dart';
-import 'package:dd_shop/mpin/enter_mpin.dart';
+import 'package:dd_shop/mpin/verify_mpin.dart';
 import 'package:dd_shop/otp_generate/otp_generate_controller.dart';
 import 'package:dd_shop/utils/components/elevated_rounded_button.dart';
 import 'package:dd_shop/utils/components/text_field_curved_edges.dart';

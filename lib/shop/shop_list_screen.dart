@@ -50,7 +50,7 @@ class ShopListScreen extends StatelessWidget {
     );
   }
 
-  Widget employeeListItem(BuildContext context, Payload payload) => Card(
+  Widget employeeListItem(BuildContext context, EmployeePayload payload) => Card(
     color: AppColors.white,
     elevation: 1.0,
     shadowColor: AppColors.grey_dots,

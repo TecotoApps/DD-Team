@@ -44,14 +44,6 @@ class DashboardController{
   }
 
 
-  assignRoleToEmploy(employCode,employName,employPhone,email,description,roles,joinDate, BuildContext context) async {
-    AssignRolesModel assignRolesModel = await apiService.assignRoles(employCode,employName,employPhone,email,description,roles,joinDate);
-    if (assignRolesModel.statusCode == 201) {
-
-    } else {
-    }
-    return assignRolesModel;
-  }
 
   Future<EmployeeListModel> getEmployeeList() async {
     EmployeeListModel employeeListModel = await apiService.getEmployeeList();
