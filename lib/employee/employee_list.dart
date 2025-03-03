@@ -33,12 +33,15 @@ class EmployeeList extends StatelessWidget {
               if (snapshot.data?.payload == null) {
                 return Center(child: Text('${snapshot.data?.message}'));
               } else {
-                return ListView.builder(
-                    itemCount: snapshot.data?.payload?.length,
-                    itemBuilder: (context, int index) {
-                      final employee = snapshot.data!.payload![index];
-                      return employeeListItem(context, employee);
-                    });
+                return Container(
+                  height: 500,
+                  child: ListView.builder(
+                      itemCount: snapshot.data?.payload?.length,
+                      itemBuilder: (context, int index) {
+                        final employee = snapshot.data!.payload![index];
+                        return employeeListItem(context, employee);
+                      }),
+                );
               }
             } else if (snapshot.connectionState == ConnectionState.waiting) {
               return CircularProgressIndicator();

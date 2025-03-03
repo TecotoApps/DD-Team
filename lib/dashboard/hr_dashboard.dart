@@ -51,7 +51,7 @@ class _HrDashboardState extends State<HrDashboard>
             ),
             TextButton(
                 onPressed: () {
-                Navigator.push(context,MaterialPageRoute(builder: (context)=>CreateNewRole()));
+                Navigator.push(context,MaterialPageRoute(builder: (context)=>CreateNewRole(comingFrom: COMINGFROM.CreateRole,)));
                 },
                 child: Text("Create New Role",
                     style: TextStyle(color: AppColors.white))),

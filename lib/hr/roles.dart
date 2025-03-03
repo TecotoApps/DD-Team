@@ -1,4 +1,5 @@
 import 'package:dd_shop/employee/employee_list.dart';
+import 'package:dd_shop/hr/allRolesList.dart';
 import 'package:dd_shop/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -19,10 +20,9 @@ class _RolesListState extends State<RolesList> {
         backgroundColor: AppColors.appPrimaryColor,
         title: Text('Roles List'),
       ),
-      body: ListView(
-        children: [
-          EmployeeList()
-        ],
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        child: AllRolesList(),
       ),
     );
   }

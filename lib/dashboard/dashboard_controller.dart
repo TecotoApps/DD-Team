@@ -2,6 +2,7 @@ import 'package:dd_shop/dashboard/model/add_employee.dart';
 import 'package:dd_shop/dashboard/model/add_new_cluster.dart';
 import 'package:dd_shop/dashboard/model/assign_role_model.dart';
 import 'package:dd_shop/employee/model/employee_list_model.dart';
+import 'package:dd_shop/hr/model/role_list_model.dart';
 import 'package:dd_shop/services/api_services.dart';
 import 'package:flutter/material.dart';
 
@@ -56,6 +57,13 @@ class DashboardController{
     EmployeeListModel employeeListModel = await apiService.getEmployeeList();
     return employeeListModel;
   }
+
+  Future<RoleListModel> getAllRolesList(context) async{
+    RoleListModel roleListModel = await apiService.getRolesList();
+    print("this is roles res $roleListModel");
+    return roleListModel;
+  }
+
 
   getShopsList() async {
     EmployeeListModel employeeListModel = await apiService.getEmployeeList();

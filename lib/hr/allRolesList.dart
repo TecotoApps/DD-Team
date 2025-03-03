@@ -13,11 +13,10 @@ class AllRolesList extends StatelessWidget {
   final HRController _hrController =
   Get.put(HRController());
 
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      body: FutureBuilder(
+    return FutureBuilder(
           future: _hrController.getAllRolesList(context),
           builder: (BuildContext context,
               AsyncSnapshot<RoleListModel?> snapshot) {
@@ -37,8 +36,7 @@ class AllRolesList extends StatelessWidget {
             } else {
               return Text('no data');
             }
-          }),
-    );
+          });
   }
 
   Widget employeeListItem(BuildContext context, RolePayload payload) => Card(
@@ -82,24 +80,14 @@ class AllRolesList extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             fontSize: 14),
                       ),
-                      Gap(10),
+                      Gap(40),
                       InkWell(
                         onTap: (){
-                          if(payload.roles==null){
-                            print('assign roles');
-                          }
-                          else{
-                            print('change role');
-                          }
+                            print('Edit role');
+                            _hrController.goToEditRole(context,payload);
                         },
-                        child: payload.roles==null?Text(
-                          'Assign Role',
-                          style: AppFonts.title.copyWith(
-                              color: AppColors.appSecondaryColor,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14),
-                        ):Text(
-                          'Change Role',
+                        child:Text(
+                          'Edit Role',
                           style: AppFonts.title.copyWith(
                               color: AppColors.appSecondaryColor,
                               fontWeight: FontWeight.w500,
