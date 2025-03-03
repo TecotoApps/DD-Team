@@ -19,11 +19,12 @@ class HRController {
   }
 
   editRole(String roleId,String role,String description, context) async {
-    print("this is role $role, this is description $description");
+    print("THIS IS roleid $roleId this is role $role, this is description $description");
     bool res = await apiService.editRole(roleId,role, description);
+    print("this is res $res");
     if(res){
       showAlertDialog(context, "Success", "Role Created successfullyy");
-      Navigator.pop(context);
+      // Navigator.pop(context);
     }
     else{
       showAlertDialog(context, "Error", "Something went wrong please try again later");
