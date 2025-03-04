@@ -189,17 +189,17 @@ class APIService {
     }
   }
 
-  Future<OrdersListModel> getShopOrder(shopId) async {
+  Future getShopOrder(shopId) async {
     print('in services $shopId');
     Response response = await get(Uri.parse('$url/order/shopOrders/$shopId'),
         headers: _headers);
     print("this is response ${response.body}");
     if (response.statusCode == 201) {
-      Map<String, dynamic> OrderMap = jsonDecode(response.body);
-      OrdersListModel userOrders = OrdersListModel.fromJson(OrderMap);
-      return userOrders;
+      var OrderMap = jsonDecode(response.body);
+      // var userOrders = OrderlistModel.fromJson(OrderMap);
+      return OrderMap;
     } else {
-      OrdersListModel res = json.decode(response.body);
+      OrderlistModel res = json.decode(response.body);
       return res;
     }
   }

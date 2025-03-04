@@ -1,19 +1,18 @@
-class OrdersListModel {
+class OrderlistModel {
   int? statusCode;
   String? message;
-  List<Payload>? payload;
+  List<OrderPayload>? payload;
   String? timeStamp;
 
-  OrdersListModel(
-      {this.statusCode, this.message, this.payload, this.timeStamp});
+  OrderlistModel({this.statusCode, this.message, this.payload, this.timeStamp});
 
-  OrdersListModel.fromJson(Map<String, dynamic> json) {
+  OrderlistModel.fromJson(Map<String, dynamic> json) {
     statusCode = json['statusCode'];
     message = json['message'];
     if (json['payload'] != null) {
-      payload = <Payload>[];
+      payload = <OrderPayload>[];
       json['payload'].forEach((v) {
-        payload!.add(new Payload.fromJson(v));
+        payload!.add(new OrderPayload.fromJson(v));
       });
     }
     timeStamp = json['timeStamp'];
@@ -31,7 +30,7 @@ class OrdersListModel {
   }
 }
 
-class Payload {
+class OrderPayload {
   String? orderId;
   String? shopId;
   String? customerId;
@@ -52,7 +51,7 @@ class Payload {
   Null? deliveryTime;
   Null? pickUpTime;
 
-  Payload(
+  OrderPayload(
       {this.orderId,
         this.shopId,
         this.customerId,
@@ -73,7 +72,7 @@ class Payload {
         this.deliveryTime,
         this.pickUpTime});
 
-  Payload.fromJson(Map<String, dynamic> json) {
+  OrderPayload.fromJson(Map<String, dynamic> json) {
     orderId = json['orderId'];
     shopId = json['shopId'];
     customerId = json['customerId'];

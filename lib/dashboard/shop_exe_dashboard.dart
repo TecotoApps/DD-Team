@@ -25,33 +25,33 @@ class ShopExeDashboard extends StatelessWidget {
           future: _dashboardController.getOrdersList('ab71de3f-51c4-4e29-b956-81947dd65d94',context),
           builder: (BuildContext context,
               AsyncSnapshot snapshot){
-            print('this is snapshot : ${snapshot.data}');
-            return Container();
-            // if (snapshot.connectionState == ConnectionState.done) {
-            //   if (snapshot.data?.payload == null) {
-            //     return Center(child: Text('the response is null'));
-            //   } else {
-            //     return Container(
-            //       height: 500,
-            //       child: ListView.builder(
-            //           itemCount: snapshot.data?.payload?.length,
-            //           itemBuilder: (context, int index) {
-            //             final employee = snapshot.data!.payload![index];
-            //             return employeeListItem(context, employee);
-            //           }),
-            //     );
-            //   }
-            // }
-            // else if (snapshot.connectionState == ConnectionState.waiting) {
-            //   return CircularProgressIndicator();
-            // } else {
-            //   return Text('no data');
-            // }
+            print('this is snapshot : ${snapshot.data["payload"]}');
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.data?["payload"] == null) {
+                return Center(child: Text('the response is null'));
+              } else {
+                return Container(
+                  height: 500,
+                  child: ListView.builder(
+                      itemCount: snapshot.data?["payload"].length,
+                      itemBuilder: (context, int index) {
+                        final employee = snapshot.data!["payload"]![index];
+                        print("this is order employee $employee");
+                        return employeeListItem(context, employee);
+                      }),
+                );
+              }
+            }
+            else if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else {
+              return Text('no data');
+            }
           }),
     );
   }
 
-  Widget employeeListItem(BuildContext context, Payload payload) => Card(
+  Widget employeeListItem(BuildContext context, OrderPayload payload) => Card(
     color: AppColors.white,
     elevation: 1.0,
     shadowColor: AppColors.grey_dots,
