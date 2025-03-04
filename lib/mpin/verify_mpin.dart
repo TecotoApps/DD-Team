@@ -30,9 +30,12 @@ class EnterMpin extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: Stack(
-        children: [
-          SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
+          ),
+          child: IntrinsicHeight(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -86,53 +89,54 @@ class EnterMpin extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      buildOtpTextField(focusNode_1, mpinController_1),
-                      buildOtpTextField(focusNode_2, mpinController_2),
-                      buildOtpTextField(focusNode_3, mpinController_3),
-                      buildOtpTextField(focusNode_4, mpinController_4),
-                      buildOtpTextField(focusNode_5, mpinController_5),
-                      buildOtpTextField(focusNode_6, mpinController_6),
+                      buildOtpTextField(focusNode_1,focusNode_2, mpinController_1),
+                      buildOtpTextField(focusNode_2,focusNode_3, mpinController_2),
+                      buildOtpTextField(focusNode_3,focusNode_4, mpinController_3),
+                      buildOtpTextField(focusNode_4,focusNode_5, mpinController_4),
+                      buildOtpTextField(focusNode_5,focusNode_6, mpinController_5),
+                      buildOtpTextField(focusNode_6,focusNode_6, mpinController_6),
                     ],
                   ),
+                ),
+                Spacer(),
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                  child: RoundedElevatedButton(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      text: Dd_Strings.submit_button_text,
+                      onPressed: () async {
+                        String mpin = mpinController_1.text +
+                            mpinController_2.text +
+                            mpinController_3.text +
+                            mpinController_4.text +
+                            mpinController_5.text +
+                            mpinController_6.text;
+                        print("this is mpin $mpin");
+                        await mpinController.validateMpin(mpin, context);
+                        // _otpBloc.add(OnOtpGenerate(number: phoneController.text));
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => OtpValidation(
+                        //             phoneNumber:phoneController.text)));
+                      },
+                      cornerRadius: 6.0,
+                      buttonColor: AppColors.appSecondaryColor,
+                      textStyle: AppFonts.title.copyWith(
+                          color: AppColors.white, fontWeight: FontWeight.w600)),
                 ),
               ],
             ),
           ),
-          Container(
-            alignment: Alignment.bottomCenter,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-            child: RoundedElevatedButton(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.05,
-                text: Dd_Strings.submit_button_text,
-                onPressed: () async {
-                  String mpin = mpinController_1.text +
-                      mpinController_2.text +
-                      mpinController_3.text +
-                      mpinController_4.text +
-                      mpinController_5.text +
-                      mpinController_6.text;
-                  print("this is mpin $mpin");
-                 await mpinController.validateMpin(mpin, context);
-                  // _otpBloc.add(OnOtpGenerate(number: phoneController.text));
-                  // Navigator.pushReplacement(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => OtpValidation(
-                  //             phoneNumber:phoneController.text)));
-                },
-                cornerRadius: 6.0,
-                buttonColor: AppColors.appSecondaryColor,
-                textStyle: AppFonts.title.copyWith(
-                    color: AppColors.white, fontWeight: FontWeight.w600)),
-          ),
-        ],
+        ),
       ),
     );
   }
 
   Widget buildOtpTextField(
-      FocusNode focusNode, TextEditingController controller) {
+      FocusNode focusNode, FocusNode? nextFocus, TextEditingController controller) {
     return SizedBox(
       height: 48.0,
       width: 48.0,
@@ -145,6 +149,16 @@ class EnterMpin extends StatelessWidget {
         textAlign: TextAlign.center,
         length: 1,
         borderRadius: 8,
+        onChanged:  (value) {
+          if (value.isNotEmpty && nextFocus != null) {
+            FocusScope.of(focusNode.context!).requestFocus(nextFocus);
+          }
+        },
+        onSubmitted: (_) {
+          if (nextFocus == null) {
+            FocusScope.of(focusNode.context!).unfocus();
+          }
+        },
       ),
     );
   }

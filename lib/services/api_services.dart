@@ -6,6 +6,7 @@ import 'package:dd_shop/dashboard/model/assign_role_model.dart';
 import 'package:dd_shop/employee/model/employee_list_model.dart';
 import 'package:dd_shop/hr/model/role_list_model.dart';
 import 'package:dd_shop/mpin/model/validate_mpin_model.dart';
+import 'package:dd_shop/orders/model/shop_order_model.dart';
 import 'package:dd_shop/orders/order_model.dart';
 import 'package:dd_shop/shop/model/location_model.dart';
 import 'package:dd_shop/shop_prices/piece_model.dart';
@@ -188,17 +189,17 @@ class APIService {
     }
   }
 
-  Future<OrderModel> getShopOrder(shopId) async {
+  Future<ShopOrderModel> getShopOrder(shopId) async {
     print('in services $shopId');
     Response response = await get(Uri.parse('$url/order/shopOrders/$shopId'),
         headers: _headers);
     print("this is response ${response.body}");
     if (response.statusCode == 202) {
       Map<String, dynamic> OrderMap = jsonDecode(response.body);
-      OrderModel userOrders = OrderModel.fromJSON(OrderMap);
+      ShopOrderModel userOrders = ShopOrderModel.fromJson(OrderMap);
       return userOrders;
     } else {
-      OrderModel res = json.decode(response.body);
+      ShopOrderModel res = json.decode(response.body);
       return res;
     }
   }

@@ -1,10 +1,12 @@
 import 'package:dd_shop/orders/order_model.dart';
 import 'package:dd_shop/services/api_services.dart';
 
+import 'model/shop_order_model.dart';
+
 
 class OrderController {
-  Future<OrderModel> getShopOrders(shopId) async {
-    OrderModel orders = await apiService.getShopOrder(shopId);
+  Future<ShopOrderModel> getShopOrders(shopId) async {
+    ShopOrderModel orders = await apiService.getShopOrder(shopId);
     return orders;
   }
 

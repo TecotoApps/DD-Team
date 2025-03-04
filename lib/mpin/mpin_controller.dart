@@ -5,6 +5,7 @@ import 'package:dd_shop/dashboard/hr_dashboard.dart';
 import 'package:dd_shop/dashboard/no_role_screen.dart';
 import 'package:dd_shop/dashboard/shop_exe_dashboard.dart';
 import 'package:dd_shop/mpin/model/validate_mpin_model.dart';
+import 'package:dd_shop/mpin/verify_mpin.dart';
 import 'package:dd_shop/otp_generate/otp_modal.dart';
 import 'package:dd_shop/services/api_services.dart';
 import 'package:dd_shop/services/sharedPress.dart';
@@ -20,11 +21,13 @@ class MPINController {
     UserInfoModal? employee = await apiService.generateMPIN(empcode, mpin);
     if(employee?.statusCode==200){
       await sharedPress.saveData("EMPLOGIN","LOGGEDIN");
-    }
-    if (employee?.payload != null) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Dashboard()));
+          context, MaterialPageRoute(builder: (context) => EnterMpin()));
     }
+    // if (employee?.payload != null) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (context) => Dashboard()));
+    // }
 
 
     // const employeeCode = ;
@@ -35,6 +38,7 @@ class MPINController {
   validateMpin(mpin, context) async {
     final empcode = await sharedPress.getData("EMPCODE");
     final empid = await sharedPress.getData("EMPID");
+    await sharedPress.saveData("EMPLOGIN","LOGGEDIN");
     print("this is empcode $empcode");
     print("this is mpin $mpin");
     ValidateMpinModel? validateMpinModel = await apiService.validateMpin(empcode, mpin);

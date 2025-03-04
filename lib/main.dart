@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:dd_shop/dashboard/Dashboard.dart';
 import 'package:dd_shop/dashboard/hr_dashboard.dart';
+import 'package:dd_shop/mpin/verify_mpin.dart';
 import 'package:dd_shop/otp_generate/otp_generate_screen.dart';
 import 'package:dd_shop/services/sharedPress.dart';
 import 'package:dd_shop/utils/components/home_screen.dart';
@@ -55,7 +56,7 @@ class MySplashScreenState extends State<MySplashScreen> {
       Timer(
           Duration(seconds: 3),
               () => Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Dashboard())));
+              context, MaterialPageRoute(builder: (context) => EnterMpin())));
     } else {
       Timer(
           Duration(seconds: 3),

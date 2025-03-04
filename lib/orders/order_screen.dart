@@ -29,10 +29,10 @@ class OrdersState extends State<Orders> {
     return shopId;
   }
 
-  Future<OrderModel> getOrders() async {
-    OrderModel orders = await orderController.getShopOrders(shopId);
-    return orders;
-  }
+  // Future<OrderModel> getOrders() async {
+  //   // OrderModel orders = await orderController.getShopOrders(shopId);
+  //   // return orders;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -47,190 +47,191 @@ class OrdersState extends State<Orders> {
                       fontSize: 20,
                       fontFamily: 'OpenSansSemiBold'))),
         ),
-        body: Container(
-          child: FutureBuilder(
-              future: getOrders(),
-              builder:
-                  (BuildContext context, AsyncSnapshot<OrderModel?> snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return ListView.builder(
-                      itemCount: snapshot.data?.payload.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        print('inside list view orders');
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          child: Container(
-                            height: 290,
-                            child: Card(
-                              elevation: 4,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 28.0,horizontal: 20),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        CircleAvatar(
-                                          radius: 16,
-                                          backgroundColor: Colors.pink.shade50,
-                                          child: Text('${snapshot.data?.payload[index].orderId}',
-                                            style: TextStyle(color: Colors.black),),
-                                        ),
-                                        SizedBox(width: 20,),
-                                        Center(
-                                          child: Text(
-                                            '${snapshot.data?.payload[index].addressName}',
-                                            style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 8,),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left:48.0),
-                                      child: Text('Contact : ${snapshot.data?.payload[index].phoneNumber}',style: TextStyle(color: Colors.grey.shade600,fontWeight: FontWeight.bold),),
-                                    ),
-                                    SizedBox(height: 10,),
-                                    Container(
-                                      height: 50,
-                                      /*child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          CircleAvatar(
-                                            backgroundColor:snapshot.data!.payload[index]!.orderStatus!='CANCELED'
-                                                ? Colors.greenAccent.shade100
-                                                : Colors.grey.shade200,
-                                            child: Icon(
-                                              snapshot.data!.payload[index]!.orderStatus !='CANCELED'
-                                                  ?Icons.check
-                                                  :Icons.cancel_outlined,
-                                              color: snapshot.data!.payload[index]!.orderStatus!='CANCELED'
-                                                  ? Colors.green.shade900
-                                                  : Colors.grey
-                                              ,),),
-                                          Container(width: MediaQuery.of(context).size.width*0.14,height:2 ,color: Colors.grey.shade500,),
-
-                                          CircleAvatar(
-                                              backgroundColor:snapshot.data!.payload[index]!.orderStatus =='PICKED' || snapshot.data!.payload[index].orderStatus == 'PROCESSED'  || snapshot.data!.payload[index].orderStatus == 'DELIVERED'
-                                                  ? Colors.greenAccent.shade100
-                                                  :snapshot.data!.payload[index]!.orderStatus !='CANCELED'
-                                                  ?Colors.yellow.shade200
-                                                  :Colors.grey.shade200,
-                                              child:snapshot.data!.payload[index].orderStatus =='PICKED' || snapshot.data!.payload[index].orderStatus == 'PROCESSED'  || snapshot.data!.payload[index].orderStatus== 'DELIVERED'
-                                                  ?Icon(Icons.check, color: Colors.green.shade900,)
-                                                  :snapshot.data!.payload[index].orderStatus !='CANCELED'
-                                                  ?Icon(Icons.cached,color: Colors.grey.shade500,)
-                                                  :Icon(Icons.cancel_outlined,color: Colors.grey,)
-                                          ),
-                                          Container(width:  MediaQuery.of(context).size.width*0.14,height:2 ,color: Colors.grey.shade500,),
-
-                                          CircleAvatar(backgroundColor:snapshot.data!.payload[index].orderStatus == 'PROCESSED'  || snapshot.data!.payload[index].orderStatus == 'DELIVERED'
-                                              ?Colors.greenAccent.shade100
-                                              :snapshot.data!.payload[index].orderStatus !='CANCELED'
-                                              ? Colors.yellow.shade200
-                                              : Colors.grey.shade200,
-                                              child:snapshot.data!.payload[index].orderStatus == 'PROCESSED'  || snapshot.data!.payload[index].orderStatus== 'DELIVERED'
-                                                  ?Icon(Icons.check, color: Colors.green.shade900,)
-                                                  :snapshot.data!.payload[index].orderStatus !='CANCELED'
-                                                  ?Icon(Icons.cached,color: Colors.grey.shade500,)
-                                                  :Icon(Icons.cancel_outlined,color: Colors.grey,)
-                                          ),
-                                          Container(width: MediaQuery.of(context).size.width*0.14,height:2 ,color: Colors.grey.shade500,),
-
-                                          CircleAvatar(backgroundColor: snapshot.data!.payload[index].orderStatus== 'DELIVERED'
-                                              ?Colors.greenAccent.shade100
-                                              :snapshot.data!.payload[index].orderStatus !='CANCELED'
-                                              ?Colors.yellow.shade200
-                                              :Colors.grey.shade200,
-                                              child:snapshot.data!.payload[index].orderStatus== 'DELIVERED'
-                                                  ?Icon(Icons.check, color: Colors.green.shade900,)
-                                                  :snapshot.data!.payload[index].orderStatus !='CANCELED'
-                                                  ?Icon(Icons.cached,color: Colors.grey.shade500,)
-                                                  :Icon(Icons.cancel_outlined,color: Colors.grey,)
-                                          ),
-                                        ],
-                                      ),*/
-                                    ),
-                                    Container(
-                                      height: 30,
-                                     /* child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          snapshot.data!.payload[index].orderStatus !='CANCELED'
-                                              ?Text('Created',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),)
-                                              :Text('Canceled',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold)),
-                                          SizedBox(width:  MediaQuery.of(context).size.width*0.16,),
-                                          snapshot.data!.payload[index].orderStatus !='CANCELED'
-                                              ?Text('Picked',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold))
-                                              :Text('Canceled',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold)),
-                                          SizedBox(width:  MediaQuery.of(context).size.width*0.16,),
-                                          snapshot.data!.payload[index].orderStatus !='CANCELED'
-                                              ?Text('Ready',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold))
-                                              :Text('Canceled',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold)),
-                                          SizedBox(width:  MediaQuery.of(context).size.width*0.12,),
-                                          snapshot.data!.payload[index].orderStatus !='CANCELED'
-                                              ?Text('Completed',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold))
-                                              :Text('Canceled',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold)),
-                                        ],
-                                      ),*/
-                                    ),
-                                    SizedBox(
-                                      height: 50,
-                                      width: 140,
-                                     /* child: ElevatedButton(
-                                        onPressed: () async{
-                                          if(snapshot.data?.payload[index].orderStatus != 'CANCELED'){
-                                            var result =
-                                            await orderController.updateOrder(
-                                                snapshot.data!.payload[index]
-                                                    .orderId,
-                                                'some Reason').then((value) {
-                                              showDialog<String>(
-                                                  context: context,
-                                                  builder: (BuildContext context) =>
-                                                      AlertDialog(
-                                                        title: Text('${value?.message!}'),
-                                                        actions: <Widget>[
-                                                          TextButton(
-                                                            onPressed: () => Navigator.pop(context, 'OK'),
-                                                            child: const Text(
-                                                              'OK', style: TextStyle(color: Colors.pink),),
-                                                          ),
-                                                        ],
-                                                      ));
-                                            });
-                                            if (result.statusCode == 201) {
-                                              verifymsg = result.message!;
-
-                                            }
-                                          }
-                                        },
-                                        child: Text('Cancel Order',style: TextStyle(color:snapshot.data!.payload[index].orderStatus != 'CANCELED'?Colors.pink.shade600:Colors.grey),),
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(50))
-                                          ),
-                                        ),
-                                      ),*/
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      });
-                } else if (snapshot.connectionState ==
-                    ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator(color: Colors.pink.shade600,));
-                } else {
-                  return Text('no data');
-                }
-              }),
-        ));
+        // body: Container(
+        //   child: FutureBuilder(
+        //       future: getOrders(),
+        //       builder:
+        //           (BuildContext context, AsyncSnapshot<OrderModel?> snapshot) {
+        //         if (snapshot.connectionState == ConnectionState.done) {
+        //           return ListView.builder(
+        //               itemCount: snapshot.data?.payload.length,
+        //               itemBuilder: (BuildContext context, int index) {
+        //                 print('inside list view orders');
+        //                 return Padding(
+        //                   padding: const EdgeInsets.symmetric(horizontal: 4),
+        //                   child: Container(
+        //                     height: 290,
+        //                     child: Card(
+        //                       elevation: 4,
+        //                       child: Padding(
+        //                         padding: const EdgeInsets.symmetric(vertical: 28.0,horizontal: 20),
+        //                         child: Column(
+        //                           crossAxisAlignment: CrossAxisAlignment.start,
+        //                           mainAxisAlignment:
+        //                           MainAxisAlignment.start,
+        //                           children: [
+        //                             Row(
+        //                               mainAxisAlignment: MainAxisAlignment.start,
+        //                               children: [
+        //                                 CircleAvatar(
+        //                                   radius: 16,
+        //                                   backgroundColor: Colors.pink.shade50,
+        //                                   child: Text('${snapshot.data?.payload[index].orderId}',
+        //                                     style: TextStyle(color: Colors.black),),
+        //                                 ),
+        //                                 SizedBox(width: 20,),
+        //                                 Center(
+        //                                   child: Text(
+        //                                     '${snapshot.data?.payload[index].addressName}',
+        //                                     style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),
+        //                                   ),
+        //                                 ),
+        //                               ],
+        //                             ),
+        //                             SizedBox(height: 8,),
+        //                             Padding(
+        //                               padding: const EdgeInsets.only(left:48.0),
+        //                               child: Text('Contact : ${snapshot.data?.payload[index].phoneNumber}',style: TextStyle(color: Colors.grey.shade600,fontWeight: FontWeight.bold),),
+        //                             ),
+        //                             SizedBox(height: 10,),
+        //                             Container(
+        //                               height: 50,
+        //                               /*child: Row(
+        //                                 mainAxisAlignment: MainAxisAlignment.center,
+        //                                 children: [
+        //                                   CircleAvatar(
+        //                                     backgroundColor:snapshot.data!.payload[index]!.orderStatus!='CANCELED'
+        //                                         ? Colors.greenAccent.shade100
+        //                                         : Colors.grey.shade200,
+        //                                     child: Icon(
+        //                                       snapshot.data!.payload[index]!.orderStatus !='CANCELED'
+        //                                           ?Icons.check
+        //                                           :Icons.cancel_outlined,
+        //                                       color: snapshot.data!.payload[index]!.orderStatus!='CANCELED'
+        //                                           ? Colors.green.shade900
+        //                                           : Colors.grey
+        //                                       ,),),
+        //                                   Container(width: MediaQuery.of(context).size.width*0.14,height:2 ,color: Colors.grey.shade500,),
+        //
+        //                                   CircleAvatar(
+        //                                       backgroundColor:snapshot.data!.payload[index]!.orderStatus =='PICKED' || snapshot.data!.payload[index].orderStatus == 'PROCESSED'  || snapshot.data!.payload[index].orderStatus == 'DELIVERED'
+        //                                           ? Colors.greenAccent.shade100
+        //                                           :snapshot.data!.payload[index]!.orderStatus !='CANCELED'
+        //                                           ?Colors.yellow.shade200
+        //                                           :Colors.grey.shade200,
+        //                                       child:snapshot.data!.payload[index].orderStatus =='PICKED' || snapshot.data!.payload[index].orderStatus == 'PROCESSED'  || snapshot.data!.payload[index].orderStatus== 'DELIVERED'
+        //                                           ?Icon(Icons.check, color: Colors.green.shade900,)
+        //                                           :snapshot.data!.payload[index].orderStatus !='CANCELED'
+        //                                           ?Icon(Icons.cached,color: Colors.grey.shade500,)
+        //                                           :Icon(Icons.cancel_outlined,color: Colors.grey,)
+        //                                   ),
+        //                                   Container(width:  MediaQuery.of(context).size.width*0.14,height:2 ,color: Colors.grey.shade500,),
+        //
+        //                                   CircleAvatar(backgroundColor:snapshot.data!.payload[index].orderStatus == 'PROCESSED'  || snapshot.data!.payload[index].orderStatus == 'DELIVERED'
+        //                                       ?Colors.greenAccent.shade100
+        //                                       :snapshot.data!.payload[index].orderStatus !='CANCELED'
+        //                                       ? Colors.yellow.shade200
+        //                                       : Colors.grey.shade200,
+        //                                       child:snapshot.data!.payload[index].orderStatus == 'PROCESSED'  || snapshot.data!.payload[index].orderStatus== 'DELIVERED'
+        //                                           ?Icon(Icons.check, color: Colors.green.shade900,)
+        //                                           :snapshot.data!.payload[index].orderStatus !='CANCELED'
+        //                                           ?Icon(Icons.cached,color: Colors.grey.shade500,)
+        //                                           :Icon(Icons.cancel_outlined,color: Colors.grey,)
+        //                                   ),
+        //                                   Container(width: MediaQuery.of(context).size.width*0.14,height:2 ,color: Colors.grey.shade500,),
+        //
+        //                                   CircleAvatar(backgroundColor: snapshot.data!.payload[index].orderStatus== 'DELIVERED'
+        //                                       ?Colors.greenAccent.shade100
+        //                                       :snapshot.data!.payload[index].orderStatus !='CANCELED'
+        //                                       ?Colors.yellow.shade200
+        //                                       :Colors.grey.shade200,
+        //                                       child:snapshot.data!.payload[index].orderStatus== 'DELIVERED'
+        //                                           ?Icon(Icons.check, color: Colors.green.shade900,)
+        //                                           :snapshot.data!.payload[index].orderStatus !='CANCELED'
+        //                                           ?Icon(Icons.cached,color: Colors.grey.shade500,)
+        //                                           :Icon(Icons.cancel_outlined,color: Colors.grey,)
+        //                                   ),
+        //                                 ],
+        //                               ),*/
+        //                             ),
+        //                             Container(
+        //                               height: 30,
+        //                              /* child: Row(
+        //                                 mainAxisAlignment: MainAxisAlignment.center,
+        //                                 children: [
+        //                                   snapshot.data!.payload[index].orderStatus !='CANCELED'
+        //                                       ?Text('Created',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),)
+        //                                       :Text('Canceled',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold)),
+        //                                   SizedBox(width:  MediaQuery.of(context).size.width*0.16,),
+        //                                   snapshot.data!.payload[index].orderStatus !='CANCELED'
+        //                                       ?Text('Picked',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold))
+        //                                       :Text('Canceled',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold)),
+        //                                   SizedBox(width:  MediaQuery.of(context).size.width*0.16,),
+        //                                   snapshot.data!.payload[index].orderStatus !='CANCELED'
+        //                                       ?Text('Ready',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold))
+        //                                       :Text('Canceled',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold)),
+        //                                   SizedBox(width:  MediaQuery.of(context).size.width*0.12,),
+        //                                   snapshot.data!.payload[index].orderStatus !='CANCELED'
+        //                                       ?Text('Completed',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold))
+        //                                       :Text('Canceled',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold)),
+        //                                 ],
+        //                               ),*/
+        //                             ),
+        //                             SizedBox(
+        //                               height: 50,
+        //                               width: 140,
+        //                              /* child: ElevatedButton(
+        //                                 onPressed: () async{
+        //                                   if(snapshot.data?.payload[index].orderStatus != 'CANCELED'){
+        //                                     var result =
+        //                                     await orderController.updateOrder(
+        //                                         snapshot.data!.payload[index]
+        //                                             .orderId,
+        //                                         'some Reason').then((value) {
+        //                                       showDialog<String>(
+        //                                           context: context,
+        //                                           builder: (BuildContext context) =>
+        //                                               AlertDialog(
+        //                                                 title: Text('${value?.message!}'),
+        //                                                 actions: <Widget>[
+        //                                                   TextButton(
+        //                                                     onPressed: () => Navigator.pop(context, 'OK'),
+        //                                                     child: const Text(
+        //                                                       'OK', style: TextStyle(color: Colors.pink),),
+        //                                                   ),
+        //                                                 ],
+        //                                               ));
+        //                                     });
+        //                                     if (result.statusCode == 201) {
+        //                                       verifymsg = result.message!;
+        //
+        //                                     }
+        //                                   }
+        //                                 },
+        //                                 child: Text('Cancel Order',style: TextStyle(color:snapshot.data!.payload[index].orderStatus != 'CANCELED'?Colors.pink.shade600:Colors.grey),),
+        //                                 style: ElevatedButton.styleFrom(
+        //                                   backgroundColor: Colors.white,
+        //                                   shape: RoundedRectangleBorder(
+        //                                       borderRadius: BorderRadius.all(Radius.circular(50))
+        //                                   ),
+        //                                 ),
+        //                               ),*/
+        //                             ),
+        //                           ],
+        //                         ),
+        //                       ),
+        //                     ),
+        //                   ),
+        //                 );
+        //               });
+        //         } else if (snapshot.connectionState ==
+        //             ConnectionState.waiting) {
+        //           return Center(child: CircularProgressIndicator(color: Colors.pink.shade600,));
+        //         } else {
+        //           return Text('no data');
+        //         }
+        //       }),
+        // )
+    );
   }
 }

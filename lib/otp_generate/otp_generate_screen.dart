@@ -26,9 +26,12 @@ class _OtpGenerateState extends State<OtpGenerate> {
   Widget build(BuildContext context) {
     return Scaffold(
           backgroundColor: Colors.white,
-          body: Stack(
-            children: [
-              SingleChildScrollView(
+          body: SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height,
+              ),
+              child: IntrinsicHeight(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -60,7 +63,7 @@ class _OtpGenerateState extends State<OtpGenerate> {
                       ),
                     ),
                     Gap(18),
-
+                
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24.0),
                       child: Text(Dd_Strings.enter_mobile_number,textAlign: TextAlign.start,
@@ -81,6 +84,45 @@ class _OtpGenerateState extends State<OtpGenerate> {
                           validatorType: 'phone'
                       ),
                     ),
+                
+                    Spacer(),
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 24),
+                      child: RoundedElevatedButton(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height*0.05,
+                          text: Dd_Strings.continue_button_text,
+                          onPressed: () async{
+                            UserInfoModal empDetails = await otp_controller.getEmployeeDetailsByPhoneNumber(phoneController.text,context);
+                            print("this si status code ${empDetails.statusCode}");
+                            if(empDetails.statusCode == 200) {
+                              if (empDetails.payload!.mpin != null) {
+                                //naviagte to enter mpin
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EnterMpin()));
+                              } else {
+                                //navigate to create mpin flow
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CreateMpin()),);
+                              }
+                            }
+                            else if(empDetails.statusCode == 203){
+                              //error dialogue
+                            }
+                          },
+                          cornerRadius: 6.0,
+                          buttonColor: AppColors.appSecondaryColor,
+                          textStyle: AppFonts.header
+                              .copyWith(color: AppColors.white)),
+                    ),
+                
                     // Container(
                     //   padding: EdgeInsets.symmetric(horizontal: 24.0),
                     //   width:MediaQuery.of(context).size.width * 0.86,
@@ -104,7 +146,7 @@ class _OtpGenerateState extends State<OtpGenerate> {
                     //       )
                     //     ),
                     //   ),
-
+                
                     /* Center(
                       child: Container(
                           color: Colors.white,
@@ -112,7 +154,7 @@ class _OtpGenerateState extends State<OtpGenerate> {
                               hintText: 'GET OTP',
                               onPressed: () async {
                                 if(formKey.currentState!.validate()){
-
+                
                                   // _otpBloc.add(OnOtpGenerate(number: phoneController.text));
                                   var result = await otp_controller
                                       .generateOTP(phoneController.text);
@@ -129,47 +171,10 @@ class _OtpGenerateState extends State<OtpGenerate> {
                                 }
                               })),
                     ),*/
-                  ],
-                ),
+                  ],),
               ),
-              Container(
-                alignment: Alignment.bottomCenter,
-                padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 24),
-                child: RoundedElevatedButton(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height*0.05,
-                    text: Dd_Strings.continue_button_text,
-                    onPressed: () async{
-                      UserInfoModal empDetails = await otp_controller.getEmployeeDetailsByPhoneNumber(phoneController.text,context);
-                     print("this si status code ${empDetails.statusCode}");
-                     if(empDetails.statusCode == 200) {
-                       if (empDetails.payload!.mpin != null) {
-                         //naviagte to enter mpin
-                         Navigator.pushReplacement(
-                             context,
-                             MaterialPageRoute(
-                                 builder: (context) =>
-                                     EnterMpin()));
-                       } else {
-                         //navigate to create mpin flow
-                         Navigator.pushReplacement(
-                             context,
-                             MaterialPageRoute(
-                                 builder: (context) =>
-                                     CreateMpin()),);
-                       }
-                     }
-                     else if(empDetails.statusCode == 203){
-                       //error dialogue
-                     }
-                   },
-                    cornerRadius: 6.0,
-                    buttonColor: AppColors.appSecondaryColor,
-                    textStyle: AppFonts.header
-                        .copyWith(color: AppColors.white)),
-              ),
-            ],
-          ),
-        );
+            ),
+          )
+          );
   }
 }
