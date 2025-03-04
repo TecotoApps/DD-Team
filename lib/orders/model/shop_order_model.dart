@@ -1,12 +1,13 @@
-class ShopOrderModel {
+class OrdersListModel {
   int? statusCode;
   String? message;
   List<Payload>? payload;
   String? timeStamp;
 
-  ShopOrderModel({this.statusCode, this.message, this.payload, this.timeStamp});
+  OrdersListModel(
+      {this.statusCode, this.message, this.payload, this.timeStamp});
 
-  ShopOrderModel.fromJson(Map<String, dynamic> json) {
+  OrdersListModel.fromJson(Map<String, dynamic> json) {
     statusCode = json['statusCode'];
     message = json['message'];
     if (json['payload'] != null) {

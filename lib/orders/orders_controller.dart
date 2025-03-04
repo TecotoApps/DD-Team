@@ -5,8 +5,8 @@ import 'model/shop_order_model.dart';
 
 
 class OrderController {
-  Future<ShopOrderModel> getShopOrders(shopId) async {
-    ShopOrderModel orders = await apiService.getShopOrder(shopId);
+  Future<OrdersListModel> getShopOrders(shopId) async {
+    OrdersListModel orders = await apiService.getShopOrder(shopId);
     return orders;
   }
 
