@@ -26,7 +26,6 @@ class _HrDashboardState extends State<HrDashboard>
     _tabController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
