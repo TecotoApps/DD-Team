@@ -3,10 +3,10 @@ import 'package:dd_shop/dashboard/model/add_employee.dart';
 import 'package:dd_shop/dashboard/model/add_new_cluster.dart';
 import 'package:dd_shop/dashboard/model/add_shop_to_cluster.dart';
 import 'package:dd_shop/dashboard/model/assign_role_model.dart';
+import 'package:dd_shop/dashboard/model/order_list_model.dart';
 import 'package:dd_shop/employee/model/employee_list_model.dart';
 import 'package:dd_shop/hr/model/role_list_model.dart';
 import 'package:dd_shop/mpin/model/validate_mpin_model.dart';
-import 'package:dd_shop/orders/model/shop_order_model.dart';
 import 'package:dd_shop/orders/order_model.dart';
 import 'package:dd_shop/shop/model/location_model.dart';
 import 'package:dd_shop/shop_prices/piece_model.dart';
@@ -164,31 +164,6 @@ class APIService {
     }
   }
 
-  Future<OrderModel> updateOrder(orderId, cancelReason) async {
-    Response response = await put(
-      Uri.parse('$url/order'),
-      headers: {
-        "content-type": "application/json",
-        "accept": "application/json",
-      },
-      body: jsonEncode(<String, String>{
-        'orderId': '$orderId',
-        'cancelReason': '$cancelReason'
-      }),
-    );
-    print("this is response ${response.body}");
-
-    if (response.statusCode == 201) {
-      print('inside 201');
-      Map<String, dynamic> orderMap = jsonDecode(response.body);
-      var orders = OrderModel.fromJSON(orderMap);
-      return orders;
-    } else {
-      var res = json.decode(response.body);
-      return res;
-    }
-  }
-
   Future getShopOrder(shopId) async {
     print('in services $shopId');
     Response response = await get(Uri.parse('$url/order/shopOrders/$shopId'),
@@ -199,7 +174,23 @@ class APIService {
       // var userOrders = OrderlistModel.fromJson(OrderMap);
       return OrderMap;
     } else {
-      OrderlistModel res = json.decode(response.body);
+      OrderListModel res = json.decode(response.body);
+      return res;
+    }
+  }
+
+
+  Future deliveryOders(empCode) async {
+    print('in services $empCode');
+    Response response = await get(Uri.parse('$url/order/deliverOrders/25S30007'),
+        headers: _headers);
+    print("this is response ${response.body}");
+    if (response.statusCode == 200) {
+      var OrderMap = jsonDecode(response.body);
+      // var userOrders = OrderlistModel.fromJson(OrderMap);
+      return OrderMap;
+    } else {
+      var res = json.decode(response.body);
       return res;
     }
   }
@@ -348,6 +339,27 @@ class APIService {
     }
   }
 
+  updateOrderStatus(orderId, orderStatus) async{
+    print("this is orderId $orderId and status $orderStatus");
+    Response response = await put(
+      Uri.parse('$url/order/orderStatus'),
+      headers: _headers,
+      body: jsonEncode(<String, String>{
+        "orderId": "$orderId",
+        "orderStatus": "$orderStatus",
+        "comments":"order picked up intime"
+      }),
+    );
+    print("this is response of update order ${response.body}");
+
+    if (response.statusCode == 201) {
+      print('inside 201');
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<UserInfoModal> addShop(phoneNumber, imageUrl, city, state) async {
     print("this is mobile number passing, $phoneNumber");
     Response response = await post(
@@ -491,6 +503,8 @@ class APIService {
       return res;
     }
   }
+
+
 }
 
 APIService apiService = APIService();

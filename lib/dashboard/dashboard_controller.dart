@@ -1,10 +1,11 @@
 import 'package:dd_shop/dashboard/model/add_employee.dart';
 import 'package:dd_shop/dashboard/model/add_new_cluster.dart';
 import 'package:dd_shop/dashboard/model/assign_role_model.dart';
+import 'package:dd_shop/dashboard/model/order_list_model.dart';
 import 'package:dd_shop/employee/model/employee_list_model.dart';
 import 'package:dd_shop/hr/model/role_list_model.dart';
-import 'package:dd_shop/orders/model/shop_order_model.dart';
 import 'package:dd_shop/services/api_services.dart';
+import 'package:dd_shop/services/sharedPress.dart';
 import 'package:flutter/material.dart';
 
 class DashboardController{
@@ -63,6 +64,12 @@ class DashboardController{
     return shopOrderModel;
   }
 
+  Future getDeliveryOrders(context) async{
+    String empCode = await sharedPress.getData('EMPCODE');
+    var shopOrderModel = await apiService.deliveryOders(empCode);
+    print("this is delivery res $shopOrderModel");
+    return shopOrderModel;
+  }
 
   getShopsList() async {
     EmployeeListModel employeeListModel = await apiService.getEmployeeList();
