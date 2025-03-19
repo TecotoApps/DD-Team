@@ -73,28 +73,31 @@ class ShopExeDashboard extends StatelessWidget {
                             ],
                           ),
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Ordered on ${order['orderDate']}',
-                                    style: AppFonts.title.copyWith(fontWeight: FontWeight.w500, fontSize: 14),
-                                  ),
-                                  Gap(10),
-                                  Text(
-                                    'Pickup Date: ${order['pickupDate']}',
-                                    style: AppFonts.title.copyWith(fontWeight: FontWeight.w500, fontSize: 14),
-                                  ),
-                                  Gap(10),
-                                  Text(
-                                    'Delivery Date: ${order['deliveryDate']}',
-                                    style: AppFonts.title.copyWith(fontWeight: FontWeight.w500, fontSize: 14),
-                                  ),
-                                  Gap(10),
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Ordered on ${order['orderDate']}',
+                                      style: AppFonts.title.copyWith(fontWeight: FontWeight.w500, fontSize: 14),
+                                    ),
+                                    Gap(10),
+                                    Text(
+                                      'Pickup Date: ${order['pickupDate']}',
+                                      style: AppFonts.title.copyWith(fontWeight: FontWeight.w500, fontSize: 14),
+                                    ),
+                                    Gap(10),
+                                    Text(
+                                      'Delivery Date: ${order['deliveryDate']}',
+                                      style: AppFonts.title.copyWith(fontWeight: FontWeight.w500, fontSize: 14),
+                                    ),
+                                    Gap(10),
 
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ],
