@@ -35,7 +35,6 @@ class EmployeeList extends StatelessWidget {
                 return Center(child: Text('${snapshot.data?.message}'));
               } else {
                 return Container(
-                  height: 500,
                   child: ListView.builder(
                       itemCount: snapshot.data?.payload?.length,
                       itemBuilder: (context, int index) {

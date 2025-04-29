@@ -1,6 +1,8 @@
 import 'package:dd_shop/employee/employee_list.dart';
 import 'package:dd_shop/hr/create_new_role.dart';
 import 'package:dd_shop/hr/roles.dart';
+import 'package:dd_shop/otp_generate/otp_generate_screen.dart';
+import 'package:dd_shop/utils/components/elevated_rounded_button.dart';
 import 'package:dd_shop/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -32,17 +34,20 @@ class _HrDashboardState extends State<HrDashboard>
       backgroundColor: AppColors.white,
       drawer: Drawer(
         elevation: 10,
-        backgroundColor: AppColors.appPrimaryColor,
-        child: ListView(
-          padding: EdgeInsets.only(top: 50),
+        backgroundColor: AppColors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Container(
+              height: MediaQuery.of(context).size.height*0.1,
+            ),
             TextButton(
                 onPressed: () {
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HrDashboard()));
                 },
                 child: Text(
                   "Employees",
-                  style: TextStyle(color: AppColors.white),
+                  style: TextStyle(color: AppColors.appPrimaryColor),
                 )),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
@@ -53,7 +58,7 @@ class _HrDashboardState extends State<HrDashboard>
                 Navigator.push(context,MaterialPageRoute(builder: (context)=>CreateNewRole(comingFrom: COMINGFROM.CreateRole,)));
                 },
                 child: Text("Create New Role",
-                    style: TextStyle(color: AppColors.white))),
+                    style: TextStyle(color: AppColors.appPrimaryColor))),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
               child: Divider(),
@@ -62,7 +67,26 @@ class _HrDashboardState extends State<HrDashboard>
                 onPressed: () {
                   Navigator.push(context,MaterialPageRoute(builder: (context)=>RolesList()));
                 },
-                child: Text("Roles", style: TextStyle(color: AppColors.white))),
+                child: Text("Roles", style: TextStyle(color: AppColors.appPrimaryColor))),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0,horizontal: 12.0),
+              child: RoundedElevatedButton(
+                width: MediaQuery.of(context).size.width,
+                height: 40,
+                cornerRadius: 10,
+                buttonColor: AppColors.appSecondaryColor,
+                text: 'Logout',
+                textStyle: TextStyle(color: AppColors.white),
+                onPressed: (){
+                  Navigator.pushReplacement(
+                      context, MaterialPageRoute(builder: (context) => OtpGenerate()));
+                },
+
+
+              ),
+            ),
+
           ],
         ),
       ),

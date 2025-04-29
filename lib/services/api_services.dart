@@ -82,15 +82,23 @@ class APIService {
       }),
     );
     print("this is response ${response.body}");
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var user = ValidateMpinModel.fromJson(userMap);
+      return user;
+    } else {
+      var res = json.decode(response.body);
+      return res;
+    }
 
-    Map<String, dynamic> jsonResponse = json.decode(response.body);
-    ValidateMpinModel? payload;
-
-    payload = ValidateMpinModel.fromJson(jsonResponse);
+    // Map<String, dynamic> jsonResponse = json.decode(response.body);
+    // ValidateMpinModel? payload;
+    //
+    // payload = ValidateMpinModel.fromJson(jsonResponse);
 
     // Now map the JSON Map to the UserInfoModal using the fromJson constructor
     // Return the UserInfoModal object
-    return payload;
+    // return payload;
   }
 
   Future<ShopModel> verifyOTP(mobile, otp) async {

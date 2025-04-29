@@ -45,52 +45,54 @@ class _AssignRoleState extends State<AssignRole> {
         backgroundColor: AppColors.appPrimaryColor,
         title: Text('Assign New Role'),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Gap(50),
-          Text('Assign role to the employee ${widget.employeePayload.employCode}',style: TextStyle(fontSize: 18),),
-          Gap(20),
-          Text("Name :  ${widget.employeePayload.employName}",style: TextStyle(fontSize: 18)),
-          Gap(20),
-          Row(
-            children: [
-              Text('Select Role :',style: TextStyle(fontSize: 18)),
-              Gap(40),
-              DropdownButton(
-                value: selectedRoleId,
-                hint: Text("Select Role"),
-                onTap: (){
-                  print("tapping");
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Gap(50),
+            Text('Assign role to the employee ${widget.employeePayload.employCode}',style: TextStyle(fontSize: 18),),
+            Gap(20),
+            Text("Name :  ${widget.employeePayload.employName}",style: TextStyle(fontSize: 18)),
+            Gap(20),
+            Row(
+              children: [
+                Text('Select Role :',style: TextStyle(fontSize: 18)),
+                Gap(40),
+                DropdownButton(
+                  value: selectedRoleId,
+                  hint: Text("Select Role"),
+                  onTap: (){
+                    print("tapping");
+                  },
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedRoleId = newValue;
+                    });
+                  },
+                  items: rolesList?.map((RolePayload role) {
+                    return DropdownMenuItem<String>(
+                      value: role.roles,  // Set the roleId as the value
+                      child: Text(role.roles ?? 'No Role'),  // Display the role name
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+           Spacer(),
+            RoundedElevatedButton(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height*0.05,
+                text: 'Assign Role',
+                onPressed: () async{
+                  hrController.assignRoleByHR(context,widget.employeePayload,selectedRoleId);
                 },
-                onChanged: (String? newValue) {
-                  setState(() {
-                    selectedRoleId = newValue;
-                  });
-                },
-                items: rolesList?.map((RolePayload role) {
-                  return DropdownMenuItem<String>(
-                    value: role.roles,  // Set the roleId as the value
-                    child: Text(role.roles ?? 'No Role'),  // Display the role name
-                  );
-                }).toList(),
-              ),
-            ],
-          ),
-          Gap(20),
-          Gap(20),
-          RoundedElevatedButton(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*0.05,
-              text: 'Assign Role',
-              onPressed: () async{
-                hrController.assignRoleByHR(context,widget.employeePayload,selectedRoleId);
-              },
-              cornerRadius: 6.0,
-              buttonColor: AppColors.appPrimaryColor,
-              textStyle: AppFonts.subHeader
-                  .copyWith(color: AppColors.white))
-        ],
+                cornerRadius: 6.0,
+                buttonColor: AppColors.appPrimaryColor,
+                textStyle: AppFonts.subHeader
+                    .copyWith(color: AppColors.white))
+          ],
+        ),
       ),
     );
   }
