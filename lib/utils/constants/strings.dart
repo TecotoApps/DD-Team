@@ -56,4 +56,15 @@ class Dd_Strings {
 
   static const String employee_id = "EMPID";
   static const String employee_code = "EMPCODE";
+
+
+  static const String enter_customer_number = "Enter Customer Number";
+  static const String enter_customer_address = "Enter Customer Address";
+  static const String customer_address_line2 = "street / locality/ Area";
+  static const String landmark = "Landmark";
+  static const String city = "City";
+  static const String add_location = "Add Location";
+  static const String customer_name = 'Customer Name';
+  static const String schedule_order = 'Schedule_order';
+
 }

@@ -8,6 +8,7 @@ import 'package:dd_shop/employee/model/employee_list_model.dart';
 import 'package:dd_shop/hr/model/role_list_model.dart';
 import 'package:dd_shop/mpin/model/validate_mpin_model.dart';
 import 'package:dd_shop/orders/order_model.dart';
+import 'package:dd_shop/orders/user_check_model.dart';
 import 'package:dd_shop/shop/model/location_model.dart';
 import 'package:dd_shop/shop_prices/piece_model.dart';
 import 'package:dd_shop/shop_prices/weight_model.dart';
@@ -19,21 +20,19 @@ import '../otp_generate/otp_modal.dart';
 
 class APIService {
   //String url = 'https://10.0.2.2:8080';
-  String url = 'http://35.207.255.233:90';
+  String url = 'http://35.207.255.233:80';
 
   static const Map<String, String> _headers = {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
+    "SECURE-API-KEY":"336924d18ed3718f48dc62b5ae3032afe387d5dc86685e5d43ad04bf2cc41f60"
   };
 
   Future<UserInfoModal> getEmployeeDetailsByPhone(mobile) async {
     print("this is mobile number passing, $mobile");
     Response response = await post(
       Uri.parse('$url/employ/userPhone'),
-      headers: {
-        "content-type": "application/json",
-        "accept": "application/json",
-      },
+      headers: _headers,
       body: jsonEncode(<String, String>{'phoneNumber': '$mobile'}),
     );
     print("this is response ${response.body}");
@@ -42,6 +41,24 @@ class APIService {
 
     // Now map the JSON Map to the UserInfoModal using the fromJson constructor
     UserInfoModal userInfoModal = UserInfoModal.fromJson(jsonResponse);
+
+    // Return the UserInfoModal object
+    return userInfoModal;
+  }
+
+  Future<UserCheckModel> getUserDetailsByPhone(mobile) async {
+    print("this is mobile number passing, $mobile");
+    Response response = await post(
+      Uri.parse('$url/user/userPhone'),
+      headers: _headers,
+      body: jsonEncode(<String, String>{'phoneNumber': '$mobile'}),
+    );
+    print("this is response ${response.body}");
+
+    Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+    // Now map the JSON Map to the UserInfoModal using the fromJson constructor
+    UserCheckModel userInfoModal = UserCheckModel.fromJson(jsonResponse);
 
     // Return the UserInfoModal object
     return userInfoModal;
@@ -104,10 +121,7 @@ class APIService {
   Future<ShopModel> verifyOTP(mobile, otp) async {
     Response response = await post(
       Uri.parse('$url/user/otp/verify'),
-      headers: {
-        "content-type": "application/json",
-        "accept": "application/json",
-      },
+      headers: _headers,
       body:
           jsonEncode(<String, String>{'phoneNumber': '$mobile', 'otp': '$otp'}),
     );
@@ -139,10 +153,7 @@ class APIService {
       longitude) async {
     Response response = await post(
       Uri.parse('$url/shop'),
-      headers: {
-        "content-type": "application/json",
-        "accept": "application/json",
-      },
+      headers: _headers,
       body: jsonEncode(<String, String>{
         'phoneNumber': '$phoneNumber',
         'shopName': '$shopName',
@@ -177,7 +188,7 @@ class APIService {
     Response response = await get(Uri.parse('$url/order/shopOrders/$shopId'),
         headers: _headers);
     print("this is response ${response.body}");
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       var OrderMap = jsonDecode(response.body);
       // var userOrders = OrderlistModel.fromJson(OrderMap);
       return OrderMap;
@@ -268,10 +279,7 @@ class APIService {
   Future<ItemPerWeightListModel> getWeight(shopId) async {
     Response response = await get(
       Uri.parse('$url/order/$shopId'),
-      headers: {
-        "content-type": "application/json",
-        "accept": "application/json",
-      },
+      headers: _headers,
     );
     print("this is response ${response.body}");
     if (response.statusCode == 202) {
@@ -288,10 +296,7 @@ class APIService {
   Future<ItemPerPeiceListModel> getPiece(shopId) async {
     Response response = await get(
       Uri.parse('$url/order/$shopId'),
-      headers: {
-        "content-type": "application/json",
-        "accept": "application/json",
-      },
+      headers: _headers,
     );
     print("this is response ${response.body}");
     if (response.statusCode == 202) {
@@ -503,6 +508,23 @@ class APIService {
 
     if (response.statusCode == 201) {
       print('inside 201');
+      Map<String, dynamic> locationMap = jsonDecode(response.body);
+      LocationModel locations = LocationModel.fromJSON(locationMap);
+      return locations;
+    } else {
+      LocationModel res = json.decode(response.body);
+      return res;
+    }
+  }
+
+  Future<LocationModel> getLocation(userId) async {
+    print('fetching locaitons');
+    Response response = await get(
+        Uri.parse('$url/location/$userId'),
+        headers: _headers
+    );
+    print("this is response ${response.body}");
+    if (response.statusCode == 201) {
       Map<String, dynamic> locationMap = jsonDecode(response.body);
       LocationModel locations = LocationModel.fromJSON(locationMap);
       return locations;

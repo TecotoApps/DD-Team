@@ -1,26 +1,26 @@
 [
     {
-        "merged": "com.swasth.team.app-debug-40:/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "com.swasth.team.app-main-35:/mipmap-xxhdpi/ic_launcher.png"
+        "merged": "com.swasth.team.app-debug-44:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.swasth.team.app-main-39:/mipmap-xhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.swasth.team.app-debug-40:/mipmap-mdpi_ic_launcher.png.flat",
-        "source": "com.swasth.team.app-main-35:/mipmap-mdpi/ic_launcher.png"
+        "merged": "com.swasth.team.app-debug-44:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.swasth.team.app-main-39:/mipmap-hdpi/ic_launcher.png"
     },
     {
-        "merged": "com.swasth.team.app-debug-40:/drawable-v21_launch_background.xml.flat",
-        "source": "com.swasth.team.app-main-35:/drawable-v21/launch_background.xml"
+        "merged": "com.swasth.team.app-debug-44:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.swasth.team.app-main-39:/mipmap-xxxhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.swasth.team.app-debug-40:/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "com.swasth.team.app-main-35:/mipmap-xxxhdpi/ic_launcher.png"
+        "merged": "com.swasth.team.app-debug-44:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.swasth.team.app-main-39:/mipmap-xxhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.swasth.team.app-debug-40:/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "com.swasth.team.app-main-35:/mipmap-hdpi/ic_launcher.png"
+        "merged": "com.swasth.team.app-debug-44:/drawable-v21_launch_background.xml.flat",
+        "source": "com.swasth.team.app-main-39:/drawable-v21/launch_background.xml"
     },
     {
-        "merged": "com.swasth.team.app-debug-40:/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "com.swasth.team.app-main-35:/mipmap-xhdpi/ic_launcher.png"
+        "merged": "com.swasth.team.app-debug-44:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.swasth.team.app-main-39:/mipmap-mdpi/ic_launcher.png"
     }
 ]

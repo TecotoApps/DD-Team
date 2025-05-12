@@ -15,131 +15,195 @@
 15    <uses-permission android:name="android.permission.INTERNET" />
 15-->/Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/android/app/src/debug/AndroidManifest.xml:7:5-66
 15-->/Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/android/app/src/debug/AndroidManifest.xml:7:22-64
-16
-17    <permission
-17-->[androidx.core:core:1.13.1] /Users/tilak/.gradle/caches/8.9/transforms/637249ad1df056a73431289eb20df326/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
-18        android:name="com.swasth.team.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-18-->[androidx.core:core:1.13.1] /Users/tilak/.gradle/caches/8.9/transforms/637249ad1df056a73431289eb20df326/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
-19        android:protectionLevel="signature" />
-19-->[androidx.core:core:1.13.1] /Users/tilak/.gradle/caches/8.9/transforms/637249ad1df056a73431289eb20df326/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
+16    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+16-->/Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/android/app/src/main/AndroidManifest.xml:4:5-78
+16-->/Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/android/app/src/main/AndroidManifest.xml:4:22-76
+17    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+17-->/Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/android/app/src/main/AndroidManifest.xml:5:5-81
+17-->/Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/android/app/src/main/AndroidManifest.xml:5:22-78
+18    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- Include required permissions for Google Maps API to run. -->
+18-->/Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/android/app/src/main/AndroidManifest.xml:6:5-85
+18-->/Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/android/app/src/main/AndroidManifest.xml:6:22-82
+19    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+19-->[com.google.android.gms:play-services-maps:18.2.0] /Users/tilak/.gradle/caches/8.9/transforms/fdf631d14eae1d535ae3eafa4207ddec/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:23:5-79
+19-->[com.google.android.gms:play-services-maps:18.2.0] /Users/tilak/.gradle/caches/8.9/transforms/fdf631d14eae1d535ae3eafa4207ddec/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:23:22-76
 20
-21    <uses-permission android:name="com.swasth.team.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-21-->[androidx.core:core:1.13.1] /Users/tilak/.gradle/caches/8.9/transforms/637249ad1df056a73431289eb20df326/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
-21-->[androidx.core:core:1.13.1] /Users/tilak/.gradle/caches/8.9/transforms/637249ad1df056a73431289eb20df326/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
-22
-23    <application
-24        android:name="android.app.Application"
-25        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-25-->[androidx.core:core:1.13.1] /Users/tilak/.gradle/caches/8.9/transforms/637249ad1df056a73431289eb20df326/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
-26        android:debuggable="true"
-27        android:extractNativeLibs="true"
-28        android:icon="@mipmap/ic_launcher"
-29        android:label="Swasth Team" >
-30        <activity
-31            android:name="com.swasth.team.MainActivity"
-32            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-33            android:exported="true"
-34            android:hardwareAccelerated="true"
-35            android:launchMode="singleTop"
-36            android:theme="@style/LaunchTheme"
-37            android:windowSoftInputMode="adjustResize" >
-38
-39            <!--
-40                 Specifies an Android theme to apply to this Activity as soon as
-41                 the Android process has started. This theme is visible to the user
-42                 while the Flutter UI initializes. After that, this theme continues
-43                 to determine the Window background behind the Flutter UI.
-44            -->
-45            <meta-data
-46                android:name="io.flutter.embedding.android.NormalTheme"
-47                android:resource="@style/NormalTheme" />
-48
-49            <intent-filter>
-50                <action android:name="android.intent.action.MAIN" />
-51
-52                <category android:name="android.intent.category.LAUNCHER" />
-53            </intent-filter>
-54        </activity>
-55        <!--
-56             Don't delete the meta-data below.
-57             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
-58        -->
-59        <meta-data
-60            android:name="flutterEmbedding"
-61            android:value="2" />
+21    <uses-feature
+21-->[com.google.android.gms:play-services-maps:18.2.0] /Users/tilak/.gradle/caches/8.9/transforms/fdf631d14eae1d535ae3eafa4207ddec/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:26:5-28:35
+22        android:glEsVersion="0x00020000"
+22-->[com.google.android.gms:play-services-maps:18.2.0] /Users/tilak/.gradle/caches/8.9/transforms/fdf631d14eae1d535ae3eafa4207ddec/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:27:9-41
+23        android:required="true" />
+23-->[com.google.android.gms:play-services-maps:18.2.0] /Users/tilak/.gradle/caches/8.9/transforms/fdf631d14eae1d535ae3eafa4207ddec/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:28:9-32
+24
+25    <queries>
+25-->[com.google.android.gms:play-services-maps:18.2.0] /Users/tilak/.gradle/caches/8.9/transforms/fdf631d14eae1d535ae3eafa4207ddec/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:30:5-34:15
+26
+27        <!-- Needs to be explicitly declared on Android R+ -->
+28        <package android:name="com.google.android.apps.maps" />
+28-->[com.google.android.gms:play-services-maps:18.2.0] /Users/tilak/.gradle/caches/8.9/transforms/fdf631d14eae1d535ae3eafa4207ddec/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:33:9-64
+28-->[com.google.android.gms:play-services-maps:18.2.0] /Users/tilak/.gradle/caches/8.9/transforms/fdf631d14eae1d535ae3eafa4207ddec/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:33:18-61
+29    </queries>
+30
+31    <permission
+31-->[androidx.core:core:1.13.1] /Users/tilak/.gradle/caches/8.9/transforms/637249ad1df056a73431289eb20df326/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
+32        android:name="com.swasth.team.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+32-->[androidx.core:core:1.13.1] /Users/tilak/.gradle/caches/8.9/transforms/637249ad1df056a73431289eb20df326/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
+33        android:protectionLevel="signature" />
+33-->[androidx.core:core:1.13.1] /Users/tilak/.gradle/caches/8.9/transforms/637249ad1df056a73431289eb20df326/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
+34
+35    <uses-permission android:name="com.swasth.team.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+35-->[androidx.core:core:1.13.1] /Users/tilak/.gradle/caches/8.9/transforms/637249ad1df056a73431289eb20df326/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
+35-->[androidx.core:core:1.13.1] /Users/tilak/.gradle/caches/8.9/transforms/637249ad1df056a73431289eb20df326/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
+36
+37    <application
+38        android:name="android.app.Application"
+39        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+39-->[androidx.core:core:1.13.1] /Users/tilak/.gradle/caches/8.9/transforms/637249ad1df056a73431289eb20df326/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
+40        android:debuggable="true"
+41        android:extractNativeLibs="true"
+42        android:icon="@mipmap/ic_launcher"
+43        android:label="Swasth Team" >
+44        <activity
+45            android:name="com.swasth.team.MainActivity"
+46            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+47            android:exported="true"
+48            android:hardwareAccelerated="true"
+49            android:launchMode="singleTop"
+50            android:theme="@style/LaunchTheme"
+51            android:windowSoftInputMode="adjustResize" >
+52
+53            <!--
+54                 Specifies an Android theme to apply to this Activity as soon as
+55                 the Android process has started. This theme is visible to the user
+56                 while the Flutter UI initializes. After that, this theme continues
+57                 to determine the Window background behind the Flutter UI.
+58            -->
+59            <meta-data
+60                android:name="io.flutter.embedding.android.NormalTheme"
+61                android:resource="@style/NormalTheme" />
 62
-63        <uses-library
-63-->[androidx.window:window:1.2.0] /Users/tilak/.gradle/caches/8.9/transforms/1916a8660131c573a1bbbf5fe85a737a/transformed/jetified-window-1.2.0/AndroidManifest.xml:23:9-25:40
-64            android:name="androidx.window.extensions"
-64-->[androidx.window:window:1.2.0] /Users/tilak/.gradle/caches/8.9/transforms/1916a8660131c573a1bbbf5fe85a737a/transformed/jetified-window-1.2.0/AndroidManifest.xml:24:13-54
-65            android:required="false" />
-65-->[androidx.window:window:1.2.0] /Users/tilak/.gradle/caches/8.9/transforms/1916a8660131c573a1bbbf5fe85a737a/transformed/jetified-window-1.2.0/AndroidManifest.xml:25:13-37
-66        <uses-library
-66-->[androidx.window:window:1.2.0] /Users/tilak/.gradle/caches/8.9/transforms/1916a8660131c573a1bbbf5fe85a737a/transformed/jetified-window-1.2.0/AndroidManifest.xml:26:9-28:40
-67            android:name="androidx.window.sidecar"
-67-->[androidx.window:window:1.2.0] /Users/tilak/.gradle/caches/8.9/transforms/1916a8660131c573a1bbbf5fe85a737a/transformed/jetified-window-1.2.0/AndroidManifest.xml:27:13-51
-68            android:required="false" />
-68-->[androidx.window:window:1.2.0] /Users/tilak/.gradle/caches/8.9/transforms/1916a8660131c573a1bbbf5fe85a737a/transformed/jetified-window-1.2.0/AndroidManifest.xml:28:13-37
-69
-70        <provider
-70-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/9ccbe453338f24c8c51bf0dc73a2f0ef/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
-71            android:name="androidx.startup.InitializationProvider"
-71-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/9ccbe453338f24c8c51bf0dc73a2f0ef/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:25:13-67
-72            android:authorities="com.swasth.team.androidx-startup"
-72-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/9ccbe453338f24c8c51bf0dc73a2f0ef/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:26:13-68
-73            android:exported="false" >
-73-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/9ccbe453338f24c8c51bf0dc73a2f0ef/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:27:13-37
-74            <meta-data
-74-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/9ccbe453338f24c8c51bf0dc73a2f0ef/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
-75                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-75-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/9ccbe453338f24c8c51bf0dc73a2f0ef/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
-76                android:value="androidx.startup" />
-76-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/9ccbe453338f24c8c51bf0dc73a2f0ef/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
-77            <meta-data
-77-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
-78                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-78-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
-79                android:value="androidx.startup" />
-79-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
-80        </provider>
-81
-82        <receiver
-82-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
-83            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-83-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
-84            android:directBootAware="false"
-84-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
-85            android:enabled="true"
-85-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
-86            android:exported="true"
-86-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
-87            android:permission="android.permission.DUMP" >
-87-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
-88            <intent-filter>
-88-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
-89                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-89-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
-89-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
-90            </intent-filter>
-91            <intent-filter>
-91-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
-92                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-92-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
-92-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
-93            </intent-filter>
-94            <intent-filter>
-94-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
-95                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-95-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
-95-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
-96            </intent-filter>
-97            <intent-filter>
-97-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
-98                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-98-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
-98-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
-99            </intent-filter>
-100        </receiver>
-101    </application>
-102
-103</manifest>
+63            <intent-filter>
+64                <action android:name="android.intent.action.MAIN" />
+65
+66                <category android:name="android.intent.category.LAUNCHER" />
+67            </intent-filter>
+68        </activity>
+69        <!--
+70             Don't delete the meta-data below.
+71             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+72        -->
+73        <meta-data
+74            android:name="flutterEmbedding"
+75            android:value="2" />
+76        <meta-data
+77            android:name="com.google.android.geo.API_KEY"
+78            android:value="AIzaSyB8UoTxemF5no_Va1aJn4x8s10VsFlLQHA" />
+79
+80        <service
+80-->[:geolocator_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:9-12:56
+81            android:name="com.baseflow.geolocator.GeolocatorLocationService"
+81-->[:geolocator_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:9:13-77
+82            android:enabled="true"
+82-->[:geolocator_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:10:13-35
+83            android:exported="false"
+83-->[:geolocator_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:11:13-37
+84            android:foregroundServiceType="location" />
+84-->[:geolocator_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:12:13-53
+85
+86        <uses-library
+86-->[androidx.window:window:1.2.0] /Users/tilak/.gradle/caches/8.9/transforms/1916a8660131c573a1bbbf5fe85a737a/transformed/jetified-window-1.2.0/AndroidManifest.xml:23:9-25:40
+87            android:name="androidx.window.extensions"
+87-->[androidx.window:window:1.2.0] /Users/tilak/.gradle/caches/8.9/transforms/1916a8660131c573a1bbbf5fe85a737a/transformed/jetified-window-1.2.0/AndroidManifest.xml:24:13-54
+88            android:required="false" />
+88-->[androidx.window:window:1.2.0] /Users/tilak/.gradle/caches/8.9/transforms/1916a8660131c573a1bbbf5fe85a737a/transformed/jetified-window-1.2.0/AndroidManifest.xml:25:13-37
+89        <uses-library
+89-->[androidx.window:window:1.2.0] /Users/tilak/.gradle/caches/8.9/transforms/1916a8660131c573a1bbbf5fe85a737a/transformed/jetified-window-1.2.0/AndroidManifest.xml:26:9-28:40
+90            android:name="androidx.window.sidecar"
+90-->[androidx.window:window:1.2.0] /Users/tilak/.gradle/caches/8.9/transforms/1916a8660131c573a1bbbf5fe85a737a/transformed/jetified-window-1.2.0/AndroidManifest.xml:27:13-51
+91            android:required="false" /> <!-- Needs to be explicitly declared on P+ -->
+91-->[androidx.window:window:1.2.0] /Users/tilak/.gradle/caches/8.9/transforms/1916a8660131c573a1bbbf5fe85a737a/transformed/jetified-window-1.2.0/AndroidManifest.xml:28:13-37
+92        <uses-library
+92-->[com.google.android.gms:play-services-maps:18.2.0] /Users/tilak/.gradle/caches/8.9/transforms/fdf631d14eae1d535ae3eafa4207ddec/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:39:9-41:40
+93            android:name="org.apache.http.legacy"
+93-->[com.google.android.gms:play-services-maps:18.2.0] /Users/tilak/.gradle/caches/8.9/transforms/fdf631d14eae1d535ae3eafa4207ddec/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:40:13-50
+94            android:required="false" />
+94-->[com.google.android.gms:play-services-maps:18.2.0] /Users/tilak/.gradle/caches/8.9/transforms/fdf631d14eae1d535ae3eafa4207ddec/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:41:13-37
+95
+96        <activity
+96-->[com.google.android.gms:play-services-base:18.3.0] /Users/tilak/.gradle/caches/8.9/transforms/c123c2e64283f8a7485ba52ad2ac1be7/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:20:9-22:45
+97            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+97-->[com.google.android.gms:play-services-base:18.3.0] /Users/tilak/.gradle/caches/8.9/transforms/c123c2e64283f8a7485ba52ad2ac1be7/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:20:19-85
+98            android:exported="false"
+98-->[com.google.android.gms:play-services-base:18.3.0] /Users/tilak/.gradle/caches/8.9/transforms/c123c2e64283f8a7485ba52ad2ac1be7/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:22:19-43
+99            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+99-->[com.google.android.gms:play-services-base:18.3.0] /Users/tilak/.gradle/caches/8.9/transforms/c123c2e64283f8a7485ba52ad2ac1be7/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:21:19-78
+100
+101        <meta-data
+101-->[com.google.android.gms:play-services-basement:18.3.0] /Users/tilak/.gradle/caches/8.9/transforms/98660cc7634b01b6029f332d4de1b51c/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:21:9-23:69
+102            android:name="com.google.android.gms.version"
+102-->[com.google.android.gms:play-services-basement:18.3.0] /Users/tilak/.gradle/caches/8.9/transforms/98660cc7634b01b6029f332d4de1b51c/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:22:13-58
+103            android:value="@integer/google_play_services_version" />
+103-->[com.google.android.gms:play-services-basement:18.3.0] /Users/tilak/.gradle/caches/8.9/transforms/98660cc7634b01b6029f332d4de1b51c/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:23:13-66
+104
+105        <provider
+105-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/9ccbe453338f24c8c51bf0dc73a2f0ef/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
+106            android:name="androidx.startup.InitializationProvider"
+106-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/9ccbe453338f24c8c51bf0dc73a2f0ef/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:25:13-67
+107            android:authorities="com.swasth.team.androidx-startup"
+107-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/9ccbe453338f24c8c51bf0dc73a2f0ef/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:26:13-68
+108            android:exported="false" >
+108-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/9ccbe453338f24c8c51bf0dc73a2f0ef/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:27:13-37
+109            <meta-data
+109-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/9ccbe453338f24c8c51bf0dc73a2f0ef/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+110                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+110-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/9ccbe453338f24c8c51bf0dc73a2f0ef/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+111                android:value="androidx.startup" />
+111-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/9ccbe453338f24c8c51bf0dc73a2f0ef/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+112            <meta-data
+112-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+113                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+113-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+114                android:value="androidx.startup" />
+114-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+115        </provider>
+116
+117        <receiver
+117-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+118            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+118-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+119            android:directBootAware="false"
+119-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+120            android:enabled="true"
+120-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+121            android:exported="true"
+121-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+122            android:permission="android.permission.DUMP" >
+122-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+123            <intent-filter>
+123-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+124                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+124-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+124-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+125            </intent-filter>
+126            <intent-filter>
+126-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+127                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+127-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+127-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+128            </intent-filter>
+129            <intent-filter>
+129-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+130                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+130-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+130-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+131            </intent-filter>
+132            <intent-filter>
+132-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+133                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+133-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+133-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/tilak/.gradle/caches/8.9/transforms/5e672277176fb5293d137c583fde0215/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+134            </intent-filter>
+135        </receiver>
+136    </application>
+137
+138</manifest>
