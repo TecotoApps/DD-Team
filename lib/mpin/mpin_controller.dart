@@ -21,8 +21,16 @@ class MPINController {
     UserInfoModal? employee = await apiService.generateMPIN(empcode, mpin);
     if(employee?.statusCode==200){
       await sharedPress.saveData("EMPLOGIN","LOGGEDIN");
-      Navigator.push(
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${employee?.message}')),
+      );
+      Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => EnterMpin()));
+    }
+    else{
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${employee?.message}')),
+      );
     }
     // if (employee?.payload != null) {
     //   Navigator.push(
@@ -44,10 +52,17 @@ class MPINController {
     ValidateMpinModel? validateMpinModel = await apiService.validateMpin(empcode, mpin);
     if(validateMpinModel?.statusCode == 200)
       {
-        if (validateMpinModel?.payload != null) {
+        final payload = validateMpinModel?.payload;
+        List<UserRole> roles = [];
+        if (payload != null && payload.isNotEmpty) {
+          for(int i=0;i<payload.length;i++){
+            roles.add(payload[i].roles!);
+          }
+
+            print('this is roles added : $roles');
             switch (validateMpinModel?.payload?[0].roles){
               case UserRole.SHOPEXECUTIVE:
-                navigate(ShopExeDashboard(),context);
+                navigate(ShopExeDashboard(roles: roles,),context);
                 break;
               case UserRole.HR:
                 navigate(HrDashboard(),context);
@@ -56,7 +71,7 @@ class MPINController {
                 navigate(ClusterManagerDashboard(),context);
                 break;
               case UserRole.DELIVERBOY:
-                navigate(DeliveryBoyDashboard(),context);
+                navigate(DeliveryBoyDashboard(roles: roles,),context);
                 break;
               case UserRole.ACCOUNTANT:
                 //
@@ -70,9 +85,17 @@ class MPINController {
 
   }
 
-  void navigate(Widget screen,context){
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>screen));
-  }
+
 }
 
 MPINController mpinController = MPINController();
+void navigate(Widget screen,context,{bool pushReplacement = false}){
+  if(pushReplacement){
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>screen), (Route<dynamic> route) => false,);
+
+  }
+  else{
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>screen));
+
+  }
+}

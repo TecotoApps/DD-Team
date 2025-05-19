@@ -1,8 +1,10 @@
 import 'package:dd_shop/dashboard/dashboard_controller.dart';
+import 'package:dd_shop/dashboard/switch_roles.dart';
 import 'package:dd_shop/delivery/delivery_controller.dart';
 import 'package:dd_shop/utils/components/elevated_rounded_button.dart';
 import 'package:dd_shop/utils/constants/app_fonts.dart';
 import 'package:dd_shop/utils/constants/colors.dart';
+import 'package:dd_shop/utils/constants/enumss.dart';
 import 'package:dd_shop/utils/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -10,7 +12,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 
 class DeliveryBoyDashboard extends StatefulWidget {
-  const DeliveryBoyDashboard({super.key});
+  final List<UserRole>? roles;
+  const DeliveryBoyDashboard({super.key,this.roles});
 
   @override
   State<DeliveryBoyDashboard> createState() => _DeliveryBoyDashboardState();
@@ -19,10 +22,14 @@ class DeliveryBoyDashboard extends StatefulWidget {
 class _DeliveryBoyDashboardState extends State<DeliveryBoyDashboard> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final DashboardController _dashboardController = Get.put(DashboardController());
+  int _orderCount = 0;
+  late Future _ordersFuture;
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _ordersFuture = _dashboardController.getDeliveryOrders(context);
   }
 
 
@@ -33,18 +40,86 @@ class _DeliveryBoyDashboardState extends State<DeliveryBoyDashboard> with Single
       appBar: AppBar(
         foregroundColor: Colors.white,
         backgroundColor: AppColors.appPrimaryColor,
-        title: Text('Delivery Boy'),
+        centerTitle: true,
+        title: Text(
+          'Orders Received ( $_orderCount )',
+          style: AppFonts.title.copyWith(color: Colors.white,fontWeight: FontWeight.bold),
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(12), // Adjust this radius as needed
+          ),
+        ),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Icon(Icons.menu, color: Colors.white),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          },
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: AppColors.appPrimaryColor,
+              ),
+              child: Text(
+                'Delivery Agent',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.compare_arrows_rounded),
+              title: Text('Switch Account',
+                style: TextStyle(color:widget.roles!.length>1?AppColors.textColor:AppColors.text_border_color ),),
+              onTap: () {
+                print('thisn is on tap');
+                Navigator.pop(context);
+                if(widget.roles!.length>1){
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SwitchRoles(roles: widget.roles,),
+                    ),
+                  );
+                }
+
+
+              },
+            ),
+            // Add more menu items here if needed
+          ],
+        ),
       ),
       body: TabBarView(
         controller: _tabController,
         children: [
           FutureBuilder(
-            future: _dashboardController.getDeliveryOrders(context),
+            future: _ordersFuture,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.data?["payload"] == null) {
                   return Center(child: Text('Something Went Wrong'));
                 } else {
+
+                  final newCount = snapshot.data["payload"].length;
+                  if (_orderCount != newCount) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      setState(() {
+                        _orderCount = newCount;
+                      });
+                    });
+                  }
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                     child: ListView.builder(
@@ -62,15 +137,24 @@ class _DeliveryBoyDashboardState extends State<DeliveryBoyDashboard> with Single
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Gap(20),
-                                  Text(
-                                    'OrderID. ${order['orderId']}',
-                                    style: AppFonts.title.copyWith(fontWeight: FontWeight.bold, fontSize: 16),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Order - ${order['orderCode']}',
+                                        style: AppFonts.title.copyWith(fontWeight: FontWeight.bold,color: AppColors.appSecondaryColor),
+                                      ),
+                                      Text(
+                                        '${getSlotText(order['timeSlot'])}',
+                                        style: AppFonts.smallText.copyWith(color: AppColors.appPrimaryColor),
+                                      ),
+                                    ],
                                   ),
                                   Gap(20),
                                   Row(
                                     children: [
                                       RoundedElevatedButton(
-                                          width: MediaQuery.of(context).size.width*0.4,
+                                          width: MediaQuery.of(context).size.width*0.3,
                                           height: MediaQuery.of(context).size.height * 0.05,
                                           text:order['orderStatus'] == "CREATED"? 'Pick up': "Complete Order" ,
                                           onPressed: () async {
@@ -82,10 +166,10 @@ class _DeliveryBoyDashboardState extends State<DeliveryBoyDashboard> with Single
                                             }
 
                                           },
-                                          cornerRadius: 6.0,
+                                          cornerRadius: 12.0,
                                           buttonColor: order['orderStatus'] == "CREATED"?AppColors.appPrimaryColor:Colors.green,
                                           textStyle: AppFonts.title.copyWith(
-                                              color: AppColors.white, fontWeight: FontWeight.w600)),
+                                              color: AppColors.white)),
                                     ],
                                   ),
                                   Gap(20),
@@ -109,5 +193,25 @@ class _DeliveryBoyDashboardState extends State<DeliveryBoyDashboard> with Single
         ],
       ),
     );
+  }
+}
+
+
+String getSlotText(String enumValue) {
+  switch (enumValue) {
+    case "EIGHTTOTEN":
+      return "8am - 10am";
+    case "TENTOTWELVE":
+      return "10am - 12pm";
+    case "TWELVETOTWO":
+      return "12pm - 2pm";
+    case "TWOTOFOUR":
+      return "2pm - 4pm";
+    case "FOURTOSIX":
+      return "4pm - 6pm";
+    case "SIXTOEIGHT":
+      return "6pm - 8pm";
+    default:
+      return "Unknown Slot";
   }
 }

@@ -26,6 +26,7 @@ class Dd_Strings {
   static const String total_items = 'Total Items';
   static const String total_weight = 'Total Weight';
   static const String bag_code = 'Bag Code';
+  static const String bag_number = 'Bag Number';
   static const String comments = 'Comments';
   static const String pricing_type = 'Pricing Type ';
   static const String order_pickup = 'Order Pickup ';
@@ -66,5 +67,12 @@ class Dd_Strings {
   static const String add_location = "Add Location";
   static const String customer_name = 'Customer Name';
   static const String schedule_order = 'Schedule_order';
+  static const String pick_from_store = 'Pick From Store';
+  static const String deliver_to_home = 'Deliver To Home';
+
+  final List<String> itemTypes = [
+  "pant", "shirt", "jacket", "t shirt", "saree",
+  "track pant", "baby shirt", "baby pant", "trousers"
+  ];
 
 }

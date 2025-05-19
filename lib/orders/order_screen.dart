@@ -235,3 +235,7 @@ class OrdersState extends State<Orders> {
     );
   }
 }
+
+enum OrderStatus{
+  CREATED,PICKED,PROCESS,READYTODELIVER,COMPLETED,CANCELED
+}

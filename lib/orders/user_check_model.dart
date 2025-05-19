@@ -30,11 +30,11 @@ class Payload {
   String? userId;
   String? name;
   String? phoneNumber;
-  Null? deviceData;
-  Null? fcmToken;
-  Null? userStatus;
+  String? deviceData;
+  String? fcmToken;
+  String? userStatus;
   String? createdDate;
-  Null? signoutDate;
+  String? signoutDate;
 
   Payload(
       {this.userId,

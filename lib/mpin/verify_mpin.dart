@@ -13,12 +13,13 @@ import '../otp_generate/otp_generate_controller.dart';
 class EnterMpin extends StatelessWidget {
   EnterMpin({super.key});
 
-  FocusNode focusNode_1 = FocusNode();
-  FocusNode focusNode_2 = FocusNode();
-  FocusNode focusNode_3 = FocusNode();
-  FocusNode focusNode_4 = FocusNode();
-  FocusNode focusNode_5 = FocusNode();
-  FocusNode focusNode_6 = FocusNode();
+  final FocusNode focusNode_1 = FocusNode();
+  final FocusNode focusNode_2 = FocusNode();
+  final FocusNode focusNode_3 = FocusNode();
+  final FocusNode focusNode_4 = FocusNode();
+  final FocusNode focusNode_5 = FocusNode();
+  final FocusNode focusNode_6 = FocusNode();
+
   final TextEditingController mpinController_1 = TextEditingController();
   final TextEditingController mpinController_2 = TextEditingController();
   final TextEditingController mpinController_3 = TextEditingController();
@@ -50,15 +51,17 @@ class EnterMpin extends StatelessWidget {
                 Gap(24),
                 Center(
                   child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 36.0),
-                      color: Colors.white,
-                      child: Text(
-                        Dd_Strings.generate_otp_text,
-                        textAlign: TextAlign.center,
-                        style: AppFonts.smallText.copyWith(
-                            color: AppColors.textColor,
-                            fontWeight: FontWeight.w400),
-                      )),
+                    padding: EdgeInsets.symmetric(horizontal: 36.0),
+                    color: Colors.white,
+                    child: Text(
+                      Dd_Strings.generate_otp_text,
+                      textAlign: TextAlign.center,
+                      style: AppFonts.smallText.copyWith(
+                        color: AppColors.textColor,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
                 ),
                 Padding(padding: EdgeInsets.only(top: 40.0)),
                 Center(
@@ -79,23 +82,42 @@ class EnterMpin extends StatelessWidget {
                     Dd_Strings.enter_your_mpin,
                     textAlign: TextAlign.start,
                     style: AppFonts.title.copyWith(
-                        color: AppColors.appPrimaryColor,
-                        fontWeight: FontWeight.w700),
+                      color: AppColors.appPrimaryColor,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
                 Gap(10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildOtpTextField(focusNode_1,focusNode_2, mpinController_1),
-                      buildOtpTextField(focusNode_2,focusNode_3, mpinController_2),
-                      buildOtpTextField(focusNode_3,focusNode_4, mpinController_3),
-                      buildOtpTextField(focusNode_4,focusNode_5, mpinController_4),
-                      buildOtpTextField(focusNode_5,focusNode_6, mpinController_5),
-                      buildOtpTextField(focusNode_6,focusNode_6, mpinController_6),
-                    ],
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      if (mpinController_1.text.isEmpty) {
+                        focusNode_1.requestFocus();
+                      } else if (mpinController_2.text.isEmpty) {
+                        focusNode_2.requestFocus();
+                      } else if (mpinController_3.text.isEmpty) {
+                        focusNode_3.requestFocus();
+                      } else if (mpinController_4.text.isEmpty) {
+                        focusNode_4.requestFocus();
+                      } else if (mpinController_5.text.isEmpty) {
+                        focusNode_5.requestFocus();
+                      } else {
+                        focusNode_6.requestFocus();
+                      }
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        buildOtpTextField(focusNode_1, focusNode_2, mpinController_1),
+                        buildOtpTextField(focusNode_2, focusNode_3, mpinController_2),
+                        buildOtpTextField(focusNode_3, focusNode_4, mpinController_3),
+                        buildOtpTextField(focusNode_4, focusNode_5, mpinController_4),
+                        buildOtpTextField(focusNode_5, focusNode_6, mpinController_5),
+                        buildOtpTextField(focusNode_6, null, mpinController_6),
+                      ],
+                    ),
                   ),
                 ),
                 Spacer(),
@@ -103,29 +125,26 @@ class EnterMpin extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                   child: RoundedElevatedButton(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      text: Dd_Strings.submit_button_text,
-                      onPressed: () async {
-                        String mpin = mpinController_1.text +
-                            mpinController_2.text +
-                            mpinController_3.text +
-                            mpinController_4.text +
-                            mpinController_5.text +
-                            mpinController_6.text;
-                        print("this is mpin $mpin");
-                        await mpinController.validateMpin(mpin, context);
-                        // _otpBloc.add(OnOtpGenerate(number: phoneController.text));
-                        // Navigator.pushReplacement(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => OtpValidation(
-                        //             phoneNumber:phoneController.text)));
-                      },
-                      cornerRadius: 6.0,
-                      buttonColor: AppColors.appSecondaryColor,
-                      textStyle: AppFonts.title.copyWith(
-                          color: AppColors.white, fontWeight: FontWeight.w600)),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    text: Dd_Strings.submit_button_text,
+                    onPressed: () async {
+                      String mpin = mpinController_1.text +
+                          mpinController_2.text +
+                          mpinController_3.text +
+                          mpinController_4.text +
+                          mpinController_5.text +
+                          mpinController_6.text;
+                      print("this is mpin $mpin");
+                      await mpinController.validateMpin(mpin, context);
+                    },
+                    cornerRadius: 6.0,
+                    buttonColor: AppColors.appSecondaryColor,
+                    textStyle: AppFonts.title.copyWith(
+                      color: AppColors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -136,7 +155,10 @@ class EnterMpin extends StatelessWidget {
   }
 
   Widget buildOtpTextField(
-      FocusNode focusNode, FocusNode? nextFocus, TextEditingController controller) {
+      FocusNode focusNode,
+      FocusNode? nextFocus,
+      TextEditingController controller,
+      ) {
     return SizedBox(
       height: 48.0,
       width: 48.0,
@@ -149,7 +171,7 @@ class EnterMpin extends StatelessWidget {
         textAlign: TextAlign.center,
         length: 1,
         borderRadius: 8,
-        onChanged:  (value) {
+        onChanged: (value) {
           if (value.isNotEmpty && nextFocus != null) {
             FocusScope.of(focusNode.context!).requestFocus(nextFocus);
           }

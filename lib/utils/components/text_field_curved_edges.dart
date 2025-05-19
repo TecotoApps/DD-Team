@@ -16,6 +16,11 @@ class TextFieldCurvedEdges extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final String? inputFormatter;
   final String? validatorType;
+  final bool readOnly;
+  final VoidCallback? onTap;
+  final String? hintText;
+  final String? labelText;
+  final Widget? suffixIcon;
 
   const TextFieldCurvedEdges({
     Key? key,
@@ -31,6 +36,11 @@ class TextFieldCurvedEdges extends StatelessWidget {
     this.onChanged,
     this.inputFormatter = '',
     this.validatorType = '',
+    this.readOnly = false,
+    this.onTap,
+    this.hintText,
+    this.labelText,
+    this.suffixIcon,
   }) : super(key: key);
 
   @override
@@ -55,8 +65,10 @@ class TextFieldCurvedEdges extends StatelessWidget {
           maxLength: length,
           maxLines: 1,
           focusNode: focusNode,
+          readOnly: readOnly,
+          onTap: onTap,
           onFieldSubmitted: onSubmitted,
-          onChanged: onChanged, // Added onChanged here
+          onChanged: onChanged,
           inputFormatters: inputFormatter == 'number'
               ? <TextInputFormatter>[
             FilteringTextInputFormatter.allow(RegExp(r'[\d+]')),
@@ -74,9 +86,12 @@ class TextFieldCurvedEdges extends StatelessWidget {
             return null;
           }
               : null,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             border: InputBorder.none,
             counterText: '',
+            hintText: hintText,
+            labelText: labelText,
+            suffixIcon: suffixIcon,
           ),
         ),
       ),

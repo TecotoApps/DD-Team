@@ -7,13 +7,14 @@ import 'package:dd_shop/dashboard/model/order_list_model.dart';
 import 'package:dd_shop/employee/model/employee_list_model.dart';
 import 'package:dd_shop/hr/model/role_list_model.dart';
 import 'package:dd_shop/mpin/model/validate_mpin_model.dart';
-import 'package:dd_shop/orders/order_model.dart';
+import 'package:dd_shop/orders/create_order_model.dart';
+import 'package:dd_shop/orders/pickup_model.dart';
+import 'package:dd_shop/orders/register_customer_model.dart';
 import 'package:dd_shop/orders/user_check_model.dart';
 import 'package:dd_shop/shop/model/location_model.dart';
 import 'package:dd_shop/shop_prices/piece_model.dart';
 import 'package:dd_shop/shop_prices/weight_model.dart';
 import 'package:dd_shop/shop_signup/shop_model.dart';
-import 'package:dd_shop/utils/components/alertDialogue.dart';
 import 'package:http/http.dart';
 
 import '../otp_generate/otp_modal.dart';
@@ -75,17 +76,14 @@ class APIService {
       }),
     );
     print("this is response ${response.body}");
-
-    Map<String, dynamic> jsonResponse = json.decode(response.body);
-    UserInfoModal? payload;
-    if (jsonResponse["statusCode"] == 200) {
-      payload = UserInfoModal.fromJson(jsonResponse["payload"]);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var user = UserInfoModal.fromJson(userMap);
+      return user;
     } else {
-      payload = null;
+      var res = json.decode(response.body);
+      return res;
     }
-    // Now map the JSON Map to the UserInfoModal using the fromJson constructor
-    // Return the UserInfoModal object
-    return payload;
   }
 
   Future<ValidateMpinModel?> validateMpin(empcode, mpin) async {
@@ -201,7 +199,7 @@ class APIService {
 
   Future deliveryOders(empCode) async {
     print('in services $empCode');
-    Response response = await get(Uri.parse('$url/order/deliverOrders/25S30007'),
+    Response response = await get(Uri.parse('$url/order/deliverOrders/$empCode'),
         headers: _headers);
     print("this is response ${response.body}");
     if (response.statusCode == 200) {
@@ -372,6 +370,33 @@ class APIService {
       return false;
     }
   }
+  Future<PickupModel> confirmPickup(orderId,bagNo,totalItems,totalWeight,comments,pricingType) async{
+    print("this is orderId $orderId and status $orderId");
+    Response response = await put(
+      Uri.parse('$url/order/orderStatus'),
+      headers: _headers,
+      body: jsonEncode(<String, String>{
+        "orderId": orderId,
+        "bagNo": bagNo,
+        "totalItems": totalItems,
+        "totalWeight": totalWeight,
+        "comments": comments,
+        "pricingType": pricingType
+      }),
+    );
+    print("this is response of update order ${response.body}");
+
+    if (response.statusCode == 200) {
+
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      PickupModel userInfoModal = PickupModel.fromJson(jsonResponse);
+      return userInfoModal;
+
+    } else {
+      PickupModel res = json.decode(response.body);
+      return res;
+    }
+  }
 
   Future<UserInfoModal> addShop(phoneNumber, imageUrl, city, state) async {
     print("this is mobile number passing, $phoneNumber");
@@ -490,7 +515,7 @@ class APIService {
   }
 
   Future<LocationModel> addLocation(
-      id, addressName, address, city, landmark, latitude, longitude) async {
+      id, address, city, landmark, latitude, longitude) async {
     print(
         "this is userid---->$id, address--->$address, landmark---->$landmark, lat-->$latitude, long---->$longitude");
     Response response = await post(
@@ -532,6 +557,81 @@ class APIService {
       LocationModel res = json.decode(response.body);
       return res;
     }
+  }
+
+  Future<CreateOrderModel> createOrder(customerId, locationId, shopId,comments,address,timeSlot,orderDate) async {
+    Response response = await post(
+      Uri.parse('$url/order/create'),
+      headers: _headers,
+      body: jsonEncode(<String, String>{
+        'customerId': '$customerId',
+        'shopId': '$shopId',
+        'locationId': '$locationId',
+        'comments':'$comments',
+        'address':'$address',
+        'timeSlot':'$timeSlot',
+        'orderDate':'$orderDate'
+      }),
+    );
+    print("this is response ${response.body}");
+
+    if (response.statusCode == 200) {
+      print('inside 200');
+      Map<String, dynamic> orderMap = jsonDecode(response.body);
+      CreateOrderModel orders = CreateOrderModel.fromJson(orderMap);
+      return orders;
+    } else {
+      Map<String, dynamic> res = json.decode(response.body);
+      CreateOrderModel result = CreateOrderModel.fromJson(res);
+      return result;
+    }
+  }
+
+  Future<RegisterCustomerModel> registerCustomer(mobile, name) async {
+    print("this is username $mobile and mobile $name ");
+    Response response = await post(
+      Uri.parse('$url/user/register'),
+      headers: _headers,
+      body: jsonEncode(
+          <String, String>{'phoneNumber': '$mobile', 'name': '$name',
+            'userType':'CUSTOMER', 'fcmToken':'', 'deviceData': ''}),
+    );
+    print("this is response ${response.body}");
+
+    if (response.statusCode == 201) {
+      print('inside 200');
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var user = RegisterCustomerModel.fromJson(userMap);
+      return user;
+    } else {
+      var res = json.decode(response.body);
+      return res;
+    }
+  }
+
+  Future<UserInfoModal> pickupOrder(phoneNumber, imageUrl, city, state) async {
+    print("this is mobile number passing, $phoneNumber");
+    Response response = await post(
+      Uri.parse('$url/order/pickup'),
+      headers: _headers,
+      body: jsonEncode(<String, String>{
+        "phoneNumber": "$phoneNumber",
+        "imageUrl": "$imageUrl",
+        "shopType": "REGULAR",
+        "shopOwnership": "COMPANY",
+        "city": "$city",
+        "state": "$state"
+      }),
+    );
+    print("this is response ${response.body}");
+
+    Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+    // Now map the JSON Map to the UserInfoModal using the fromJson constructor
+    UserInfoModal userInfoModal = UserInfoModal.fromJson(jsonResponse);
+
+    // Return the UserInfoModal object
+    return userInfoModal;
   }
 
 

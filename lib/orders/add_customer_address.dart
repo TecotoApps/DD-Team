@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:dd_shop/services/api_services.dart';
 import 'package:dd_shop/utils/components/elevated_rounded_button.dart';
 import 'package:dd_shop/utils/components/text_field_curved_edges.dart';
 import 'package:dd_shop/utils/constants/app_fonts.dart';
@@ -11,7 +12,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class AddCustomerAddress extends StatefulWidget {
-  const AddCustomerAddress({super.key});
+  final String? customerId;
+  const AddCustomerAddress({super.key,this.customerId});
 
   @override
   State<AddCustomerAddress> createState() => _AddCustomerAddressState();
@@ -89,7 +91,7 @@ class _AddCustomerAddressState extends State<AddCustomerAddress> {
     print("Tapped Location: ${tappedPoint.latitude}, ${tappedPoint.longitude}");
 
     setState(() {
-      lat = tappedPoint.latitude;
+      lat = tappedPoint.longitude;
       lng = tappedPoint.longitude;
       _markers.clear();
       _markers.add(
@@ -120,7 +122,9 @@ class _AddCustomerAddressState extends State<AddCustomerAddress> {
           style: AppFonts.subHeader.copyWith(color: AppColors.white),
         ),
       ),
-      body: SingleChildScrollView(
+      body: _currentPosition==null?
+      Center(child: CircularProgressIndicator(color: AppColors.appPrimaryColor,)):
+      SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Column(
@@ -178,7 +182,19 @@ class _AddCustomerAddressState extends State<AddCustomerAddress> {
                   borderColor: AppColors.text_border_color),
               Gap(MediaQuery.of(context).size.height * 0.03),
               RoundedElevatedButton(width: MediaQuery.of(context).size.width,
-                  height: 40, text: 'Add Address', onPressed: (){
+                  height: 40, text: 'Submit', onPressed: ()async{
+                var res = await apiService.addLocation(widget.customerId,
+                    _addressController.text, _cityController.text,
+                    _landmarkController.text, lat, lng);
+                if(res.statusCode == 201){
+                  Navigator.pop(context);
+                }
+                else{
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Something went wrong...Try again Later')),
+                  );
+                }
+
                   },
                   cornerRadius: 10, buttonColor: AppColors.appSecondaryColor,
                   textStyle: AppFonts.title.copyWith(color: AppColors.white,fontWeight: FontWeight.bold))
