@@ -40,7 +40,7 @@ class Payload {
   String? clusterName;
   String? shopId;
   String? assignDate;
-  Null? stopDate;
+  String? stopDate;
   String? description;
 
   Payload(

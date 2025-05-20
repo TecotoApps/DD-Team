@@ -13,7 +13,8 @@ import 'package:get/get_instance/get_instance.dart';
 
 class DeliveryBoyDashboard extends StatefulWidget {
   final List<UserRole>? roles;
-  const DeliveryBoyDashboard({super.key,this.roles});
+  final String? shopId;
+  const DeliveryBoyDashboard({super.key,this.roles,this.shopId});
 
   @override
   State<DeliveryBoyDashboard> createState() => _DeliveryBoyDashboardState();
@@ -89,7 +90,7 @@ class _DeliveryBoyDashboardState extends State<DeliveryBoyDashboard> with Single
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SwitchRoles(roles: widget.roles,),
+                      builder: (context) => SwitchRoles(roles: widget.roles,shopId: widget.shopId,),
                     ),
                   );
                 }

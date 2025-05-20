@@ -370,7 +370,7 @@ class APIService {
       return false;
     }
   }
-  Future<PickupModel> confirmPickup(orderId,bagNo,totalItems,totalWeight,comments,pricingType) async{
+  Future<PickupModel> confirmPickup(orderId,bagNo,totalItems,totalWeight,comments,pricingType,orderItems) async{
     print("this is orderId $orderId and status $orderId");
     Response response = await put(
       Uri.parse('$url/order/orderStatus'),
@@ -632,6 +632,26 @@ class APIService {
 
     // Return the UserInfoModal object
     return userInfoModal;
+  }
+
+  Future<bool> updateLocationToOrder( orderId, locationId, address, lat, lng) async {
+    Response response = await put(
+      Uri.parse('$url/order/addLocation'),
+      headers: _headers,
+      body: jsonEncode(<String, String>{
+        "userId": "$orderId",
+        "locationId": "$locationId",
+        "address":'$address',
+        "lat":lat,
+        "lng":lng
+      }),
+    );
+    print("this is response of update role ${response.body}");
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 

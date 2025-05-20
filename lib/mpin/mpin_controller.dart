@@ -54,15 +54,19 @@ class MPINController {
       {
         final payload = validateMpinModel?.payload;
         List<UserRole> roles = [];
+        String? shopId;
         if (payload != null && payload.isNotEmpty) {
           for(int i=0;i<payload.length;i++){
             roles.add(payload[i].roles!);
+            if(payload[i].shopId!=null){
+              shopId = payload[i].shopId;
+            }
           }
 
             print('this is roles added : $roles');
             switch (validateMpinModel?.payload?[0].roles){
               case UserRole.SHOPEXECUTIVE:
-                navigate(ShopExeDashboard(roles: roles,),context);
+                navigate(ShopExeDashboard(roles: roles,shopId: shopId,),context);
                 break;
               case UserRole.HR:
                 navigate(HrDashboard(),context);
@@ -71,7 +75,7 @@ class MPINController {
                 navigate(ClusterManagerDashboard(),context);
                 break;
               case UserRole.DELIVERBOY:
-                navigate(DeliveryBoyDashboard(roles: roles,),context);
+                navigate(DeliveryBoyDashboard(roles: roles,shopId: shopId),context);
                 break;
               case UserRole.ACCOUNTANT:
                 //

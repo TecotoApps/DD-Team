@@ -1,5 +1,6 @@
 import 'package:dd_shop/dashboard/model/order_list_model.dart';
 import 'package:dd_shop/delivery/delivery_controller.dart';
+import 'package:dd_shop/services/api_services.dart';
 import 'package:dd_shop/utils/components/elevated_rounded_button.dart';
 import 'package:dd_shop/utils/components/text_field_curved_edges.dart';
 import 'package:dd_shop/utils/constants/app_fonts.dart';
@@ -26,19 +27,27 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
 
   String selectedOption = 'Weight'; // Default selected radio button
 
-  // Dropdown item list and selected item
   final List<String> itemTypes = [
     "pant", "shirt", "jacket", "t shirt", "saree",
     "track pant", "baby shirt", "baby pant", "trousers"
   ];
   String? selectedItem;
 
-  // Store item count map
   Map<String, int> selectedItems = {};
+
+  // List to hold itemName and quantity
+  List<Map<String, String>> orderItems = [];
 
   void incrementItem(String item) {
     setState(() {
       selectedItems[item] = (selectedItems[item] ?? 0) + 1;
+
+      int index = orderItems.indexWhere((element) => element['itemName'] == item);
+      if (index >= 0) {
+        orderItems[index]['quantity'] = selectedItems[item].toString();
+      } else {
+        orderItems.add({'itemName': item, 'quantity': '1'});
+      }
     });
   }
 
@@ -46,8 +55,15 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
     setState(() {
       if (selectedItems.containsKey(item) && selectedItems[item]! > 0) {
         selectedItems[item] = selectedItems[item]! - 1;
+
+        int index = orderItems.indexWhere((element) => element['itemName'] == item);
         if (selectedItems[item] == 0) {
           selectedItems.remove(item);
+          if (index >= 0) orderItems.removeAt(index);
+        } else {
+          if (index >= 0) {
+            orderItems[index]['quantity'] = selectedItems[item].toString();
+          }
         }
       }
     });
@@ -92,7 +108,6 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
               ),
               Gap(20),
 
-              // Dropdown
               Text("Add Items"),
               DropdownButtonFormField<String>(
                 value: selectedItem,
@@ -100,7 +115,7 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                 isExpanded: true,
                 hint: Text("select an item"),
                 dropdownColor: AppColors.white,
-                menuMaxHeight: MediaQuery.of(context).size.height*0.4,
+                menuMaxHeight: MediaQuery.of(context).size.height * 0.4,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.text_border_color),
@@ -110,30 +125,29 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                     borderSide: BorderSide(color: AppColors.text_border_color),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                   contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 ),
                 items: itemTypes.map((item) {
                   return DropdownMenuItem<String>(
                     value: item,
-                    child: Text(item,style: AppFonts.title,),
+                    child: Text(item, style: AppFonts.title),
                   );
                 }).toList(),
                 onChanged: (value) {
                   if (value != null) {
                     setState(() {
                       selectedItem = value;
-                      incrementItem(value); // auto add once on selection
+                      incrementItem(value);
                     });
                   }
                 },
               ),
               Gap(10),
 
-              // Show selected items with count
               if (selectedItems.isNotEmpty)
                 Container(
-                  padding: const EdgeInsets.all( 8.0),
+                  padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
@@ -151,12 +165,12 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                           Row(
                             children: [
                               IconButton(
-                                icon: Icon(Icons.remove_circle_outline,color: AppColors.text_border_color,),
+                                icon: Icon(Icons.remove_circle_outline, color: AppColors.text_border_color),
                                 onPressed: () => decrementItem(entry.key),
                               ),
                               Text(entry.value.toString(), style: TextStyle(fontSize: 16)),
                               IconButton(
-                                icon: Icon(Icons.add_circle_outline,color: AppColors.appPrimaryColor,),
+                                icon: Icon(Icons.add_circle_outline, color: AppColors.appPrimaryColor),
                                 onPressed: () => incrementItem(entry.key),
                               ),
                             ],
@@ -242,7 +256,7 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                 children: [
                   RadioListTile<String>(
                     title: const Text('Weight'),
-                    value: 'Weight',
+                    value: 'WEIGHT',
                     groupValue: selectedOption,
                     activeColor: AppColors.appPrimaryColor,
                     onChanged: (value) {
@@ -253,7 +267,7 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                   ),
                   RadioListTile<String>(
                     title: const Text('Piece'),
-                    value: 'Piece',
+                    value: 'PIECE',
                     groupValue: selectedOption,
                     activeColor: AppColors.appPrimaryColor,
                     onChanged: (value) {
@@ -264,7 +278,7 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                   ),
                   RadioListTile<String>(
                     title: const Text('Package'),
-                    value: 'Package',
+                    value: 'PACKAGE',
                     groupValue: selectedOption,
                     activeColor: AppColors.appPrimaryColor,
                     onChanged: (value) {
@@ -281,13 +295,23 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                 height: MediaQuery.of(context).size.height * 0.05,
                 text: "Pickup",
                 onPressed: () async {
-                  // TODO: Implement submission logic
+                  print(orderItems); // <- To verify structure before API use
+                  //
+                  // apiService.confirmPickup(
+                  //   widget.orderPayload.orderId,
+                  //   bagNoController.text,
+                  //   itemsController.text,
+                  //   weightController.text,
+                  //   commentsController.text,
+                  //   selectedOption,orderItems
+                  // );
                 },
                 cornerRadius: 6.0,
                 buttonColor: AppColors.appPrimaryColor,
                 textStyle: AppFonts.title.copyWith(
                     color: AppColors.white, fontWeight: FontWeight.w600),
               ),
+              Gap(10),
             ],
           ),
         ),

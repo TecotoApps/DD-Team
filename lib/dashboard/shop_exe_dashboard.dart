@@ -10,8 +10,9 @@ import 'package:get/get.dart';
 
 class ShopExeDashboard extends StatefulWidget {
   final List<UserRole>? roles;
+  final String? shopId;
 
-  const ShopExeDashboard({super.key,this.roles});
+  const ShopExeDashboard({super.key,this.roles, this.shopId});
 
   @override
   State<ShopExeDashboard> createState() => _ShopExeDashboardState();
@@ -26,12 +27,13 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
     super.initState();
     _ordersFuture = _fetchOrders();
     print('User Roles: ${widget.roles}');
+    print('Shop ID: ${widget.shopId}');
 
   }
 
   Future _fetchOrders() {
     return _dashboardController.getOrdersList(
-      '9e85b524-0909-4d0b-8511-649974abb94d',
+      '${widget.shopId}',
       context,
     );
   }
@@ -92,7 +94,7 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SwitchRoles(roles: widget.roles,),
+                      builder: (context) => SwitchRoles(roles: widget.roles,shopId: widget.shopId,),
                     ),
                   );
                 }
@@ -109,7 +111,7 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => AddCustomer(
-                      shopId: '9e85b524-0909-4d0b-8511-649974abb94d',
+                      shopId: '${widget.shopId}',
                     ),
                   ),
                 );
@@ -127,10 +129,8 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
           future: _ordersFuture,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.data?["payload"] == null) {
-                return ListView( // Required for RefreshIndicator to work when there's an error
-                  children: [Center(child: Text('Something Went Wrong'))],
-                );
+              if (snapshot.data?["payload"] == null ) {
+                return Center(child: Text('No Orders Received'));
               } else {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
@@ -147,12 +147,25 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
                             title: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Bag No. ${order['bagNo'] ?? 000}',
-                                  style: AppFonts.title.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Bag No. ${order['bagNo'] ?? 000}',
+                                      style: AppFonts.title.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${order['orderStatus']}',
+                                      style: AppFonts.title.copyWith(
+                                        color: AppColors.textColor,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 Gap(10),
                                 Row(
@@ -174,19 +187,19 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
                                     ),
                                   ],
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      '${order['orderStatus']}',
-                                      style: AppFonts.title.copyWith(
-                                        color: AppColors.textColor,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                // Row(
+                                //   mainAxisAlignment: MainAxisAlignment.end,
+                                //   children: [
+                                //     Text(
+                                //       '${order['orderStatus']}',
+                                //       style: AppFonts.title.copyWith(
+                                //         color: AppColors.textColor,
+                                //         fontWeight: FontWeight.w500,
+                                //         fontSize: 14,
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
                               ],
                             ),
                             children: [
@@ -251,7 +264,7 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
             context,
             MaterialPageRoute(
               builder: (context) => AddCustomer(
-                shopId: '9e85b524-0909-4d0b-8511-649974abb94d',
+                shopId: '${widget.shopId}',
               ),
             ),
           );

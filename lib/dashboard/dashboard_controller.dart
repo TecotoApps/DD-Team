@@ -1,7 +1,5 @@
 import 'package:dd_shop/dashboard/model/add_employee.dart';
 import 'package:dd_shop/dashboard/model/add_new_cluster.dart';
-import 'package:dd_shop/dashboard/model/assign_role_model.dart';
-import 'package:dd_shop/dashboard/model/order_list_model.dart';
 import 'package:dd_shop/employee/model/employee_list_model.dart';
 import 'package:dd_shop/hr/model/role_list_model.dart';
 import 'package:dd_shop/services/api_services.dart';
@@ -66,7 +64,6 @@ class DashboardController{
 
   Future getDeliveryOrders(context) async{
     String empCode = await sharedPress.getData('EMPCODE');
-    // var shopOrderModel = await apiService.deliveryOders(empCode);
     var shopOrderModel = await apiService.deliveryOders(empCode);
     print("this is delivery res $shopOrderModel");
     return shopOrderModel;

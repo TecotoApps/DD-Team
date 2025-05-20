@@ -12,8 +12,9 @@ import 'shop_exe_dashboard.dart';
 
 class SwitchRoles extends StatefulWidget {
   final List<UserRole>? roles;
+  final String? shopId;
 
-  const SwitchRoles({super.key, this.roles});
+  const SwitchRoles({super.key, this.roles, this.shopId});
 
   @override
   State<SwitchRoles> createState() => _SwitchRolesState();
@@ -85,7 +86,7 @@ class _SwitchRolesState extends State<SwitchRoles> {
   navigateToSelectedRole(UserRole role){
     switch (role){
       case UserRole.SHOPEXECUTIVE:
-        navigate(ShopExeDashboard(roles: widget.roles,),context,pushReplacement: true);
+        navigate(ShopExeDashboard(roles: widget.roles,shopId: widget.shopId,),context,pushReplacement: true);
         break;
       case UserRole.HR:
         navigate(HrDashboard(),context,pushReplacement: true);
@@ -94,7 +95,7 @@ class _SwitchRolesState extends State<SwitchRoles> {
         navigate(ClusterManagerDashboard(),context,pushReplacement: true);
         break;
       case UserRole.DELIVERBOY:
-        navigate(DeliveryBoyDashboard(roles: widget.roles,),context,pushReplacement: true);
+        navigate(DeliveryBoyDashboard(roles: widget.roles,shopId: widget.shopId,),context,pushReplacement: true);
         break;
       case UserRole.ACCOUNTANT:
       //

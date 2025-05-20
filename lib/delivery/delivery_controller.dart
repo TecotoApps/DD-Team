@@ -19,8 +19,8 @@ class DeliveryController{
 
   }
 
-  confirmPickup(orderId,bagNo,totalItems,totalWeight,comments,pricingType) async{
-    PickupModel pickupModel = await apiService.confirmPickup(orderId,bagNo,totalItems,totalWeight,comments,pricingType);
+  confirmPickup(orderId,bagNo,totalItems,totalWeight,comments,pricingType,orderItems) async{
+    PickupModel pickupModel = await apiService.confirmPickup(orderId,bagNo,totalItems,totalWeight,comments,pricingType,orderItems);
     return pickupModel;
 
   }
