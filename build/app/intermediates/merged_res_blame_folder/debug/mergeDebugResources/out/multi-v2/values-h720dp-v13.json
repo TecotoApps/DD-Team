@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.swasth.team.app-mergeDebugResources-42:/values-h720dp-v13/values-h720dp-v13.xml",
+            "outputFile": "com.swasth.team.app-mergeDebugResources-43:/values-h720dp-v13/values-h720dp-v13.xml",
             "map": [
                 {
                     "source": "/Users/tilak/.gradle/caches/8.9/transforms/c232e5d2fac8a1d2a2afde9d22c7481e/transformed/appcompat-1.1.0/res/values-h720dp-v13/values-h720dp-v13.xml",

@@ -1,6 +1,11 @@
 import 'package:dd_shop/dashboard/dashboard_controller.dart';
 import 'package:dd_shop/dashboard/switch_roles.dart';
+import 'package:dd_shop/delivery/delivery_controller.dart';
 import 'package:dd_shop/orders/add_customer.dart';
+import 'package:dd_shop/orders/order_process.dart';
+import 'package:dd_shop/orders/order_screen.dart';
+import 'package:dd_shop/services/api_services.dart';
+import 'package:dd_shop/utils/components/elevated_rounded_button.dart';
 import 'package:dd_shop/utils/constants/app_fonts.dart';
 import 'package:dd_shop/utils/constants/colors.dart';
 import 'package:dd_shop/utils/constants/enumss.dart';
@@ -12,7 +17,7 @@ class ShopExeDashboard extends StatefulWidget {
   final List<UserRole>? roles;
   final String? shopId;
 
-  const ShopExeDashboard({super.key,this.roles, this.shopId});
+  const ShopExeDashboard({super.key, this.roles, this.shopId});
 
   @override
   State<ShopExeDashboard> createState() => _ShopExeDashboardState();
@@ -20,6 +25,8 @@ class ShopExeDashboard extends StatefulWidget {
 
 class _ShopExeDashboardState extends State<ShopExeDashboard> {
   final DashboardController _dashboardController = Get.put(DashboardController());
+  final DeliveryController deliveryController = Get.put(DeliveryController());
+
   late Future _ordersFuture;
 
   @override
@@ -28,7 +35,6 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
     _ordersFuture = _fetchOrders();
     print('User Roles: ${widget.roles}');
     print('Shop ID: ${widget.shopId}');
-
   }
 
   Future _fetchOrders() {
@@ -52,7 +58,7 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
         backgroundColor: AppColors.appPrimaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(12), // Adjust this radius as needed
+            bottom: Radius.circular(12),
           ),
         ),
         leading: Builder(
@@ -85,28 +91,26 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
             ),
             ListTile(
               leading: Icon(Icons.compare_arrows_rounded),
-              title: Text('Switch Account',
-                style: TextStyle(color:widget.roles!.length>1?AppColors.textColor:AppColors.text_border_color ),),
+              title: Text(
+                'Switch Account',
+                style: TextStyle(color: widget.roles!.length > 1 ? AppColors.textColor : AppColors.text_border_color),
+              ),
               onTap: () {
-
-                if(widget.roles!.length>1){
-
+                if (widget.roles!.length > 1) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SwitchRoles(roles: widget.roles,shopId: widget.shopId,),
+                      builder: (context) => SwitchRoles(roles: widget.roles, shopId: widget.shopId),
                     ),
                   );
                 }
-
-
               },
             ),
             ListTile(
               leading: Icon(Icons.person_add),
               title: Text('Add Customer'),
               onTap: () {
-                Navigator.pop(context); // Close the drawer
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -117,7 +121,6 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
                 );
               },
             ),
-            // Add more menu items here if needed
           ],
         ),
       ),
@@ -129,116 +132,131 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
           future: _ordersFuture,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.data?["payload"] == null ) {
+              if (snapshot.data?['payload'] == null) {
                 return Center(child: Text('No Orders Received'));
               } else {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                   child: ListView.builder(
-                    itemCount: snapshot.data?["payload"].length,
+                    itemCount: snapshot.data?['payload'].length,
                     itemBuilder: (context, int index) {
-                      final order = snapshot.data!["payload"][index];
+                      final order = snapshot.data!['payload'][index];
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Card(
                           color: AppColors.white,
                           elevation: 2,
-                          child: ExpansionTile(
-                            title: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Bag No. ${order['bagNo'] ?? 000}',
-                                      style: AppFonts.title.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    Text(
-                                      '${order['orderStatus']}',
-                                      style: AppFonts.title.copyWith(
-                                        color: AppColors.textColor,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Gap(10),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Items ${order['totalItems'] ?? 0}',
-                                      style: AppFonts.title.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Weight ${order['totalWeight']}',
-                                      style: AppFonts.title.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                // Row(
-                                //   mainAxisAlignment: MainAxisAlignment.end,
-                                //   children: [
-                                //     Text(
-                                //       '${order['orderStatus']}',
-                                //       style: AppFonts.title.copyWith(
-                                //         color: AppColors.textColor,
-                                //         fontWeight: FontWeight.w500,
-                                //         fontSize: 14,
-                                //       ),
-                                //     ),
-                                //   ],
-                                // ),
-                              ],
-                            ),
-                            children: [
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                          child: Theme(
+                            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                            child: ExpansionTile(
+                              title: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Ordered on ${order['orderDate'] ?? ''}',
+                                        'Bag No. ${order['bagNo'] ?? 000}',
                                         style: AppFonts.title.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
                                         ),
                                       ),
-                                      Gap(10),
-                                      Text(
-                                        'Pickup Date: ${order['pickupDate'] ?? ''}',
-                                        style: AppFonts.title.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                        ),
+                                      getOrderStatusText(
+                                        getOrderStatusFromString(order['orderStatus']),
+                                        style: AppFonts.title.copyWith(fontWeight: FontWeight.bold),
                                       ),
-                                      Gap(10),
-                                      Text(
-                                        'Delivery Date: ${order['deliveryDate'] ?? ''}',
-                                        style: AppFonts.title.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                      Gap(10),
                                     ],
                                   ),
-                                ),
+                                  Gap(10),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Items ${order['totalItems'] ?? 0}',
+                                        style: AppFonts.title.copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Weight ${order['totalWeight']}',
+                                        style: AppFonts.title.copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ],
+                              children: [
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Ordered on ${order['orderDate'] ?? ''}',
+                                          style: AppFonts.title.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        Gap(10),
+                                        Text(
+                                          'Pickup Date: ${order['pickupDate'] ?? ''}',
+                                          style: AppFonts.title.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        Gap(10),
+                                        Text(
+                                          'Delivery Date: ${order['deliveryDate'] ?? ''}',
+                                          style: AppFonts.title.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        Gap(10),
+                                        (
+                                            getOrderStatusFromString(order['orderStatus']) == OrderStatus.PICKED ||
+                                            getOrderStatusFromString(order['orderStatus']) == OrderStatus.PROCESS
+                                        )
+                                            ? Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                          child: RoundedElevatedButton(
+                                            width: MediaQuery.of(context).size.width,
+                                            height: MediaQuery.of(context).size.height * 0.05,
+                                            text:getOrderStatusFromString(order['orderStatus']) == OrderStatus.PICKED? "Process Order":"Update Order",
+                                            onPressed: () async {
+                                              if(getOrderStatusFromString(order['orderStatus']) == OrderStatus.PICKED){
+                                                await apiService.updateOrderStatus(order['orderId'], 'PROCESS');
+                                              }
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(builder: (context)=>OrderProcess(
+                                                    index: index,
+                                                    orderData: order,
+                                                  )));
+
+                                            },
+                                            cornerRadius: 6.0,
+                                            buttonColor: AppColors.appPrimaryColor,
+                                            textStyle: AppFonts.title.copyWith(
+                                                color: AppColors.white,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        )
+                                            : Container(),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -249,7 +267,7 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
             } else if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
             } else {
-              return ListView( // Required for RefreshIndicator to trigger
+              return ListView(
                 children: [Center(child: Text('No data'))],
               );
             }
@@ -271,5 +289,15 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
         },
       ),
     );
+  }
+}
+
+OrderStatus getOrderStatusFromString(String? status) {
+  try {
+    return OrderStatus.values.firstWhere(
+          (e) => e.toString().split('.').last == status,
+    );
+  } catch (e) {
+    return OrderStatus.CREATED; // Fallback/default value
   }
 }

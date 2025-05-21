@@ -35,18 +35,23 @@ class Payload {
   String? shopId;
   String? customerId;
   String? locationId;
+  double? lat;
+  double? lng;
   String? orderCode;
   String? address;
   String? bagNo;
+  List<OrderItems>? orderItems;
   int? totalItems;
-  int? totalWeight;
+  double? totalWeight;
   String? orderType;
   String? pricingType;
   String? paymentType;
   String? orderStatus;
   String? timeSlot;
-  int? amount;
-  int? discount;
+  double? amount;
+  double? gst;
+  double? payableAmount;
+  double? discount;
   String? comments;
   String? orderDate;
   String? pickupDate;
@@ -59,9 +64,12 @@ class Payload {
         this.shopId,
         this.customerId,
         this.locationId,
+        this.lat,
+        this.lng,
         this.orderCode,
         this.address,
         this.bagNo,
+        this.orderItems,
         this.totalItems,
         this.totalWeight,
         this.orderType,
@@ -70,6 +78,8 @@ class Payload {
         this.orderStatus,
         this.timeSlot,
         this.amount,
+        this.gst,
+        this.payableAmount,
         this.discount,
         this.comments,
         this.orderDate,
@@ -83,9 +93,17 @@ class Payload {
     shopId = json['shopId'];
     customerId = json['customerId'];
     locationId = json['locationId'];
+    lat = json['lat'];
+    lng = json['lng'];
     orderCode = json['orderCode'];
     address = json['address'];
     bagNo = json['bagNo'];
+    if (json['orderItems'] != null) {
+      orderItems = <OrderItems>[];
+      json['orderItems'].forEach((v) {
+        orderItems!.add(new OrderItems.fromJson(v));
+      });
+    }
     totalItems = json['totalItems'];
     totalWeight = json['totalWeight'];
     orderType = json['orderType'];
@@ -94,6 +112,8 @@ class Payload {
     orderStatus = json['orderStatus'];
     timeSlot = json['timeSlot'];
     amount = json['amount'];
+    gst = json['gst'];
+    payableAmount = json['payableAmount'];
     discount = json['discount'];
     comments = json['comments'];
     orderDate = json['orderDate'];
@@ -109,9 +129,14 @@ class Payload {
     data['shopId'] = this.shopId;
     data['customerId'] = this.customerId;
     data['locationId'] = this.locationId;
+    data['lat'] = this.lat;
+    data['lng'] = this.lng;
     data['orderCode'] = this.orderCode;
     data['address'] = this.address;
     data['bagNo'] = this.bagNo;
+    if (this.orderItems != null) {
+      data['orderItems'] = this.orderItems!.map((v) => v.toJson()).toList();
+    }
     data['totalItems'] = this.totalItems;
     data['totalWeight'] = this.totalWeight;
     data['orderType'] = this.orderType;
@@ -120,6 +145,8 @@ class Payload {
     data['orderStatus'] = this.orderStatus;
     data['timeSlot'] = this.timeSlot;
     data['amount'] = this.amount;
+    data['gst'] = this.gst;
+    data['payableAmount'] = this.payableAmount;
     data['discount'] = this.discount;
     data['comments'] = this.comments;
     data['orderDate'] = this.orderDate;
@@ -127,6 +154,28 @@ class Payload {
     data['deliveryDate'] = this.deliveryDate;
     data['deliveryTime'] = this.deliveryTime;
     data['pickUpTime'] = this.pickUpTime;
+    return data;
+  }
+}
+
+class OrderItems {
+  String? itemName;
+  int? nos;
+  double? price;
+
+  OrderItems({this.itemName, this.nos, this.price});
+
+  OrderItems.fromJson(Map<String, dynamic> json) {
+    itemName = json['itemName'];
+    nos = json['nos'];
+    price = json['price'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['itemName'] = this.itemName;
+    data['nos'] = this.nos;
+    data['price'] = this.price;
     return data;
   }
 }

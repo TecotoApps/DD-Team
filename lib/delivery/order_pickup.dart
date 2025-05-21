@@ -36,7 +36,7 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
   Map<String, int> selectedItems = {};
 
   // List to hold itemName and quantity
-  List<Map<String, String>> orderItems = [];
+  List<Map<String, dynamic>> orderItems = [];
 
   void incrementItem(String item) {
     setState(() {
@@ -44,9 +44,9 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
 
       int index = orderItems.indexWhere((element) => element['itemName'] == item);
       if (index >= 0) {
-        orderItems[index]['quantity'] = selectedItems[item].toString();
+        orderItems[index]['nos'] = selectedItems[item];
       } else {
-        orderItems.add({'itemName': item, 'quantity': '1'});
+        orderItems.add({'itemName': item, 'nos': 0});
       }
     });
   }
@@ -62,7 +62,7 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
           if (index >= 0) orderItems.removeAt(index);
         } else {
           if (index >= 0) {
-            orderItems[index]['quantity'] = selectedItems[item].toString();
+            orderItems[index]['nos'] = selectedItems[item].toString();
           }
         }
       }
@@ -296,15 +296,23 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                 text: "Pickup",
                 onPressed: () async {
                   print(orderItems); // <- To verify structure before API use
-                  //
-                  // apiService.confirmPickup(
-                  //   widget.orderPayload.orderId,
-                  //   bagNoController.text,
-                  //   itemsController.text,
-                  //   weightController.text,
-                  //   commentsController.text,
-                  //   selectedOption,orderItems
-                  // );
+
+                  var orderRes = await apiService.confirmPickup(
+                    widget.orderPayload.orderId,
+                    bagNoController.text,
+                    itemsController.text,
+                    weightController.text,
+                    commentsController.text,
+                    selectedOption,orderItems
+                  );
+                  if(orderRes.statusCode==200){
+                    Navigator.pop(context);
+                  }
+                  else{
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('${orderRes.message}',style: AppFonts.title.copyWith(color: AppColors.white),)),
+                    );
+                  }
                 },
                 cornerRadius: 6.0,
                 buttonColor: AppColors.appPrimaryColor,

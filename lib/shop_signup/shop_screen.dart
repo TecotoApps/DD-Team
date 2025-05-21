@@ -1,5 +1,5 @@
+import 'package:dd_shop/orders/price_home.dart';
 import 'package:dd_shop/services/sharedPress.dart';
-import 'package:dd_shop/shop_prices/price_screen.dart';
 import 'package:dd_shop/utils/components/dd_elevated_buttons.dart';
 import 'package:dd_shop/utils/constants/strings.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +86,7 @@ class _ShopScreenState extends State<ShopScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => PriceScreen(shopId: 7)));
+                                    builder: (context) => PriceScreen(shopId: '7')));
                           }),
                     ),
                     SizedBox(

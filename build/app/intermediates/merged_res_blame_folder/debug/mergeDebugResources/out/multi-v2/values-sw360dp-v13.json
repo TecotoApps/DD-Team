@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.swasth.team.app-mergeDebugResources-42:/values-sw360dp-v13/values-sw360dp-v13.xml",
+            "outputFile": "com.swasth.team.app-mergeDebugResources-43:/values-sw360dp-v13/values-sw360dp-v13.xml",
             "map": [
                 {
                     "source": "/Users/tilak/.gradle/caches/8.9/transforms/645f6534f957fc5e5897e481e88ee8b8/transformed/preference-1.2.1/res/values-sw360dp-v13/values-sw360dp-v13.xml",

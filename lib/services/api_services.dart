@@ -9,11 +9,11 @@ import 'package:dd_shop/hr/model/role_list_model.dart';
 import 'package:dd_shop/mpin/model/validate_mpin_model.dart';
 import 'package:dd_shop/orders/create_order_model.dart';
 import 'package:dd_shop/orders/pickup_model.dart';
+import 'package:dd_shop/orders/piece_model.dart';
 import 'package:dd_shop/orders/register_customer_model.dart';
 import 'package:dd_shop/orders/user_check_model.dart';
+import 'package:dd_shop/orders/weight_model.dart';
 import 'package:dd_shop/shop/model/location_model.dart';
-import 'package:dd_shop/shop_prices/piece_model.dart';
-import 'package:dd_shop/shop_prices/weight_model.dart';
 import 'package:dd_shop/shop_signup/shop_model.dart';
 import 'package:http/http.dart';
 
@@ -274,39 +274,6 @@ class APIService {
     }
   }
 
-  Future<ItemPerWeightListModel> getWeight(shopId) async {
-    Response response = await get(
-      Uri.parse('$url/order/$shopId'),
-      headers: _headers,
-    );
-    print("this is response ${response.body}");
-    if (response.statusCode == 202) {
-      Map<String, dynamic> WeightMap = jsonDecode(response.body);
-      ItemPerWeightListModel weightPrice =
-          ItemPerWeightListModel.fromJson(WeightMap);
-      return weightPrice;
-    } else {
-      ItemPerWeightListModel res = json.decode(response.body);
-      return res;
-    }
-  }
-
-  Future<ItemPerPeiceListModel> getPiece(shopId) async {
-    Response response = await get(
-      Uri.parse('$url/order/$shopId'),
-      headers: _headers,
-    );
-    print("this is response ${response.body}");
-    if (response.statusCode == 202) {
-      Map<String, dynamic> PieceMap = jsonDecode(response.body);
-      ItemPerPeiceListModel weightPrice =
-          ItemPerPeiceListModel.fromJson(PieceMap);
-      return weightPrice;
-    } else {
-      ItemPerPeiceListModel res = json.decode(response.body);
-      return res;
-    }
-  }
 
   Future<AddShopToClusterModel> addShopToCluster(shopId, clusterId) async {
     Response response = await put(
@@ -363,7 +330,7 @@ class APIService {
     );
     print("this is response of update order ${response.body}");
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       print('inside 201');
       return true;
     } else {
@@ -373,15 +340,16 @@ class APIService {
   Future<PickupModel> confirmPickup(orderId,bagNo,totalItems,totalWeight,comments,pricingType,orderItems) async{
     print("this is orderId $orderId and status $orderId");
     Response response = await put(
-      Uri.parse('$url/order/orderStatus'),
+      Uri.parse('$url/order/pickup'),
       headers: _headers,
-      body: jsonEncode(<String, String>{
+      body: jsonEncode(<String, dynamic>{
         "orderId": orderId,
         "bagNo": bagNo,
         "totalItems": totalItems,
         "totalWeight": totalWeight,
         "comments": comments,
-        "pricingType": pricingType
+        "pricingType": pricingType,
+        "orderItems":orderItems
       }),
     );
     print("this is response of update order ${response.body}");
@@ -651,6 +619,39 @@ class APIService {
       return true;
     } else {
       return false;
+    }
+  }
+
+  Future<PieceModel> getItemPriceByPeice(shopId) async {
+    Response response = await get(
+        Uri.parse('$url/item/zone/ZONEONE'),
+        headers: _headers
+    );
+    print("this is response ItemPerPeiceListModel ${response.body}");
+    if (response.statusCode == 200) {
+      print('inside 202');
+      Map<String, dynamic> perPeiceItemMap = jsonDecode(response.body);
+      PieceModel perPeiceItems = PieceModel.fromJson(perPeiceItemMap);
+      return perPeiceItems;
+    } else {
+      PieceModel res = json.decode(response.body);
+      return res;
+    }
+  }
+
+  Future<WeightModel> getItemPriceByWeight(shopId) async {
+    Response response = await get(
+        Uri.parse('$url/weight/zone/ZONEONE'),
+        headers: _headers
+    );
+    print("this is response ${response.body}");
+    if (response.statusCode == 200) {
+      Map<String, dynamic> WeightMap = jsonDecode(response.body);
+      WeightModel weightPrice = WeightModel.fromJson(WeightMap);
+      return weightPrice;
+    } else {
+      WeightModel res = json.decode(response.body);
+      return res;
     }
   }
 

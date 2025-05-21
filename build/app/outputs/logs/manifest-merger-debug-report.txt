@@ -4,6 +4,8 @@ INJECTED from /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/android/app
 INJECTED from /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/android/app/src/debug/AndroidManifest.xml
 MERGED from [:geolocator_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-13:19
 MERGED from [:geolocator_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-13:19
+MERGED from [:url_launcher_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/url_launcher_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-12:19
+MERGED from [:url_launcher_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/url_launcher_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-12:19
 MERGED from [com.google.android.gms:play-services-location:21.2.0] /Users/tilak/.gradle/caches/8.9/transforms/afcec065407f02d10152da80d7bb34a3/transformed/jetified-play-services-location-21.2.0/AndroidManifest.xml:7:5-20
 MERGED from [com.google.android.gms:play-services-location:21.2.0] /Users/tilak/.gradle/caches/8.9/transforms/afcec065407f02d10152da80d7bb34a3/transformed/jetified-play-services-location-21.2.0/AndroidManifest.xml:7:5-20
 MERGED from [androidx.window:window:1.2.0] /Users/tilak/.gradle/caches/8.9/transforms/1916a8660131c573a1bbbf5fe85a737a/transformed/jetified-window-1.2.0/AndroidManifest.xml:22:5-29:19
@@ -45,10 +47,12 @@ MERGED from [:flutter_plugin_android_lifecycle] /Users/tilak/Documents/Flutter_P
 MERGED from [:geolocator_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-15:12
 MERGED from [:permission_handler_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/permission_handler_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
 MERGED from [:shared_preferences_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/shared_preferences_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
+MERGED from [:url_launcher_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/url_launcher_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-14:12
 MERGED from [com.google.android.gms:play-services-location:21.2.0] /Users/tilak/.gradle/caches/8.9/transforms/afcec065407f02d10152da80d7bb34a3/transformed/jetified-play-services-location-21.2.0/AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.datastore:datastore-preferences:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/feb9c8627fb2c9afdf9997d7e3c6da36/transformed/jetified-datastore-preferences-1.0.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.datastore:datastore:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/864fa76b7b3d6eec4c3b36426e2bf64c/transformed/jetified-datastore-1.0.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.preference:preference:1.2.1] /Users/tilak/.gradle/caches/8.9/transforms/645f6534f957fc5e5897e481e88ee8b8/transformed/preference-1.2.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.browser:browser:1.8.0] /Users/tilak/.gradle/caches/8.9/transforms/1f5cd37cc2c036a6addcd563045e0f7c/transformed/browser-1.8.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.recyclerview:recyclerview:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/98c4b4d1d648620371c092615b7e7e5b/transformed/recyclerview-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/4d5a5ce2780f6258ea0e0d7ed0433222/transformed/legacy-support-core-ui-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.2.0] /Users/tilak/.gradle/caches/8.9/transforms/cdfc702f4543ed5f5e443ccfdc3d17aa/transformed/slidingpanelayout-1.2.0/AndroidManifest.xml:17:1-24:12
@@ -66,6 +70,11 @@ MERGED from [androidx.activity:activity:1.8.1] /Users/tilak/.gradle/caches/8.9/t
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/978ac2742b77e5f3c855f89728e649af/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.loader:loader:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/bee14890382fe4f32d0d90989e94af75/transformed/loader-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/0d219df7cefa2e0bc6ab48bac3ce271b/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /Users/tilak/.gradle/caches/8.9/transforms/593aa629eaa52becfbc162482d354bc2/transformed/jetified-appcompat-resources-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/aca2a8e33a93cc7cd3f7c96e7d4eb2be/transformed/drawerlayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/35cc6bdb0e3b6c68465adf853c732fa4/transformed/coordinatorlayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.1.0] /Users/tilak/.gradle/caches/8.9/transforms/e8bb7aa79d4f49ec6600683c59162df0/transformed/customview-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.transition:transition:1.4.1] /Users/tilak/.gradle/caches/8.9/transforms/6718eb124fe98e28b2dab277b28ddeb1/transformed/transition-1.4.1/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/930456caa19e590de014ee28bfadd154/transformed/jetified-lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/529895b9ba1ee629073cbb6f232f03be/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/0f709dbd23b6320dfddb64da14befb94/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:2:1-7:12
@@ -78,11 +87,6 @@ MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/tilak/.gradle/caches/8
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/0e67b920d22dae15734dafc86b4480fc/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/f48893ab2453cc7168878f5c2a6bbb3c/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.core:core-ktx:1.13.1] /Users/tilak/.gradle/caches/8.9/transforms/fdf39383423901b302c753cc5170da32/transformed/jetified-core-ktx-1.13.1/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /Users/tilak/.gradle/caches/8.9/transforms/593aa629eaa52becfbc162482d354bc2/transformed/jetified-appcompat-resources-1.1.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/aca2a8e33a93cc7cd3f7c96e7d4eb2be/transformed/drawerlayout-1.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/35cc6bdb0e3b6c68465adf853c732fa4/transformed/coordinatorlayout-1.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.customview:customview:1.1.0] /Users/tilak/.gradle/caches/8.9/transforms/e8bb7aa79d4f49ec6600683c59162df0/transformed/customview-1.1.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.transition:transition:1.4.1] /Users/tilak/.gradle/caches/8.9/transforms/6718eb124fe98e28b2dab277b28ddeb1/transformed/transition-1.4.1/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/tilak/.gradle/caches/8.9/transforms/a36ef3a5c0e7af1089ba2025bfb8c446/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/tilak/.gradle/caches/8.9/transforms/e04b49d8ca2f671d43eadec5cf4dc6d1/transformed/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/5a2b029ed8256abd63175b693f77b259/transformed/swiperefreshlayout-1.0.0/AndroidManifest.xml:17:1-22:12
@@ -143,6 +147,8 @@ MERGED from [:permission_handler_android] /Users/tilak/Documents/Flutter_Project
 MERGED from [:permission_handler_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/permission_handler_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
 MERGED from [:shared_preferences_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/shared_preferences_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
 MERGED from [:shared_preferences_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/shared_preferences_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/url_launcher_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/url_launcher_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-location:21.2.0] /Users/tilak/.gradle/caches/8.9/transforms/afcec065407f02d10152da80d7bb34a3/transformed/jetified-play-services-location-21.2.0/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-location:21.2.0] /Users/tilak/.gradle/caches/8.9/transforms/afcec065407f02d10152da80d7bb34a3/transformed/jetified-play-services-location-21.2.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.datastore:datastore-preferences:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/feb9c8627fb2c9afdf9997d7e3c6da36/transformed/jetified-datastore-preferences-1.0.0/AndroidManifest.xml:20:5-22:41
@@ -151,6 +157,8 @@ MERGED from [androidx.datastore:datastore:1.0.0] /Users/tilak/.gradle/caches/8.9
 MERGED from [androidx.datastore:datastore:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/864fa76b7b3d6eec4c3b36426e2bf64c/transformed/jetified-datastore-1.0.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.preference:preference:1.2.1] /Users/tilak/.gradle/caches/8.9/transforms/645f6534f957fc5e5897e481e88ee8b8/transformed/preference-1.2.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.preference:preference:1.2.1] /Users/tilak/.gradle/caches/8.9/transforms/645f6534f957fc5e5897e481e88ee8b8/transformed/preference-1.2.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.browser:browser:1.8.0] /Users/tilak/.gradle/caches/8.9/transforms/1f5cd37cc2c036a6addcd563045e0f7c/transformed/browser-1.8.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.browser:browser:1.8.0] /Users/tilak/.gradle/caches/8.9/transforms/1f5cd37cc2c036a6addcd563045e0f7c/transformed/browser-1.8.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.recyclerview:recyclerview:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/98c4b4d1d648620371c092615b7e7e5b/transformed/recyclerview-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.recyclerview:recyclerview:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/98c4b4d1d648620371c092615b7e7e5b/transformed/recyclerview-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/4d5a5ce2780f6258ea0e0d7ed0433222/transformed/legacy-support-core-ui-1.0.0/AndroidManifest.xml:20:5-44
@@ -185,6 +193,16 @@ MERGED from [androidx.loader:loader:1.0.0] /Users/tilak/.gradle/caches/8.9/trans
 MERGED from [androidx.loader:loader:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/bee14890382fe4f32d0d90989e94af75/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/0d219df7cefa2e0bc6ab48bac3ce271b/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/0d219df7cefa2e0bc6ab48bac3ce271b/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /Users/tilak/.gradle/caches/8.9/transforms/593aa629eaa52becfbc162482d354bc2/transformed/jetified-appcompat-resources-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /Users/tilak/.gradle/caches/8.9/transforms/593aa629eaa52becfbc162482d354bc2/transformed/jetified-appcompat-resources-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/aca2a8e33a93cc7cd3f7c96e7d4eb2be/transformed/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/aca2a8e33a93cc7cd3f7c96e7d4eb2be/transformed/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/35cc6bdb0e3b6c68465adf853c732fa4/transformed/coordinatorlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/35cc6bdb0e3b6c68465adf853c732fa4/transformed/coordinatorlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.1.0] /Users/tilak/.gradle/caches/8.9/transforms/e8bb7aa79d4f49ec6600683c59162df0/transformed/customview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.1.0] /Users/tilak/.gradle/caches/8.9/transforms/e8bb7aa79d4f49ec6600683c59162df0/transformed/customview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.4.1] /Users/tilak/.gradle/caches/8.9/transforms/6718eb124fe98e28b2dab277b28ddeb1/transformed/transition-1.4.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.4.1] /Users/tilak/.gradle/caches/8.9/transforms/6718eb124fe98e28b2dab277b28ddeb1/transformed/transition-1.4.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/930456caa19e590de014ee28bfadd154/transformed/jetified-lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/930456caa19e590de014ee28bfadd154/transformed/jetified-lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/529895b9ba1ee629073cbb6f232f03be/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:20:5-44
@@ -209,16 +227,6 @@ MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Users/til
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Users/tilak/.gradle/caches/8.9/transforms/f48893ab2453cc7168878f5c2a6bbb3c/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.core:core-ktx:1.13.1] /Users/tilak/.gradle/caches/8.9/transforms/fdf39383423901b302c753cc5170da32/transformed/jetified-core-ktx-1.13.1/AndroidManifest.xml:5:5-44
 MERGED from [androidx.core:core-ktx:1.13.1] /Users/tilak/.gradle/caches/8.9/transforms/fdf39383423901b302c753cc5170da32/transformed/jetified-core-ktx-1.13.1/AndroidManifest.xml:5:5-44
-MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /Users/tilak/.gradle/caches/8.9/transforms/593aa629eaa52becfbc162482d354bc2/transformed/jetified-appcompat-resources-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /Users/tilak/.gradle/caches/8.9/transforms/593aa629eaa52becfbc162482d354bc2/transformed/jetified-appcompat-resources-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/aca2a8e33a93cc7cd3f7c96e7d4eb2be/transformed/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/aca2a8e33a93cc7cd3f7c96e7d4eb2be/transformed/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/35cc6bdb0e3b6c68465adf853c732fa4/transformed/coordinatorlayout-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] /Users/tilak/.gradle/caches/8.9/transforms/35cc6bdb0e3b6c68465adf853c732fa4/transformed/coordinatorlayout-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.customview:customview:1.1.0] /Users/tilak/.gradle/caches/8.9/transforms/e8bb7aa79d4f49ec6600683c59162df0/transformed/customview-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.customview:customview:1.1.0] /Users/tilak/.gradle/caches/8.9/transforms/e8bb7aa79d4f49ec6600683c59162df0/transformed/customview-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.transition:transition:1.4.1] /Users/tilak/.gradle/caches/8.9/transforms/6718eb124fe98e28b2dab277b28ddeb1/transformed/transition-1.4.1/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.transition:transition:1.4.1] /Users/tilak/.gradle/caches/8.9/transforms/6718eb124fe98e28b2dab277b28ddeb1/transformed/transition-1.4.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/tilak/.gradle/caches/8.9/transforms/a36ef3a5c0e7af1089ba2025bfb8c446/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/tilak/.gradle/caches/8.9/transforms/a36ef3a5c0e7af1089ba2025bfb8c446/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/tilak/.gradle/caches/8.9/transforms/e04b49d8ca2f671d43eadec5cf4dc6d1/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
@@ -271,6 +279,14 @@ ADDED from [:geolocator_android] /Users/tilak/Documents/Flutter_Projects/Swasth/
 		ADDED from [:geolocator_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:12:13-53
 	android:name
 		ADDED from [:geolocator_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:9:13-77
+activity#io.flutter.plugins.urllauncher.WebViewActivity
+ADDED from [:url_launcher_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/url_launcher_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:9-11:74
+	android:exported
+		ADDED from [:url_launcher_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/url_launcher_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:10:13-37
+	android:theme
+		ADDED from [:url_launcher_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/url_launcher_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:11:13-71
+	android:name
+		ADDED from [:url_launcher_android] /Users/tilak/Documents/Flutter_Projects/Swasth/DD-Team/build/url_launcher_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:9:13-74
 uses-library#androidx.window.extensions
 ADDED from [androidx.window:window:1.2.0] /Users/tilak/.gradle/caches/8.9/transforms/1916a8660131c573a1bbbf5fe85a737a/transformed/jetified-window-1.2.0/AndroidManifest.xml:23:9-25:40
 	android:required

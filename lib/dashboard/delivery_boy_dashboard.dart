@@ -5,16 +5,15 @@ import 'package:dd_shop/utils/components/elevated_rounded_button.dart';
 import 'package:dd_shop/utils/constants/app_fonts.dart';
 import 'package:dd_shop/utils/constants/colors.dart';
 import 'package:dd_shop/utils/constants/enumss.dart';
-import 'package:dd_shop/utils/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
+import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DeliveryBoyDashboard extends StatefulWidget {
   final List<UserRole>? roles;
   final String? shopId;
-  const DeliveryBoyDashboard({super.key,this.roles,this.shopId});
+  const DeliveryBoyDashboard({super.key, this.roles, this.shopId});
 
   @override
   State<DeliveryBoyDashboard> createState() => _DeliveryBoyDashboardState();
@@ -23,6 +22,7 @@ class DeliveryBoyDashboard extends StatefulWidget {
 class _DeliveryBoyDashboardState extends State<DeliveryBoyDashboard> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final DashboardController _dashboardController = Get.put(DashboardController());
+  final DeliveryController deliveryController = Get.put(DeliveryController());
   int _orderCount = 0;
   late Future _ordersFuture;
 
@@ -33,6 +33,13 @@ class _DeliveryBoyDashboardState extends State<DeliveryBoyDashboard> with Single
     _ordersFuture = _dashboardController.getDeliveryOrders(context);
   }
 
+  Future<void> _refreshOrders() async {
+    final refreshedFuture = _dashboardController.getDeliveryOrders(context);
+    final refreshedData = await refreshedFuture;
+    setState(() {
+      _ordersFuture = Future.value(refreshedData);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +51,11 @@ class _DeliveryBoyDashboardState extends State<DeliveryBoyDashboard> with Single
         centerTitle: true,
         title: Text(
           'Orders Received ( $_orderCount )',
-          style: AppFonts.title.copyWith(color: Colors.white,fontWeight: FontWeight.bold),
+          style: AppFonts.title.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(12), // Adjust this radius as needed
+            bottom: Radius.circular(12),
           ),
         ),
         leading: Builder(
@@ -72,33 +79,29 @@ class _DeliveryBoyDashboardState extends State<DeliveryBoyDashboard> with Single
               ),
               child: Text(
                 'Delivery Agent',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
+                style: TextStyle(color: Colors.white, fontSize: 24),
               ),
             ),
             ListTile(
               leading: Icon(Icons.compare_arrows_rounded),
-              title: Text('Switch Account',
-                style: TextStyle(color:widget.roles!.length>1?AppColors.textColor:AppColors.text_border_color ),),
+              title: Text(
+                'Switch Account',
+                style: TextStyle(
+                  color: widget.roles!.length > 1 ? AppColors.textColor : AppColors.text_border_color,
+                ),
+              ),
               onTap: () {
-                print('thisn is on tap');
                 Navigator.pop(context);
-                if(widget.roles!.length>1){
-
+                if (widget.roles!.length > 1) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SwitchRoles(roles: widget.roles,shopId: widget.shopId,),
+                      builder: (context) => SwitchRoles(roles: widget.roles, shopId: widget.shopId),
                     ),
                   );
                 }
-
-
               },
             ),
-            // Add more menu items here if needed
           ],
         ),
       ),
@@ -112,7 +115,6 @@ class _DeliveryBoyDashboardState extends State<DeliveryBoyDashboard> with Single
                 if (snapshot.data?["payload"] == null) {
                   return Center(child: Text('Something Went Wrong'));
                 } else {
-
                   final newCount = snapshot.data["payload"].length;
                   if (_orderCount != newCount) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -121,65 +123,92 @@ class _DeliveryBoyDashboardState extends State<DeliveryBoyDashboard> with Single
                       });
                     });
                   }
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                    child: ListView.builder(
-                      itemCount: snapshot.data?["payload"].length,
-                      itemBuilder: (context, int index) {
-                        final order = snapshot.data!["payload"][index];
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Card(
-                            color: AppColors.white,
-                            elevation: 2,
-                            child:  Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Gap(20),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Order - ${order['orderCode']}',
-                                        style: AppFonts.title.copyWith(fontWeight: FontWeight.bold,color: AppColors.appSecondaryColor),
-                                      ),
-                                      Text(
-                                        '${getSlotText(order['timeSlot'])}',
-                                        style: AppFonts.smallText.copyWith(color: AppColors.appPrimaryColor),
-                                      ),
-                                    ],
-                                  ),
-                                  Gap(20),
-                                  Row(
-                                    children: [
-                                      RoundedElevatedButton(
-                                          width: MediaQuery.of(context).size.width*0.3,
+                  return RefreshIndicator(
+                    onRefresh: _refreshOrders,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                      child: ListView.builder(
+                        itemCount: snapshot.data["payload"].length,
+                        itemBuilder: (context, index) {
+                          final order = snapshot.data["payload"][index];
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Card(
+                              color: AppColors.white,
+                              elevation: 2,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Gap(20),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Order - ${order['orderCode']}',
+                                          style: AppFonts.title.copyWith(fontWeight: FontWeight.bold, color: AppColors.appSecondaryColor),
+                                        ),
+                                        Text(
+                                          getSlotText(order['timeSlot']),
+                                          style: AppFonts.smallText.copyWith(color: AppColors.appPrimaryColor),
+                                        ),
+                                      ],
+                                    ),
+                                    Gap(20),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        order['orderStatus'] == "CREATED"?RoundedElevatedButton(
+                                          width: MediaQuery.of(context).size.width * 0.4,
                                           height: MediaQuery.of(context).size.height * 0.05,
-                                          text:order['orderStatus'] == "CREATED"? 'Pick up': "Complete Order" ,
+                                          text: 'Pick up' ,
                                           onPressed: () async {
-                                            if(order['orderStatus'] == "CREATED"){
-                                              deliveryController.goToOrderPickUP(order,context);
-                                            }
-                                            else{
+                                            if (order['orderStatus'] == "CREATED") {
+                                              deliveryController.goToOrderPickUP(order, context);
+                                            } else {
                                               deliveryController.changeOrderStatus(order, "COMPLETED", context);
                                             }
+                                          },
+                                          cornerRadius: 12.0,
+                                          buttonColor: AppColors.appPrimaryColor,
+                                          textStyle: AppFonts.title.copyWith(color: AppColors.white),
+                                        ):order['orderStatus'] == "READYTODELIVER"?
+                                        RoundedElevatedButton(
+                                          width: MediaQuery.of(context).size.width * 0.4,
+                                          height: MediaQuery.of(context).size.height * 0.05,
+                                          text: 'Delivery' ,
+                                          onPressed: () async {
 
                                           },
                                           cornerRadius: 12.0,
-                                          buttonColor: order['orderStatus'] == "CREATED"?AppColors.appPrimaryColor:Colors.green,
-                                          textStyle: AppFonts.title.copyWith(
-                                              color: AppColors.white)),
-                                    ],
-                                  ),
-                                  Gap(20),
-                                ],
+                                          buttonColor: Colors.green,
+                                          textStyle: AppFonts.title.copyWith(color: AppColors.white),
+                                        ):Container(),
+                                        IconButton(
+                                          icon: Icon(Icons.directions, color: AppColors.appSecondaryColor),
+                                          tooltip: 'Open in Google Maps',
+                                          onPressed: () {
+                                            print('this is lat : ${order['lat']}');
+                                            print('this is lng : ${order['lng']}');
+                                            // Replace with your launch URL logic
+                                            final latitude = order['lat']; // example
+                                            final longitude = order['lng']; // example
+                                            final googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+                                            print('this is map url : $googleMapsUrl');
+                                            launchUrl(Uri.parse(googleMapsUrl));
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                    Gap(20),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   );
                 }
@@ -196,7 +225,6 @@ class _DeliveryBoyDashboardState extends State<DeliveryBoyDashboard> with Single
     );
   }
 }
-
 
 String getSlotText(String enumValue) {
   switch (enumValue) {
