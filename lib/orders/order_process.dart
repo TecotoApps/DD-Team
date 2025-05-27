@@ -1,63 +1,52 @@
-import 'package:dd_shop/dashboard/shop_exe_dashboard.dart';
-import 'package:dd_shop/orders/order_screen.dart';
-import 'package:dd_shop/orders/orders_controller.dart';
-import 'package:dd_shop/orders/price_home.dart';
-import 'package:dd_shop/utils/components/elevated_rounded_button.dart';
-import 'package:dd_shop/utils/components/text_field_curved_edges.dart';
-import 'package:dd_shop/utils/constants/app_fonts.dart';
-import 'package:dd_shop/utils/constants/colors.dart';
-import 'package:dd_shop/utils/constants/strings.dart';
+// Place your imports here
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:dd_shop/utils/constants/colors.dart';
+import 'package:dd_shop/utils/constants/app_fonts.dart';
+import 'package:dd_shop/utils/components/text_field_curved_edges.dart';
+import 'package:dd_shop/utils/components/elevated_rounded_button.dart';
+import 'package:dd_shop/orders/price_home.dart';
+import 'package:dd_shop/services/api_services.dart';
+import 'package:dd_shop/orders/orders_controller.dart';
 
 class OrderProcess extends StatefulWidget {
   final int? index;
   final Map<String, dynamic>? orderData;
+  final String? orderId;
 
-  const OrderProcess({Key? key, this.index, this.orderData}) : super(key: key);
+  const OrderProcess({Key? key, this.index, this.orderData, this.orderId}) : super(key: key);
 
   @override
   State<OrderProcess> createState() => _OrderProcessState();
 }
 
 class _OrderProcessState extends State<OrderProcess> {
-  List<Map<String, dynamic>> orderItems = [];
-  List<TextEditingController> priceControllers = [];
-  TextEditingController totalItemsController = TextEditingController();
-  TextEditingController totalWeightController = TextEditingController();
-  double amount = 0.0;
+  List<Map<String, dynamic>> selectedExtras = [];
+  bool isOthersSelected = false;
+  String? selectedOtherService;
+  List<String> otherServices = ["Strain Removal", "Extra Iron", "Fold"];
+  Map<String, List<TextEditingController>> bagPriceControllers = {};
+  Map<String, double> bagAmounts = {};
+  double extraCharges = 0.0;
 
   @override
   void initState() {
     super.initState();
-    if (widget.orderData?['orderItems'] != null) {
-      orderItems = List<Map<String, dynamic>>.from(widget.orderData!['orderItems']);
-      priceControllers = List.generate(orderItems.length, (index) {
+    for (var bag in widget.orderData!['orderBags']) {
+      final bagNo = bag['bagNo'];
+      final items = List<Map<String, dynamic>>.from(bag['orderItems']);
+      bagPriceControllers[bagNo] = List.generate(items.length, (index) {
         final controller = TextEditingController();
-        if (orderItems[index]['price'] != null) {
-          controller.text = orderItems[index]['price'].toString();
+        if (items[index]['price'] != null) {
+          controller.text = items[index]['price'].toString();
         }
         return controller;
       });
-
-      totalItemsController.text = widget.orderData!['totalItems'].toString();
-      totalWeightController.text = widget.orderData!['totalWeight'].toString();
-      amount = orderController.addAmount(orderItems);
+      bagAmounts[bagNo] = orderController.addAmount(items);
     }
   }
 
-  @override
-  void dispose() {
-    for (var controller in priceControllers) {
-      controller.dispose();
-    }
-    totalItemsController.dispose();
-    totalWeightController.dispose();
-    super.dispose();
-  }
-
-  Widget _buildOrderItemRow(int index) {
-    final item = orderItems[index];
+  Widget _buildOrderItemRow(int index, Map<String, dynamic> item, TextEditingController controller, String bagNo) {
     final quantity = item['nos'] ?? 0;
     final price = item['price'] ?? 0.0;
     final total = (quantity is num && price is num) ? quantity * price : 0.0;
@@ -67,18 +56,12 @@ class _OrderProcessState extends State<OrderProcess> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(
-            flex: 3,
-            child: Text(
-              "${item['itemName']}",
-              style: AppFonts.title,
-            ),
-          ),
+          Expanded(flex: 3, child: Text(item['itemName'], style: AppFonts.title)),
           SizedBox(width: 8),
           Expanded(
             flex: 2,
             child: TextFieldCurvedEdges(
-              controller: priceControllers[index],
+              controller: controller,
               backgroundColor: AppColors.white,
               keyboardType: TextInputType.number,
               borderColor: AppColors.text_border_color,
@@ -86,218 +69,194 @@ class _OrderProcessState extends State<OrderProcess> {
               onChanged: (value) {
                 setState(() {
                   item['price'] = double.tryParse(value);
-                  amount = orderController.addAmount(orderItems);
+                  final items = List<Map<String, dynamic>>.from(widget.orderData!['orderBags']
+                      .firstWhere((bag) => bag['bagNo'] == bagNo)['orderItems']);
+                  bagAmounts[bagNo] = orderController.addAmount(items);
                 });
               },
             ),
           ),
           SizedBox(width: 8),
-          Expanded(
-            flex: 1,
-            child: Text(
-              'x$quantity',
-              textAlign: TextAlign.end,
-              style: AppFonts.title,
-            ),
-          ),
+          Expanded(flex: 1, child: Text('x $quantity', textAlign: TextAlign.end, style: AppFonts.title)),
           SizedBox(width: 8),
-          Expanded(
-            flex: 2,
-            child: Text(
-              '₹${total.toStringAsFixed(2)}',
-              textAlign: TextAlign.end,
-              style: AppFonts.title.copyWith(fontWeight: FontWeight.bold),
-            ),
-          ),
+          Expanded(flex: 2, child: Text('₹${total.toStringAsFixed(2)}', textAlign: TextAlign.end, style: AppFonts.title)),
         ],
       ),
     );
   }
 
+  Widget _buildExtraItems() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ...selectedExtras.map((extra) {
+          final controller = TextEditingController(text: extra['price']?.toString() ?? '');
+          return Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(flex: 2, child: Text(extra['itemName'], style: AppFonts.title)),
+                  SizedBox(width: 8),
+                  Flexible(
+                    flex: 1,
+                    child: TextField(
+                      controller: controller,
+                      keyboardType: TextInputType.number,
+                      onChanged: (val) {
+                        setState(() {
+                          extra['price'] = double.tryParse(val);
+                          extraCharges = orderController.addAmount(selectedExtras);
+                        });
+                      },
+                      decoration: InputDecoration(hintText: "Price", isDense: true, border: OutlineInputBorder()),
+                    ),
+                  )
+                ],
+              ),
+              Gap(10)
+            ],
+          );
+        }),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    extraCharges = orderController.addAmount(selectedExtras);
+    double totalAmount = bagAmounts.values.fold(0.0, (a, b) => a + b);
+    double totalWithExtras = totalAmount + extraCharges;
+    double gstAmount = orderController.getGSTAmount(selectedExtras); // GST only for extras
+    double totalPayable = totalWithExtras + gstAmount;
+
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(
         foregroundColor: Colors.white,
         backgroundColor: AppColors.appPrimaryColor,
         centerTitle: true,
-        title: Text(
-          'Process Order',
-          style: AppFonts.title.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(12)),
-        ),
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(Icons.arrow_back_ios_rounded, color: AppColors.white),
-        ),
+        title: Text('Process Order', style: AppFonts.title.copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(12))),
+        leading: IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.arrow_back_ios_rounded)),
       ),
-      body: orderItems.isEmpty
-          ? Center(child: Text("No items found", style: AppFonts.smallText))
-          : Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Gap(20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('${Dd_Strings.bag_number} : ${widget.orderData!['bagNo']}',
-                    style: AppFonts.title.copyWith(fontWeight: FontWeight.bold)),
-                getOrderStatusText(
-                  getOrderStatusFromString(widget.orderData!['orderStatus']),
-                  style: AppFonts.title.copyWith(fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            Gap(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => PriceScreen(shopId: widget.orderData!['shopId']),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    'Pricing',
-                    style: AppFonts.title.copyWith(
-                      color: AppColors.appPrimaryColor,
-                      decoration: TextDecoration.underline,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                Text(
-                  '${widget.orderData!['pricingType'].toString().toLowerCase().replaceFirstMapped(RegExp(r'^[a-z]'), (match) => match.group(0)!.toUpperCase())} Type',
-                  style: AppFonts.title.copyWith(fontWeight: FontWeight.bold, color: AppColors.appPrimaryColor),
-                ),
-              ],
-            ),
-            Gap(20),
-            Divider(color: AppColors.text_border_color, height: 1),
-            Gap(10),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.3,
-              child: ListView.builder(
-                itemCount: orderItems.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) => _buildOrderItemRow(index),
-              ),
-            ),
-            Gap(10),
-            Divider(color: AppColors.text_border_color, height: 1),
-            Gap(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Total Items :', style: AppFonts.title),
-                SizedBox(
-                  width: 80,
-                  child: TextField(
-                    controller: totalItemsController,
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.end,
-                    decoration: InputDecoration(
-                      isDense: true,
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            Gap(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Total Weight (in Kgs) : ', style: AppFonts.title),
-                SizedBox(
-                  width: 80,
-                  child: TextField(
-                    controller: totalWeightController,
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.end,
-                    decoration: InputDecoration(
-                      isDense: true,
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            Gap(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Amount :', style: AppFonts.title),
-                Text(amount.toStringAsFixed(2), style: AppFonts.title),
 
-              ],
-            ),
-            Gap(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('GST :', style: AppFonts.title),
-                Text(orderController.getGSTAmount(orderItems).toStringAsFixed(2), style: AppFonts.title)
-              ],
-            ),
-            Gap(10),
-            Divider(color: AppColors.text_border_color),
-            Gap(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Payable Amount :', style: AppFonts.title),
-                Text('${orderController.getTotalPayableAmount(orderItems).toStringAsFixed(2)}', style: AppFonts.title)
-              ],
-            ),
-            Gap(10),
-            Divider(color: AppColors.text_border_color),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: RoundedElevatedButton(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      height: 40,
-                      text: 'Update',
-                      onPressed: () {
-                        // Optional: Save/update order using updated amount
-                      },
-                      cornerRadius: 10,
-                      buttonColor: AppColors.appSecondaryColor,
-                      textStyle: AppFonts.title.copyWith(color: AppColors.white),
+            ...widget.orderData!['orderBags'].map<Widget>((bag) {
+              final bagNo = bag['bagNo'];
+              final orderItems = List<Map<String, dynamic>>.from(bag['orderItems']);
+              return Card(
+                elevation: 4,
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                color: AppColors.white,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                        decoration: BoxDecoration(
+                          color: AppColors.appSecondaryColor.withOpacity(0.4),
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+                        ),
+                        child: Text("Bag No: $bagNo", style: AppFonts.title.copyWith(fontWeight: FontWeight.bold))),
+                    Gap(8),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: ListView.builder(
+                        itemCount: orderItems.length,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) => _buildOrderItemRow(index, orderItems[index], bagPriceControllers[bagNo]![index], bagNo),
+                      ),
                     ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: RoundedElevatedButton(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      height: 40,
-                      text: 'Delivery',
-                      onPressed: () {},
-                      cornerRadius: 10,
-                      buttonColor: Colors.green,
-                      textStyle: AppFonts.title.copyWith(color: AppColors.white),
-                    ),
-                  ),
-                ],
+
+                  ],
+                ),
+              );
+            }).toList(),
+            Gap(10),
+            // Text('Subtotal: ₹${bagAmounts[bagNo]!.toStringAsFixed(2)}', style: AppFonts.title),
+            Divider(),
+            CheckboxListTile(
+              contentPadding: EdgeInsets.zero,
+              value: isOthersSelected,
+              activeColor: AppColors.appPrimaryColor,
+              title: Text('Other Extra Charges', style: AppFonts.title.copyWith(fontWeight: FontWeight.bold, color: AppColors.appPrimaryColor)),
+              controlAffinity: ListTileControlAffinity.leading,
+              onChanged: (val) => setState(() => isOthersSelected = val ?? false),
+            ),
+            if (isOthersSelected) ...[
+              DropdownButton<String>(
+                value: selectedOtherService,
+                hint: Text("Select Extra Service"),
+                items: otherServices.map((item) => DropdownMenuItem<String>(value: item, child: Text(item))).toList(),
+                onChanged: (value) {
+                  if (value != null && !selectedExtras.any((e) => e['itemName'] == value)) {
+                    setState(() {
+                      selectedOtherService = value;
+                      selectedExtras.add({"itemName": value, "price": 0.0, "nos": 1});
+                    });
+                  }
+                },
               ),
-            )
+              _buildExtraItems(),
+            ],
+            Divider(),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text('Total Amount:', style: AppFonts.title),
+              Text('₹${totalAmount.toStringAsFixed(2)}', style: AppFonts.title),
+            ]),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text('Extra Charges:', style: AppFonts.title),
+              Text('₹${extraCharges.toStringAsFixed(2)}', style: AppFonts.title),
+            ]),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text('GST:', style: AppFonts.title),
+              Text('₹${gstAmount.toStringAsFixed(2)}', style: AppFonts.title),
+            ]),
+            Divider(),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text('Total Payable:', style: AppFonts.title.copyWith(fontWeight: FontWeight.bold)),
+              Text('₹${totalPayable.toStringAsFixed(2)}', style: AppFonts.title.copyWith(fontWeight: FontWeight.bold)),
+            ]),
+            Gap(20),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Expanded(
+                child: RoundedElevatedButton(
+                  width: MediaQuery.of(context).size.width*0.4,
+                  height: 40,
+                  text: 'Update',
+                  onPressed: () {},
+                  cornerRadius: 10,
+                  buttonColor: AppColors.appSecondaryColor,
+                  textStyle: AppFonts.title.copyWith(color: AppColors.white),
+                ),
+              ),
+              Gap(10),
+              Expanded(
+                child: RoundedElevatedButton(
+                  text: 'Delivery',
+                  onPressed: () async {
+                    var res = await apiService.updateOrderStatus(widget.orderId, 'READYTODELIVER');
+                    if (res) {
+                      Navigator.pop(context);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please try again later')));
+                    }
+                  },
+                  cornerRadius: 10,
+                  buttonColor: Colors.green,
+                  textStyle: AppFonts.title.copyWith(color: AppColors.white), width: MediaQuery.of(context).size.width*0.4,
+                  height: 40,
+                ),
+              ),
+            ]),
           ],
         ),
       ),

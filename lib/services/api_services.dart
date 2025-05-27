@@ -16,7 +16,6 @@ import 'package:dd_shop/orders/weight_model.dart';
 import 'package:dd_shop/shop/model/location_model.dart';
 import 'package:dd_shop/shop_signup/shop_model.dart';
 import 'package:http/http.dart';
-
 import '../otp_generate/otp_modal.dart';
 
 class APIService {
@@ -337,7 +336,7 @@ class APIService {
       return false;
     }
   }
-  Future<PickupModel> confirmPickup(orderId,bagNo,totalItems,totalWeight,comments,pricingType,orderItems) async{
+  Future<PickupModel> confirmPickup(orderId,bagNo,totalItems,totalWeight,comments,pricingType,orderItems,orderBags,orderProcess) async{
     print("this is orderId $orderId and status $orderId");
     Response response = await put(
       Uri.parse('$url/order/pickup'),
@@ -349,6 +348,8 @@ class APIService {
         "totalWeight": totalWeight,
         "comments": comments,
         "pricingType": pricingType,
+        "orderBags":orderBags,
+        "orderProcess":orderProcess,
         "orderItems":orderItems
       }),
     );

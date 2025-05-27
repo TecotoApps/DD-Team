@@ -35,28 +35,27 @@ class Payload {
   String? shopId;
   String? customerId;
   String? locationId;
-  double? lat;
-  double? lng;
+  Null? lat;
+  Null? lng;
   String? orderCode;
-  String? address;
-  String? bagNo;
-  List<OrderItems>? orderItems;
+  Null? address;
+  List<OrderBags>? orderBags;
   int? totalItems;
-  double? totalWeight;
+  int? totalWeight;
   String? orderType;
   String? pricingType;
-  String? paymentType;
+  Null? paymentType;
   String? orderStatus;
   String? timeSlot;
-  double? amount;
-  double? gst;
-  double? payableAmount;
-  double? discount;
+  int? amount;
+  int? gst;
+  Null? payableAmount;
+  int? discount;
   String? comments;
   String? orderDate;
   String? pickupDate;
-  String? deliveryDate;
-  String? deliveryTime;
+  Null? deliveryDate;
+  Null? deliveryTime;
   String? pickUpTime;
 
   Payload(
@@ -68,8 +67,7 @@ class Payload {
         this.lng,
         this.orderCode,
         this.address,
-        this.bagNo,
-        this.orderItems,
+        this.orderBags,
         this.totalItems,
         this.totalWeight,
         this.orderType,
@@ -97,11 +95,10 @@ class Payload {
     lng = json['lng'];
     orderCode = json['orderCode'];
     address = json['address'];
-    bagNo = json['bagNo'];
-    if (json['orderItems'] != null) {
-      orderItems = <OrderItems>[];
-      json['orderItems'].forEach((v) {
-        orderItems!.add(new OrderItems.fromJson(v));
+    if (json['orderBags'] != null) {
+      orderBags = <OrderBags>[];
+      json['orderBags'].forEach((v) {
+        orderBags!.add(new OrderBags.fromJson(v));
       });
     }
     totalItems = json['totalItems'];
@@ -133,9 +130,8 @@ class Payload {
     data['lng'] = this.lng;
     data['orderCode'] = this.orderCode;
     data['address'] = this.address;
-    data['bagNo'] = this.bagNo;
-    if (this.orderItems != null) {
-      data['orderItems'] = this.orderItems!.map((v) => v.toJson()).toList();
+    if (this.orderBags != null) {
+      data['orderBags'] = this.orderBags!.map((v) => v.toJson()).toList();
     }
     data['totalItems'] = this.totalItems;
     data['totalWeight'] = this.totalWeight;
@@ -158,10 +154,42 @@ class Payload {
   }
 }
 
+class OrderBags {
+  String? bagNo;
+  List<OrderItems>? orderItems;
+  int? numOfItems;
+  String? orderProcess;
+
+  OrderBags({this.bagNo, this.orderItems, this.numOfItems, this.orderProcess});
+
+  OrderBags.fromJson(Map<String, dynamic> json) {
+    bagNo = json['bagNo'];
+    if (json['orderItems'] != null) {
+      orderItems = <OrderItems>[];
+      json['orderItems'].forEach((v) {
+        orderItems!.add(new OrderItems.fromJson(v));
+      });
+    }
+    numOfItems = json['numOfItems'];
+    orderProcess = json['orderProcess'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['bagNo'] = this.bagNo;
+    if (this.orderItems != null) {
+      data['orderItems'] = this.orderItems!.map((v) => v.toJson()).toList();
+    }
+    data['numOfItems'] = this.numOfItems;
+    data['orderProcess'] = this.orderProcess;
+    return data;
+  }
+}
+
 class OrderItems {
   String? itemName;
   int? nos;
-  double? price;
+  Null? price;
 
   OrderItems({this.itemName, this.nos, this.price});
 

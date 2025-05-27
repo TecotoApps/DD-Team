@@ -156,10 +156,9 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Bag No. ${order['bagNo'] ?? 000}',
+                                        'Bags : ${order['orderBags']?.length ?? 0}',
                                         style: AppFonts.title.copyWith(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 16,
                                         ),
                                       ),
                                       getOrderStatusText(
@@ -198,12 +197,24 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          'Ordered on ${order['orderDate'] ?? ''}',
-                                          style: AppFonts.title.copyWith(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                          ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Ordered on ${order['orderDate'] ?? ''}',
+                                              style: AppFonts.title.copyWith(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                            Text(
+                                              '${order['orderType'] ?? ''}',
+                                              style: AppFonts.smallText.copyWith(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.green
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         Gap(10),
                                         Text(
@@ -240,6 +251,7 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
                                                   MaterialPageRoute(builder: (context)=>OrderProcess(
                                                     index: index,
                                                     orderData: order,
+                                                    orderId:order['orderId']
                                                   )));
 
                                             },

@@ -20,7 +20,7 @@ class DeliveryController{
   }
 
   confirmPickup(orderId,bagNo,totalItems,totalWeight,comments,pricingType,orderItems) async{
-    PickupModel pickupModel = await apiService.confirmPickup(orderId,bagNo,totalItems,totalWeight,comments,pricingType,orderItems);
+    PickupModel pickupModel = await apiService.confirmPickup(orderId,bagNo,totalItems,totalWeight,comments,pricingType,orderItems,'','');
     return pickupModel;
 
   }

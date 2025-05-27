@@ -1,6 +1,5 @@
 import 'package:dd_shop/dashboard/model/order_list_model.dart';
-import 'package:dd_shop/delivery/delivery_controller.dart';
-import 'package:dd_shop/services/api_services.dart';
+ import 'package:dd_shop/services/api_services.dart';
 import 'package:dd_shop/utils/components/elevated_rounded_button.dart';
 import 'package:dd_shop/utils/components/text_field_curved_edges.dart';
 import 'package:dd_shop/utils/constants/app_fonts.dart';
@@ -25,7 +24,8 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
   TextEditingController itemsController = TextEditingController();
   TextEditingController commentsController = TextEditingController();
 
-  String selectedOption = 'Weight'; // Default selected radio button
+  String selectedOption = 'WEIGHT';
+  String selectedServiceType = 'WASH_ONLY';
 
   final List<String> itemTypes = [
     "pant", "shirt", "jacket", "t shirt", "saree",
@@ -34,8 +34,6 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
   String? selectedItem;
 
   Map<String, int> selectedItems = {};
-
-  // List to hold itemName and quantity
   List<Map<String, dynamic>> orderItems = [];
 
   void incrementItem(String item) {
@@ -107,7 +105,6 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                 borderRadius: 10,
               ),
               Gap(20),
-
               Text("Add Items"),
               DropdownButtonFormField<String>(
                 value: selectedItem,
@@ -144,7 +141,6 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                 },
               ),
               Gap(10),
-
               if (selectedItems.isNotEmpty)
                 Container(
                   padding: const EdgeInsets.all(8.0),
@@ -180,7 +176,6 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                     }).toList(),
                   ),
                 ),
-
               Gap(20),
               Text("Enter weight (in Kgs)"),
               TextFieldCurvedEdges(
@@ -200,92 +195,95 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                 borderRadius: 10,
               ),
               Gap(20),
+              Text("Select Unit Type"),
               Row(
                 children: [
                   Expanded(
-                    child: TextFieldCurvedEdges(
-                      controller: pickupDateController,
-                      backgroundColor: AppColors.white,
-                      keyboardType: TextInputType.none,
-                      borderColor: AppColors.text_border_color,
-                      borderRadius: 10,
-                      readOnly: true,
-                      hintText: "Select date",
-                      suffixIcon: Icon(Icons.calendar_today, color: AppColors.appPrimaryColor),
-                      onTap: () async {
-                        DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime.now(),
-                          lastDate: DateTime(2100),
-                        );
-                        if (pickedDate != null) {
-                          pickupDateController.text =
-                          "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
-                        }
-                      },
+                    child: RadioListTile<String>(
+                      title: const Text('Weight'),
+                      value: 'WEIGHT',
+                      groupValue: selectedOption,
+                      activeColor: AppColors.appPrimaryColor,
+                      contentPadding: EdgeInsets.zero,
+                      dense: true,
+                      onChanged: (value) => setState(() => selectedOption = value!),
                     ),
                   ),
-                  SizedBox(width: 12),
                   Expanded(
-                    child: TextFieldCurvedEdges(
-                      controller: pickupTimeController,
-                      backgroundColor: AppColors.white,
-                      keyboardType: TextInputType.none,
-                      borderColor: AppColors.text_border_color,
-                      borderRadius: 10,
-                      readOnly: true,
-                      hintText: "Select time",
-                      suffixIcon: Icon(Icons.access_time, color: AppColors.appPrimaryColor),
-                      onTap: () async {
-                        TimeOfDay? pickedTime = await showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay.now(),
-                        );
-                        if (pickedTime != null) {
-                          pickupTimeController.text = pickedTime.format(context);
-                        }
-                      },
+                    child: RadioListTile<String>(
+                      title: const Text('Piece'),
+                      value: 'PIECE',
+                      groupValue: selectedOption,
+                      activeColor: AppColors.appPrimaryColor,
+                      contentPadding: EdgeInsets.zero,
+                      dense: true,
+                      onChanged: (value) => setState(() => selectedOption = value!),
+                    ),
+                  ),
+                  Expanded(
+                    child: RadioListTile<String>(
+                      title: const Text('Package'),
+                      value: 'PACKAGE',
+                      groupValue: selectedOption,
+                      activeColor: AppColors.appPrimaryColor,
+                      contentPadding: EdgeInsets.zero,
+                      dense: true,
+                      onChanged: (value) => setState(() => selectedOption = value!),
                     ),
                   ),
                 ],
               ),
-              Gap(20),
-              Text("Select Unit Type"),
-              Column(
+              Gap(10),
+              Text("Select Service Type"),
+              Row(
                 children: [
-                  RadioListTile<String>(
-                    title: const Text('Weight'),
-                    value: 'WEIGHT',
-                    groupValue: selectedOption,
-                    activeColor: AppColors.appPrimaryColor,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedOption = value!;
-                      });
-                    },
+                  Expanded(
+                    child: RadioListTile<String>(
+                      title: const Text("Wash Only"),
+                      value: "WASH_ONLY",
+                      groupValue: selectedServiceType,
+                      activeColor: AppColors.appPrimaryColor,
+                      contentPadding: EdgeInsets.zero,
+                      dense: true,
+                      onChanged: (value) => setState(() => selectedServiceType = value!),
+                    ),
                   ),
-                  RadioListTile<String>(
-                    title: const Text('Piece'),
-                    value: 'PIECE',
-                    groupValue: selectedOption,
-                    activeColor: AppColors.appPrimaryColor,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedOption = value!;
-                      });
-                    },
+                  Expanded(
+                    child: RadioListTile<String>(
+                      title: const Text("Wash & Iron"),
+                      value: "WASH_AND_IRON",
+                      groupValue: selectedServiceType,
+                      activeColor: AppColors.appPrimaryColor,
+                      contentPadding: EdgeInsets.zero,
+                      dense: true,
+                      onChanged: (value) => setState(() => selectedServiceType = value!),
+                    ),
                   ),
-                  RadioListTile<String>(
-                    title: const Text('Package'),
-                    value: 'PACKAGE',
-                    groupValue: selectedOption,
-                    activeColor: AppColors.appPrimaryColor,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedOption = value!;
-                      });
-                    },
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: RadioListTile<String>(
+                      title: const Text("Iron Only"),
+                      value: "IRON_ONLY",
+                      groupValue: selectedServiceType,
+                      activeColor: AppColors.appPrimaryColor,
+                      contentPadding: EdgeInsets.zero,
+                      dense: true,
+                      onChanged: (value) => setState(() => selectedServiceType = value!),
+                    ),
+                  ),
+                  Expanded(
+                    child: RadioListTile<String>(
+                      title: const Text("Wash & Fold"),
+                      value: "WASH_AND_FOLD",
+                      groupValue: selectedServiceType,
+                      activeColor: AppColors.appPrimaryColor,
+                      contentPadding: EdgeInsets.zero,
+                      dense: true,
+                      onChanged: (value) => setState(() => selectedServiceType = value!),
+                    ),
                   ),
                 ],
               ),
@@ -295,22 +293,25 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                 height: MediaQuery.of(context).size.height * 0.05,
                 text: "Pickup",
                 onPressed: () async {
-                  print(orderItems); // <- To verify structure before API use
-
                   var orderRes = await apiService.confirmPickup(
                     widget.orderPayload.orderId,
                     bagNoController.text,
                     itemsController.text,
                     weightController.text,
                     commentsController.text,
-                    selectedOption,orderItems
+                    selectedOption,
+                    orderItems,'',''
                   );
-                  if(orderRes.statusCode==200){
+                  if(orderRes.statusCode == 200){
                     Navigator.pop(context);
-                  }
-                  else{
+                  } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('${orderRes.message}',style: AppFonts.title.copyWith(color: AppColors.white),)),
+                      SnackBar(
+                        content: Text(
+                          '${orderRes.message}',
+                          style: AppFonts.title.copyWith(color: AppColors.white),
+                        ),
+                      ),
                     );
                   }
                 },
