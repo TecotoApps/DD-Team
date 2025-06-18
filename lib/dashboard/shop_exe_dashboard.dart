@@ -4,6 +4,7 @@ import 'package:dd_shop/delivery/delivery_controller.dart';
 import 'package:dd_shop/orders/add_customer.dart';
 import 'package:dd_shop/orders/order_process.dart';
 import 'package:dd_shop/orders/order_screen.dart';
+import 'package:dd_shop/orders/process_order_by_bags.dart';
 import 'package:dd_shop/services/api_services.dart';
 import 'package:dd_shop/utils/components/elevated_rounded_button.dart';
 import 'package:dd_shop/utils/constants/app_fonts.dart';
@@ -156,7 +157,7 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Bags : ${order['orderBags']?.length ?? 0}',
+                                        'Bags : ${order['orderItems']?.length ?? 0}',
                                         style: AppFonts.title.copyWith(
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -248,9 +249,7 @@ class _ShopExeDashboardState extends State<ShopExeDashboard> {
                                                 await apiService.updateOrderStatus(order['orderId'], 'PROCESS');
                                               }
                                               Navigator.push(context,
-                                                  MaterialPageRoute(builder: (context)=>OrderProcess(
-                                                    index: index,
-                                                    orderData: order,
+                                                  MaterialPageRoute(builder: (context)=>ProcessOrderByBags(
                                                     orderId:order['orderId']
                                                   )));
 

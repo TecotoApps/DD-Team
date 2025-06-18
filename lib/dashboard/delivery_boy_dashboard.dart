@@ -162,12 +162,10 @@ class _DeliveryBoyDashboardState extends State<DeliveryBoyDashboard> with Single
                                         order['orderStatus'] == "CREATED"?RoundedElevatedButton(
                                           width: MediaQuery.of(context).size.width * 0.4,
                                           height: MediaQuery.of(context).size.height * 0.05,
-                                          text: 'Pick up' ,
+                                          text: 'Pick up Order' ,
                                           onPressed: () async {
                                             if (order['orderStatus'] == "CREATED") {
                                               deliveryController.goToOrderPickUP(order, context);
-                                            } else {
-                                              deliveryController.changeOrderStatus(order, "COMPLETED", context);
                                             }
                                           },
                                           cornerRadius: 12.0,
@@ -177,14 +175,36 @@ class _DeliveryBoyDashboardState extends State<DeliveryBoyDashboard> with Single
                                         RoundedElevatedButton(
                                           width: MediaQuery.of(context).size.width * 0.4,
                                           height: MediaQuery.of(context).size.height * 0.05,
-                                          text: 'Delivery' ,
+                                          text: 'Pickup Delivery' ,
                                           onPressed: () async {
-
+                                           await deliveryController.changeOrderStatus(order['orderId'], "COMPLETED", context);
+                                            await _refreshOrders();
                                           },
                                           cornerRadius: 12.0,
                                           buttonColor: Colors.green,
                                           textStyle: AppFonts.title.copyWith(color: AppColors.white),
-                                        ):Container(),
+                                        ):order['orderStatus'] == "COMPLETED"?
+                                        Container(
+
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                              BorderRadius.all(Radius.circular(10)),),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Center(child: Text('Order Completed',
+                                              style: AppFonts.title.copyWith(color: Colors.green),),),
+                                          ),
+                                        ):RoundedElevatedButton(
+                                          width: MediaQuery.of(context).size.width * 0.4,
+                                          height: MediaQuery.of(context).size.height * 0.05,
+                                          text: 'Processing ...' ,
+                                          onPressed: () async {
+                                            // deliveryController.changeOrderStatus(order, "COMPLETED", context);
+                                          },
+                                          cornerRadius: 8.0,
+                                          buttonColor: AppColors.appSecondaryColor.withOpacity(0.1),
+                                          textStyle: AppFonts.title.copyWith(color: AppColors.white),
+                                        ),
                                         IconButton(
                                           icon: Icon(Icons.directions, color: AppColors.appSecondaryColor),
                                           tooltip: 'Open in Google Maps',

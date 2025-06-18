@@ -11,6 +11,8 @@ class TextFieldCurvedEdges extends StatelessWidget {
   final double borderRadius;
   final TextAlign textAlign;
   final int length;
+  final int maxlines;
+  final int minlines;
   final FocusNode? focusNode;
   final ValueChanged<String>? onSubmitted;
   final ValueChanged<String>? onChanged;
@@ -31,6 +33,8 @@ class TextFieldCurvedEdges extends StatelessWidget {
     this.borderRadius = 20.0,
     this.textAlign = TextAlign.start,
     this.length = 100,
+    this.maxlines = 1,
+    this.minlines = 1,
     this.focusNode,
     this.onSubmitted,
     this.onChanged,
@@ -63,7 +67,8 @@ class TextFieldCurvedEdges extends StatelessWidget {
           keyboardType: keyboardType,
           textAlign: textAlign,
           maxLength: length,
-          maxLines: 1,
+          maxLines: maxlines,
+          minLines: minlines,
           focusNode: focusNode,
           readOnly: readOnly,
           onTap: onTap,

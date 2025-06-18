@@ -7,6 +7,7 @@ import 'package:dd_shop/dashboard/model/order_list_model.dart';
 import 'package:dd_shop/employee/model/employee_list_model.dart';
 import 'package:dd_shop/hr/model/role_list_model.dart';
 import 'package:dd_shop/mpin/model/validate_mpin_model.dart';
+import 'package:dd_shop/orders/bag_list_by_orderid_model.dart';
 import 'package:dd_shop/orders/create_order_model.dart';
 import 'package:dd_shop/orders/pickup_model.dart';
 import 'package:dd_shop/orders/piece_model.dart';
@@ -656,6 +657,123 @@ class APIService {
     }
   }
 
+  Future<UserInfoModal> addBag(orderId,orderCode, totalItems, totalWeight,
+      pricingType,orderProcess,orderItems,paymentType,comments) async {
+    print('this is the add bag request :{'
+        ' "orderId": "$orderId","orderCode": "$orderCode","totalItems": "$totalItems","totalWeight": "$totalWeight",'
+        '"pricingType": "$pricingType","orderProcess": "$orderProcess","orderItems": $orderItems,'
+        '"paymentType": "$paymentType","comments": "$comments"');
+    Response response = await post(
+      Uri.parse('$url/bag/addBag'),
+      headers: _headers,
+      body: jsonEncode(<String, dynamic>{
+        "orderId": "$orderId",
+        "orderCode": "$orderCode",
+        "totalItems": "$totalItems",
+        "totalWeight": "$totalWeight",
+        "pricingType": "$pricingType",
+        "orderProcess": "$orderProcess",
+        "orderItems": orderItems,
+        "paymentType": "$paymentType",
+        "comments": "$comments"
+      }),
+    );
+    print("this is response ${response.body}");
+
+    Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+    // Now map the JSON Map to the UserInfoModal using the fromJson constructor
+    UserInfoModal userInfoModal = UserInfoModal.fromJson(jsonResponse);
+
+    // Return the UserInfoModal object
+    return userInfoModal;
+  }
+
+  Future<UserInfoModal> updateBag(bagId,orderId,orderCode,totalItems, totalWeight,
+      pricingType,orderProcess,orderItems,comments) async {
+    print('this is the update request : "bagId": "$bagId",'
+        '"orderId": "$orderId","orderCode": "$orderCode",'
+        '"totalItems": "$totalItems","totalWeight": "$totalWeight","pricingType": "$pricingType",'
+        '"orderProcess": "$orderProcess","orderItems": "$orderItems", "comments": "$comments"');
+    Response response = await put(
+      Uri.parse('$url/bag/updateBag'),
+      headers: _headers,
+      body: jsonEncode(<String, dynamic>{
+        "bagId": "$bagId",
+        "orderId": "$orderId",
+        "orderCode": "$orderCode",
+        "totalItems": "$totalItems",
+        "totalWeight": "$totalWeight",
+        "pricingType": "$pricingType",
+        "orderProcess": "$orderProcess",
+        "orderItems": orderItems,
+        "comments": "$comments"
+      }),
+    );
+    print("this is response ${response.body}");
+
+    Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+    // Now map the JSON Map to the UserInfoModal using the fromJson constructor
+    UserInfoModal userInfoModal = UserInfoModal.fromJson(jsonResponse);
+
+    // Return the UserInfoModal object
+    return userInfoModal;
+  }
+
+  Future<bool> updateBagStatus(String? bagId, String bagStatus,String otherCharge,
+      String comments, String deliveryDate, String deliveryTime) async {
+    Response response = await put(
+      Uri.parse('$url/bag/updateBagStatus'),
+      headers: _headers,
+      body: jsonEncode(<String, String>{
+        "bagId": "$bagId",
+        "orderStatus": "$bagStatus",
+        "otherCharge": "$otherCharge",
+        "otherChargeComments": "$comments",
+        "deliveryDate": "$deliveryDate",
+        "deliveryTime": "$deliveryTime"
+      }),
+    );
+    print("this is response of update role ${response.body}");
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  Future<BagListByOrderIdModel> getBagListsByOrderId(orderId) async {
+
+    Response response = await get(
+        Uri.parse('$url/bag/baglistByOrderId/$orderId'),
+        headers: _headers
+    );
+    print("this is response for bag List ${response.body}");
+    if (response.statusCode == 200) {
+      Map<String, dynamic> locationMap = jsonDecode(response.body);
+      BagListByOrderIdModel locations = BagListByOrderIdModel.fromJson(locationMap);
+      return locations;
+    } else {
+      BagListByOrderIdModel res = json.decode(response.body);
+      return res;
+    }
+  }
+  Future<BagListByOrderIdModel> getItemsList() async {
+
+    Response response = await get(
+        Uri.parse('$url/serviceItem/serviceItemList'),
+        headers: _headers
+    );
+    print("this is response for bag List ${response.body}");
+    if (response.statusCode == 200) {
+      Map<String, dynamic> locationMap = jsonDecode(response.body);
+      BagListByOrderIdModel locations = BagListByOrderIdModel.fromJson(locationMap);
+      return locations;
+    } else {
+      BagListByOrderIdModel res = json.decode(response.body);
+      return res;
+    }
+  }
 
 }
 

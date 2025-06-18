@@ -35,41 +35,37 @@ class OrderPayload {
   String? shopId;
   String? customerId;
   String? locationId;
-  Null? bagNo;
-  Null? totalItems;
+  double? lat;
+  double? lng;
+  String? orderCode;
+  String? address;
+  String? totalItems;
   double? totalWeight;
-  Null? pricingType;
-  Null? paymentType;
+  String? orderType;
+  String? paymentType;
   String? orderStatus;
   String? timeSlot;
-  double? amount;
-  double? discount;
-  String? comments;
   String? orderDate;
-  Null? pickupDate;
-  Null? deliveryDate;
-  Null? deliveryTime;
-  Null? pickUpTime;
+  String? pickupDate;
+  String? pickUpTime;
 
   OrderPayload(
       {this.orderId,
         this.shopId,
         this.customerId,
         this.locationId,
-        this.bagNo,
+        this.lat,
+        this.lng,
+        this.orderCode,
+        this.address,
         this.totalItems,
         this.totalWeight,
-        this.pricingType,
+        this.orderType,
         this.paymentType,
         this.orderStatus,
         this.timeSlot,
-        this.amount,
-        this.discount,
-        this.comments,
         this.orderDate,
         this.pickupDate,
-        this.deliveryDate,
-        this.deliveryTime,
         this.pickUpTime});
 
   OrderPayload.fromJson(Map<String, dynamic> json) {
@@ -77,20 +73,18 @@ class OrderPayload {
     shopId = json['shopId'];
     customerId = json['customerId'];
     locationId = json['locationId'];
-    bagNo = json['bagNo'];
+    lat = json['lat'];
+    lng = json['lng'];
+    orderCode = json['orderCode'];
+    address = json['address'];
     totalItems = json['totalItems'];
     totalWeight = json['totalWeight'];
-    pricingType = json['pricingType'];
+    orderType = json['orderType'];
     paymentType = json['paymentType'];
     orderStatus = json['orderStatus'];
     timeSlot = json['timeSlot'];
-    amount = json['amount'];
-    discount = json['discount'];
-    comments = json['comments'];
     orderDate = json['orderDate'];
     pickupDate = json['pickupDate'];
-    deliveryDate = json['deliveryDate'];
-    deliveryTime = json['deliveryTime'];
     pickUpTime = json['pickUpTime'];
   }
 
@@ -100,20 +94,18 @@ class OrderPayload {
     data['shopId'] = this.shopId;
     data['customerId'] = this.customerId;
     data['locationId'] = this.locationId;
-    data['bagNo'] = this.bagNo;
+    data['lat'] = this.lat;
+    data['lng'] = this.lng;
+    data['orderCode'] = this.orderCode;
+    data['address'] = this.address;
     data['totalItems'] = this.totalItems;
     data['totalWeight'] = this.totalWeight;
-    data['pricingType'] = this.pricingType;
+    data['orderType'] = this.orderType;
     data['paymentType'] = this.paymentType;
     data['orderStatus'] = this.orderStatus;
     data['timeSlot'] = this.timeSlot;
-    data['amount'] = this.amount;
-    data['discount'] = this.discount;
-    data['comments'] = this.comments;
     data['orderDate'] = this.orderDate;
     data['pickupDate'] = this.pickupDate;
-    data['deliveryDate'] = this.deliveryDate;
-    data['deliveryTime'] = this.deliveryTime;
     data['pickUpTime'] = this.pickUpTime;
     return data;
   }

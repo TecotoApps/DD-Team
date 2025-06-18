@@ -69,6 +69,7 @@ class Dd_Strings {
   static const String schedule_order = 'Schedule_order';
   static const String pick_from_store = 'Pick From Store';
   static const String deliver_to_home = 'Deliver To Home';
+  static const String update_and_submit = 'Update And Submit';
 
   final List<String> itemTypes = [
   "pant", "shirt", "jacket", "t shirt", "saree",

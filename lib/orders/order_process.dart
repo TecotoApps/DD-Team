@@ -32,18 +32,19 @@ class _OrderProcessState extends State<OrderProcess> {
   @override
   void initState() {
     super.initState();
-    for (var bag in widget.orderData!['orderBags']) {
-      final bagNo = bag['bagNo'];
-      final items = List<Map<String, dynamic>>.from(bag['orderItems']);
-      bagPriceControllers[bagNo] = List.generate(items.length, (index) {
-        final controller = TextEditingController();
-        if (items[index]['price'] != null) {
-          controller.text = items[index]['price'].toString();
-        }
-        return controller;
-      });
-      bagAmounts[bagNo] = orderController.addAmount(items);
-    }
+    apiService.getBagListsByOrderId(widget.orderId);
+    // for (var bag in widget.orderData!['orderBags']) {
+    //   final bagNo = bag['bagNo'];
+    //   final items = List<Map<String, dynamic>>.from(bag['orderItems']);
+    //   bagPriceControllers[bagNo] = List.generate(items.length, (index) {
+    //     final controller = TextEditingController();
+    //     if (items[index]['price'] != null) {
+    //       controller.text = items[index]['price'].toString();
+    //     }
+    //     return controller;
+    //   });
+    //   bagAmounts[bagNo] = orderController.addAmount(items);
+    // }
   }
 
   Widget _buildOrderItemRow(int index, Map<String, dynamic> item, TextEditingController controller, String bagNo) {

@@ -13,8 +13,8 @@ class DeliveryController{
     Navigator.push(context, MaterialPageRoute(builder: (context)=>AddOrderPickupDetails(orderPayload: order,)));
   }
 
-  changeOrderStatus(OrderPayload order,status,context) async{
-      bool employeeListModel = await apiService.updateOrderStatus(order.orderId,status);
+  changeOrderStatus(String orderId,status,context) async{
+      bool employeeListModel = await apiService.updateOrderStatus(orderId,status);
       return employeeListModel;
 
   }

@@ -44,7 +44,7 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
       if (index >= 0) {
         orderItems[index]['nos'] = selectedItems[item];
       } else {
-        orderItems.add({'itemName': item, 'nos': 0});
+        orderItems.add({'itemName': item, 'nos': 1});
       }
     });
   }
@@ -65,6 +65,14 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
         }
       }
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('this is order id : ${widget.orderPayload.orderId}');
+    print('this is order id : ${widget.orderPayload.orderCode}');
   }
 
   @override
@@ -95,15 +103,15 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Gap(20),
-              Text("${Dd_Strings.bag_number}"),
-              TextFieldCurvedEdges(
-                controller: bagNoController,
-                backgroundColor: AppColors.white,
-                keyboardType: TextInputType.number,
-                borderColor: AppColors.text_border_color,
-                borderRadius: 10,
-              ),
+              // Gap(20),
+              // Text("${Dd_Strings.bag_number}"),
+              // TextFieldCurvedEdges(
+              //   controller: bagNoController,
+              //   backgroundColor: AppColors.white,
+              //   keyboardType: TextInputType.number,
+              //   borderColor: AppColors.text_border_color,
+              //   borderRadius: 10,
+              // ),
               Gap(20),
               Text("Add Items"),
               DropdownButtonFormField<String>(
@@ -201,7 +209,7 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                   Expanded(
                     child: RadioListTile<String>(
                       title: const Text('Weight'),
-                      value: 'WEIGHT',
+                      value: PICKUP_ENUMS.WEIGHT.name,
                       groupValue: selectedOption,
                       activeColor: AppColors.appPrimaryColor,
                       contentPadding: EdgeInsets.zero,
@@ -212,7 +220,7 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                   Expanded(
                     child: RadioListTile<String>(
                       title: const Text('Piece'),
-                      value: 'PIECE',
+                      value: PICKUP_ENUMS.PIECE.name,
                       groupValue: selectedOption,
                       activeColor: AppColors.appPrimaryColor,
                       contentPadding: EdgeInsets.zero,
@@ -220,17 +228,17 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                       onChanged: (value) => setState(() => selectedOption = value!),
                     ),
                   ),
-                  Expanded(
-                    child: RadioListTile<String>(
-                      title: const Text('Package'),
-                      value: 'PACKAGE',
-                      groupValue: selectedOption,
-                      activeColor: AppColors.appPrimaryColor,
-                      contentPadding: EdgeInsets.zero,
-                      dense: true,
-                      onChanged: (value) => setState(() => selectedOption = value!),
-                    ),
-                  ),
+                  // Expanded(
+                  //   child: RadioListTile<String>(
+                  //     title: const Text('Package'),
+                  //     value:PICKUP_ENUMS.PACKAGE.name,
+                  //     groupValue: selectedOption,
+                  //     activeColor: AppColors.appPrimaryColor,
+                  //     contentPadding: EdgeInsets.zero,
+                  //     dense: true,
+                  //     onChanged: (value) => setState(() => selectedOption = value!),
+                  //   ),
+                  // ),
                 ],
               ),
               Gap(10),
@@ -240,7 +248,7 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                   Expanded(
                     child: RadioListTile<String>(
                       title: const Text("Wash Only"),
-                      value: "WASH_ONLY",
+                      value:PRICING_TYPE_ENUMS.WASH.name,
                       groupValue: selectedServiceType,
                       activeColor: AppColors.appPrimaryColor,
                       contentPadding: EdgeInsets.zero,
@@ -251,7 +259,18 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                   Expanded(
                     child: RadioListTile<String>(
                       title: const Text("Wash & Iron"),
-                      value: "WASH_AND_IRON",
+                      value: PRICING_TYPE_ENUMS.WASHIRON.name,
+                      groupValue: selectedServiceType,
+                      activeColor: AppColors.appPrimaryColor,
+                      contentPadding: EdgeInsets.zero,
+                      dense: true,
+                      onChanged: (value) => setState(() => selectedServiceType = value!),
+                    ),
+                  ),
+                  Expanded(
+                    child: RadioListTile<String>(
+                      title: const Text("Iron Only"),
+                      value: PRICING_TYPE_ENUMS.IRON.name,
                       groupValue: selectedServiceType,
                       activeColor: AppColors.appPrimaryColor,
                       contentPadding: EdgeInsets.zero,
@@ -263,10 +282,11 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
               ),
               Row(
                 children: [
+
                   Expanded(
                     child: RadioListTile<String>(
-                      title: const Text("Iron Only"),
-                      value: "IRON_ONLY",
+                      title: const Text("Wash & Fold"),
+                      value: PRICING_TYPE_ENUMS.WASHFOLD.name,
                       groupValue: selectedServiceType,
                       activeColor: AppColors.appPrimaryColor,
                       contentPadding: EdgeInsets.zero,
@@ -276,8 +296,19 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                   ),
                   Expanded(
                     child: RadioListTile<String>(
-                      title: const Text("Wash & Fold"),
-                      value: "WASH_AND_FOLD",
+                      title: const Text("Dryclean"),
+                      value: PRICING_TYPE_ENUMS.DRYCLEAN.name,
+                      groupValue: selectedServiceType,
+                      activeColor: AppColors.appPrimaryColor,
+                      contentPadding: EdgeInsets.zero,
+                      dense: true,
+                      onChanged: (value) => setState(() => selectedServiceType = value!),
+                    ),
+                  ),
+                  Expanded(
+                    child: RadioListTile<String>(
+                      title: const Text("Stain Remove"),
+                      value: PRICING_TYPE_ENUMS.STAIN.name,
                       groupValue: selectedServiceType,
                       activeColor: AppColors.appPrimaryColor,
                       contentPadding: EdgeInsets.zero,
@@ -288,22 +319,35 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
                 ],
               ),
               Gap(10),
+
+              Text("${Dd_Strings.comments}"),
+              TextFieldCurvedEdges(
+                controller: commentsController,
+                backgroundColor: AppColors.white,
+                keyboardType: TextInputType.text,
+                borderColor: AppColors.text_border_color,
+                borderRadius: 10,
+                maxlines: 4,
+                minlines: 3,
+
+              ),
+              Gap(20),
               RoundedElevatedButton(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.05,
-                text: "Pickup",
+                text: Dd_Strings.submit_button_text,
                 onPressed: () async {
-                  var orderRes = await apiService.confirmPickup(
-                    widget.orderPayload.orderId,
-                    bagNoController.text,
+
+                  var orderRes = await apiService.addBag(
+                    widget.orderPayload.orderId,widget.orderPayload.orderCode,
                     itemsController.text,
-                    weightController.text,
-                    commentsController.text,
-                    selectedOption,
-                    orderItems,'',''
+                    weightController.text,selectedOption,selectedServiceType,
+                    orderItems,'UPI',commentsController.text,
                   );
+                  print('this is add bag response : $orderRes');
                   if(orderRes.statusCode == 200){
-                    Navigator.pop(context);
+                    // Navigator.pop(context);
+                    addBagDialog(orderRes.message);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -327,6 +371,72 @@ class _AddOrderPickupDetailsState extends State<AddOrderPickupDetails> {
       ),
     );
   }
+
+  void addBagDialog(String? message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Success",style: AppFonts.header.copyWith(color: Colors.green),textAlign: TextAlign.center,),
+        content: Text(message!,style: AppFonts.title.copyWith(fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+        actions: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  child: Text("Add Bag",
+                      style: AppFonts.title.copyWith(color: AppColors.appSecondaryColor,
+                          fontWeight: FontWeight.bold)),
+                  onPressed: () {
+                    clearEntries();
+                    Navigator.pop(context);
+                  }
+                ),
+                RoundedElevatedButton(
+                  width: MediaQuery.of(context).size.width*0.3,
+                  height: 40,
+                  cornerRadius: 10,
+                  buttonColor: AppColors.appPrimaryColor,
+                  text: 'Pickup',
+                  textStyle: AppFonts.title.copyWith(color: AppColors.white,fontWeight: FontWeight.bold),
+                  onPressed: ()async{
+                    var res = await apiService.updateOrderStatus(widget.orderPayload.orderId, 'PICKED');
+                    if(res){
+                      Navigator.pop(context);
+                      await Future.delayed(Duration(milliseconds: 100));
+                      Navigator.pop(context);
+                    }
+                  },
+
+
+                ),
+              ],
+            ),
+          ),
+
+
+        ],
+      ),
+    );
+  }
+  void clearEntries(){
+    setState(() {
+      weightController.clear();
+      itemsController.clear();
+      commentsController.clear();
+      bagNoController.clear();
+      pickupDateController.clear();
+      pickupTimeController.clear();
+
+      selectedItem = null;
+      selectedItems.clear();
+      orderItems.clear();
+
+      selectedOption = 'WEIGHT';
+      selectedServiceType = PRICING_TYPE_ENUMS.WASH.name;
+    });
+  }
 }
 
 String _formatDate(DateTime date) {
@@ -334,3 +444,5 @@ String _formatDate(DateTime date) {
 }
 
 enum PICKUP_ENUMS { WEIGHT, PIECE, PACKAGE }
+enum PRICING_TYPE_ENUMS { IRON, WASH, WASHIRON,WASHFOLD,DRYCLEAN,STAIN }
+enum WEIGTH_PRICE_ENUMS { ZEROTOTHREE, THREETOFIVE, FIVETOEIGHT,EIGHTTOTEN,TENABOVE }

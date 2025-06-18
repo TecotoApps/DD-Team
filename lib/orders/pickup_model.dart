@@ -35,27 +35,27 @@ class Payload {
   String? shopId;
   String? customerId;
   String? locationId;
-  Null? lat;
-  Null? lng;
+  double? lat;
+  double? lng;
   String? orderCode;
-  Null? address;
+  String? address;
   List<OrderBags>? orderBags;
   int? totalItems;
   int? totalWeight;
   String? orderType;
   String? pricingType;
-  Null? paymentType;
+  String? paymentType;
   String? orderStatus;
   String? timeSlot;
   int? amount;
   int? gst;
-  Null? payableAmount;
+  double? payableAmount;
   int? discount;
   String? comments;
   String? orderDate;
   String? pickupDate;
-  Null? deliveryDate;
-  Null? deliveryTime;
+  String? deliveryDate;
+  String? deliveryTime;
   String? pickUpTime;
 
   Payload(
